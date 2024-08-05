@@ -1,0 +1,120 @@
+
+
+.Login-Container {
+  height: 100vh;
+  background: linear-gradient(to right, #66b2ff, #6bb4fe, #71b6fd, #76b8fb, #7bbafa, #7ec1f9, #84c8f8, #8ccff7, #9ddcf5, #b4e7f4, #ccf1f5, #e6fbfa);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to right, rgba(5, 197, 245, 0.5), white), 
+}
+
+.login-page-Image {
+  width: 50%;
+  height: auto;
+  display: block;
+  max-width: 450px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.Login-Card {
+  margin-top: 30vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.Login_Buttons,
+.Login-Nav-Button {
+  margin: 10px;
+  width: 550px;
+  height: 70px;
+  border-radius: 50px;
+}
+
+.Login-Nav-Button {
+  background-color: #f5f7f9;
+  border: 2px solid #66b2ff;
+}
+
+.Login_Buttons:hover {
+  box-shadow: 2px 2px 20px black;
+}
+
+.Login-Nav-Button:hover {
+  background-color: #e1e2f8;
+}
+
+.line {
+  opacity: 0;
+  transform: translateX(100%);
+  animation: slide-in 1.5s ease-out forwards;
+}
+
+/* hr css */
+.hr-with-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .hr {
+    flex: 2;
+    border: none;
+    border-top: 1px solid #000;
+    margin: 0 10px;
+  }
+  
+  .hr-with-text span {
+    white-space: nowrap;
+  }
+
+  .Login-Logos{
+    width: 250px;
+    background-color:"white ";
+  }
+  
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.line:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.line:nth-child(2) {
+  animation-delay: 1s;
+}
+
+@media only screen and (max-width: 769px) {
+  .Login-Container {
+    height: inherit;
+    width: 100%;
+    margin: 0;
+    /* background-color: linear-gradient(
+      to bottom,
+      #5bccfb,
+      #91d6fe,
+      #b9e1ff,
+      #daedff,
+      #f6faff
+    ); */
+  }
+  .Login_Row {
+  display: none;
+  }
+
+  
+  .login-page-Image {
+    width: 90%; /* Adjust as needed for smaller screens */
+    max-width: none; /* Remove max-width for responsive resizing */
+  }
+}
