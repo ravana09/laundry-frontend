@@ -84,22 +84,22 @@ function Login() {
                 </div>
                 <Row className="justify-content-center">
                   <Col xs={3}>
-                    <Button className="Login-Logos" style={{ backgroundColor: "white" }}>
+                   <Button className="Login-Logos" style={{ backgroundColor: "white",border:'none' }}>
                       <img src={google} alt="Google" style={{ width: "30px" }} />
                     </Button>
                   </Col>
                   <Col xs={3}>
-                    <Button className="Login-Logos" style={{ backgroundColor: "white" }}>
+                    <Button className="Login-Logos" style={{ backgroundColor: "white",border:'none' }}>
                       <img src={apple} alt="Apple" style={{ width: "25px" }} />
                     </Button>
                   </Col>
                   <Col xs={3}>
-                    <Button className="Login-Logos" style={{ backgroundColor: "white" }}>
+                   <Button className="Login-Logos" style={{ backgroundColor: "white",border:'none' }}>
                       <img src={twitter} alt="Twitter" style={{ width: "30px" }} />
                     </Button>
                   </Col>
                   <Col xs={3}>
-                    <Button className="Login-Logos" style={{ backgroundColor: "white" }}>
+                   <Button className="Login-Logos" style={{ backgroundColor: "white",border:'none' }}>
                       <img src={facebook} alt="Facebook" style={{ width: "30px" }} />
                     </Button>
                   </Col>
