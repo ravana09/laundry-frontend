@@ -1,0 +1,54 @@
+/* MobileVerification.css */
+.otp-inputs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .otp-header{
+    font-size: 20px;
+    color: grey;
+    font-weight: 500;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    display: flex;
+    justify-content: center;
+  }
+  .otp-input {
+    width: 30px;
+    height: 50px;
+    text-align: center;
+    border: 2px solid white; /* White border for visibility */
+    background-color: skyblue;
+    color: black;
+    font-size: 30px;
+    font-weight: 500;
+    margin: 0 10px;
+    position: relative;
+    caret-color: transparent;
+  }
+  
+  .otp-input::placeholder {
+    color: black;
+    font-size: 30px;
+    text-align: center;
+  }
+  
+  .otp-input:not(:placeholder-shown) {
+    background-color: skyblue; 
+  }
+  
+  .otp-input::before {
+    content: '•'; /* Dot character */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+    color: black;
+    pointer-events: none; /* Make sure the dot does not interfere with typing */
+  }
+  
+  .otp-input:focus {
+    outline: none;
+  }
+  

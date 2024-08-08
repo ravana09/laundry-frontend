@@ -28,7 +28,7 @@ const BubbleAnimation = () => {
     const createBubble = () => {
       const size = Math.random() * 30 + 30; // Size between 10px and 30px
       const left = Math.random() * 100; // Random position within viewport width
-      const duration = Math.random() * 3 + 2; // Duration between 2s and 5s
+      const duration = Math.random() * 10 + 2; // Duration between 2s and 5s
 
       // Add new bubble to the state
       setBubbles(bubbles => [

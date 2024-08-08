@@ -1,0 +1,52 @@
+.bg-skyblue {
+    background:  linear-gradient(to right, #09b8f5, #3dc6f2, #62d2ef, #83deec, #a2e9ec)
+    !important;
+    width:100vw;
+    position: fixed;
+    top:0
+  }
+
+
+  .navbar-bubble-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Ensure animation is behind other elements */
+  }
+  .Sidenavbar-Offcampus-body{
+    background:  linear-gradient(to right, #09b8f5, #3dc6f2, #62d2ef, #83deec, #a2e9ec)
+    !important;
+  }
+  
+  @media (max-width: 576px) {
+    .navbar-bubble-animation {
+      height: auto;
+      margin-left: 0px;
+    }
+  
+    .Sidenavbar-Offcampus-body {
+      padding: 1rem;
+    }
+  
+    .text-center {
+      text-align: left !important;
+    }
+  
+    .navbar-brand {
+      font-size: 1.2rem;
+    }
+  
+    .Sidenavbar-Offcampus-body .nav-link {
+      padding: 0.5rem 0;
+    }
+  
+    .bg-skyblue {
+      background: linear-gradient(to bottom, #09b8f5, #3dc6f2, #62d2ef, #83deec, #a2e9ec) !important;
+    }
+    .text-end{
+      display: none;
+    }
+  }
+  

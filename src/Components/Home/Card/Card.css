@@ -1,0 +1,75 @@
+.CompanyCard-body {
+  display: flex;
+  justify-content: center;
+  margin-top: 10vh;
+}
+
+.card-grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 30px; 
+  padding: 20px;
+  width: 100%;
+  max-width: 1500px; 
+  box-sizing: border-box;
+}
+
+.CompanyCard-Card {
+  background-color: rgb(206, 196, 196);
+  height: 80%; /* Changed to auto */
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-evenly; /* Space the buttons evenly */
+  gap: 10px; /* Optional: space between buttons */
+  padding: 10px;
+  flex-wrap: wrap; /* Ensure buttons wrap on smaller screens */
+  margin-top: 10px;
+}
+
+.button-container button {
+  flex: 1 1 auto; /* Allow buttons to grow and shrink */
+  max-width: 150px; /* Optional: max width for buttons */
+}
+
+.truncated {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limit to 3 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  max-height: 4.5em; /* Adjust based on line height */
+}
+
+.expanded {
+  display: block;
+  max-height: none;
+}
+
+@media (max-width: 576px) {
+  .button-container {
+    flex-direction: column; /* Stack buttons vertically on small screens */
+    align-items: center; /* Center buttons in the column layout */
+  }
+
+  .button-container button {
+    width: 100%; /* Buttons take full width on small screens */
+    max-width: none; /* Remove max width constraint */
+  }
+}
+
+@media (max-width: 768px) {
+  .card-grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .card-grid-container {
+    grid-template-columns: 1fr; /* One card per row on extra small screens */
+    padding: 0px;
+    height: auto;
+  }
+}

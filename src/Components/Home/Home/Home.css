@@ -1,0 +1,12 @@
+.Home-Navbar{
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    z-index: 1000;
+    
+}
+
+.Home-Body{
+    overflow: hidden;
+    margin-top: 50px;
+}
