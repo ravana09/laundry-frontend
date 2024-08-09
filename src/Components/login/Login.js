@@ -49,7 +49,7 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted");
-    navigate("/home");
+    navigate("/CompanyCard");
   };
 
   const handleSignUpPage = () => {
