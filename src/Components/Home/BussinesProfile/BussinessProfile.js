@@ -4,8 +4,14 @@ import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
 import BussinesImage from "../../Images/BussinessProfile.jpg";
 import { FaLocationDot } from "react-icons/fa6";
 import BoostImage from "../../Images/BoostImg.png";
+import { useNavigate } from "react-router-dom";
 
 function BussinessProfile() {
+  let navigation = useNavigate();
+  const handleNavigation = (PAGES) => {
+    navigation(PAGES);
+    console.log("navigate");
+  };
   return (
     <>
       <Container fluid className="Bussiness-Profile-head">
@@ -13,7 +19,13 @@ function BussinessProfile() {
           <Col xs={12} sm={4} md={4} lg={4} xl={4}>
             <Card
               className="Bussiness-Profile-ComapnyCard"
-              style={{ width: "100%", borderRadius: "20px" ,height:'auto',padding:'10px'}}
+              style={{
+                width: "100%",
+                borderRadius: "20px",
+                height: "auto",
+                padding: "10px",
+               
+              }}
             >
               <Card.Img
                 variant="top"
@@ -40,16 +52,12 @@ function BussinessProfile() {
                       variant="top"
                       src={BoostImage}
                       className="Bussiness-Profile-BoostPic"
-                      style={{
-                        width: "100px",
-                        height: "100px",
-                        objectFit: "fill",
-                      }}
+                    
                     />
                   </Col>
                   <Col sm={12} md={8}>
-                    <p>
-                      {" "}
+                    <p className="Bussiness-Profile-BoostText">
+                     
                       Increase Bussiness Profile to reach out more customers
                     </p>
                     <Button> Boost Now </Button>
@@ -61,132 +69,65 @@ function BussinessProfile() {
           <Col xs={12} sm={8} md={8} lg={8} xl={8}>
             <Card
               className="Bussiness-Profile-MyBussinesCard"
-              style={{backgroundColor:'transparent'}}
+              style={{ backgroundColor: "transparent", border:'none' }}
             >
               <Card.Body>
-                {/* <Card.Title>My Bussiness</Card.Title> */}
-                <Card
-                  className="Bussiness-Profile-MyBussinessCards"
-                  style={{
-                    borderRadius: "40px",
-                    backgroundColor: "rgb(228, 227, 227)",
-                    height:'min-Content'
-                  }}
-                >
-                   
-                  <Card.Body>
-                  <div style={{ border: '0.5px solid grey', borderRadius: '20px', padding: '1px' }}>
-                   
-                    <Row>
-                      <Col sm={4}>
-
-                        {" "}
-                        <Image
-                          src={BoostImage}
-                          alt="Leads Image "
-                          style={{
-                            width: "100px",
-                            height: "100px",
-                            objectFit: "fill",
-                          }}
-                        />
-                      </Col>
-                      <Col sm={8}>
-                        <p>
-                          {" "}
-                          Increase Bussiness Profile to reach out more customers
-                        </p>
-                        <Button> Boost Now </Button>
-                      </Col>
-                    </Row>
-                    </div>
-                  </Card.Body>
-              
-                </Card>
-                <Card
-                  className="Bussiness-Profile-MyBussinessCards"
-                  style={{ borderRadius: "40px",height:'min-Content' }}
-                >
-                  <Card.Body>
-                    <Row>
-                      <Col sm={4}>
-                        {" "}
-                        <Image
-                          src={BoostImage}
-                          alt="Leads Image "
-                          style={{
-                            width: "100px",
-                            height: "100px",
-                            objectFit: "fill",
-                          }}
-                        />
-                      </Col>
-                      <Col sm={8}>
-                        <p>
-                          {" "}
-                          Increase Bussiness Profile to reach out more customers
-                        </p>
-                        <Button> Boost Now </Button>
-                      </Col>
-                    </Row>
-                  </Card.Body>
-                </Card>
-                <Card
-                  className="Bussiness-Profile-MyBussinessCards"
-                  style={{ borderRadius: "40px" }}
-                >
-                  <Card.Body>
-                    <Row>
-                      <Col sm={4}>
-                        {" "}
-                        <Image
-                          src={BoostImage}
-                          alt="Leads Image "
-                          style={{
-                            width: "100px",
-                            height: "100px",
-                            objectFit: "fill",
-                          }}
-                        />
-                      </Col>
-                      <Col sm={8}>
-                        <p>
-                          {" "}
-                          Increase Bussiness Profile to reach out more customers
-                        </p>
-                        <Button> Boost Now </Button>
-                      </Col>
-                    </Row>
-                  </Card.Body>
-                </Card>
-                <Card
-                  className="Bussiness-Profile-MyBussinessCards"
-                  style={{ borderRadius: "40px" }}
-                >
-                  <Card.Body>
-                    <Row>
-                      <Col sm={4}>
-                        {" "}
-                        <Image
-                          src={BoostImage}
-                          alt="Leads Image "
-                          style={{
-                            width: "100px",
-                            height: "100px",
-                            objectFit: "fill",
-                          }}
-                        />
-                      </Col>
-                      <Col sm={8}>
-                        <p>
-                          {" "}
-                          Increase Bussiness Profile to reach out more customers
-                        </p>
-                        <Button> Boost Now </Button>
-                      </Col>
-                    </Row>
-                  </Card.Body>
-                </Card>
+                {[
+                  { title: "My Leads", subtitle: "Tap to View your Leads" },
+                  {
+                    title: "Catalogue",
+                    subtitle: "Show your Product and Services",
+                  },
+                  {
+                    title: "KYC, Payments & Invoices",
+                    subtitle: "KYC, GST Update",
+                  },
+                  {
+                    title: "Advertise On LAUND",
+                    subtitle: "Reach out wide range of customers",
+                  },
+                ].map((item, index) => (
+                  <Card
+                    key={index}
+                    className="Bussiness-Profile-MyBussinessCards"
+                    style={{
+                      borderRadius: "40px",
+                      height: "min-content",
+                      backgroundColor: "white",
+                      marginBottom: "15px",
+                    }}
+                    onClick={() => handleNavigation()}
+                  >
+                    <Card.Body>
+                      <div className="MYbussinessCard-Div">
+                        <Row className="justify-content-center align-items-center">
+                          <Col
+                            xs={4}
+                            sm={3}
+                            className="text-center mb-3 mb-sm-0"
+                          >
+                            <Image
+                              src={BoostImage}
+                              alt="Leads Image"
+                              className="MYbussinessCard-Images"
+                              style={{ maxWidth: "80px" }}
+                            />
+                          </Col>
+                          <Col xs={8} sm={9} >
+                            <h2
+                              onClick={() => handleNavigation()}
+                              className="MYbussinessCard-Title"
+                              // style={{ color: "skyblue", marginBottom: "10px" }}
+                            >
+                              {item.title}
+                            </h2>
+                            <h5 className="MYbussinessCard-SubTitle">{item.subtitle}</h5>
+                          </Col>
+                        </Row>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                ))}
               </Card.Body>
             </Card>
           </Col>
