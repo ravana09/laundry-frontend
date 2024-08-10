@@ -5,6 +5,7 @@ import BussinesImage from "../../Images/BussinessProfile.jpg";
 import { FaLocationDot } from "react-icons/fa6";
 import BoostImage from "../../Images/BoostImg.png";
 import { useNavigate } from "react-router-dom";
+import BussinessProfileCard from "./BussinesProfileCard";
 
 function BussinessProfile() {
   let navigation = useNavigate();
@@ -17,32 +18,8 @@ function BussinessProfile() {
       <Container fluid className="Bussiness-Profile-head">
         <Row>
           <Col xs={12} sm={4} md={4} lg={4} xl={4}>
-            <Card
-              className="Bussiness-Profile-ComapnyCard"
-              style={{
-                width: "100%",
-                borderRadius: "20px",
-                height: "auto",
-                padding: "10px",
-               
-              }}
-            >
-              <Card.Img
-                variant="top"
-                src={BussinesImage}
-                className="Bussiness-Profile-ProfilePic"
-              />
-              <Card.Body>
-                <Card.Title>Company Name </Card.Title>
-                <Card.Text>
-                  <FaLocationDot /> Company address
-                </Card.Text>
-              </Card.Body>
-
-              <Card.Body>
-                <Card.Link href="#">Edit </Card.Link>
-              </Card.Body>
-            </Card>
+          
+            <BussinessProfileCard/>
             <Card className="Bussiness-Profile-BoostCard">
               <Card.Body>
                 <Row>
@@ -73,10 +50,12 @@ function BussinessProfile() {
             >
               <Card.Body>
                 {[
-                  { title: "My Leads", subtitle: "Tap to View your Leads" },
+                  { title: "My Leads", subtitle: "Tap to View your Leads",Navigate:"/CustomerLeads", },
                   {
                     title: "Catalogue",
                     subtitle: "Show your Product and Services",
+                    Navigate:"/CompanyCard"
+                    
                   },
                   {
                     title: "KYC, Payments & Invoices",
@@ -96,7 +75,7 @@ function BussinessProfile() {
                       backgroundColor: "white",
                       marginBottom: "15px",
                     }}
-                    onClick={() => handleNavigation()}
+                    onClick={() => handleNavigation(item.Navigate)}
                   >
                     <Card.Body>
                       <div className="MYbussinessCard-Div">

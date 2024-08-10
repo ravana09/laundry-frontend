@@ -8,6 +8,9 @@ import SideNavBar from './Components/Home/SideNavbar/SideNavBar';
 import Home from './Components/Home/Home/Home';
 import CompanyCard from './Components/Home/Card/Card';
 import BussinessProfile from './Components/Home/BussinesProfile/BussinessProfile';
+import CustomerLeads from './Components/Home/CustomerLeads/CustomerLeads';
+import BussinessProfileCard from './Components/Home/BussinesProfile/BussinesProfileCard';
+
 
 function App() {
   return (
@@ -17,17 +20,20 @@ function App() {
         <Route path="/Bubbles" element={<BubbleAnimation />} />
         <Route path="/SignUpPage" element={<SignUpPage />} />
         <Route path="/MobileVerification" element={<MobileVerification />} />
-        <Route path="/Home" element={<Home />} />
+        <Route path="/Home" element={<Home showSideBar={true} />} />
         <Route path="/SideNavBar" element={<SideNavBar />} />
+        <Route path="/BussinessProfileCard" element={<BussinessProfileCard />} />
+
         <Route path="/CompanyCard" element={<WithHomeLayout component={<CompanyCard />} />} />
         <Route path="/BussinessProfile" element={<WithHomeLayout component={<BussinessProfile />} />} />
+        <Route path="/CustomerLeads" element={<WithHomeLayout component={<CustomerLeads />} showSideBar={false} />} />
       </Routes>
     </Router>
   );
 }
 
-function WithHomeLayout({ component }) {
-  return <Home>{component}</Home>;
+function WithHomeLayout({ component, showSideBar = true }) {
+  return <Home showSideBar={showSideBar}>{component}</Home>;
 }
 
 export default App;
