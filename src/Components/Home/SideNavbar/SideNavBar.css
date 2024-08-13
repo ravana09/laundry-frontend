@@ -13,14 +13,14 @@
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* Ensure animation is behind other elements */
+    z-index: -1; 
   }
   .Sidenavbar-Offcampus-body{
     background:  linear-gradient(to right, #09b8f5, #3dc6f2, #62d2ef, #83deec, #a2e9ec)
     !important;
   }
   
-  @media (max-width: 576px) {
+  @media (max-width: 786px) {
     .navbar-bubble-animation {
       height: auto;
       margin-left: 0px;
@@ -45,8 +45,8 @@
     .bg-skyblue {
       background: linear-gradient(to bottom, #09b8f5, #3dc6f2, #62d2ef, #83deec, #a2e9ec) !important;
     }
-    .text-end{
+    /* .text-end{
       display: none;
-    }
+    } */
   }
   

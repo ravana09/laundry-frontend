@@ -43,14 +43,14 @@ function SideNavBar() {
                 style={{ border: "none", height: "50px" }}
                 onClick={() => handleNavigation("/BussinessProfile")}
               >
-                Bussiness <CgProfile />
+                 <CgProfile />
               </Button>
-              <Button
+              {/* <Button
                 variant="transparent"
-                style={{ border: "none", height: "50px" }}
+                
               >
                 User Name <CgProfile />
-              </Button>
+              </Button> */}
             </Col>
           </Row>
           <Navbar.Offcanvas
@@ -64,7 +64,9 @@ function SideNavBar() {
             <Offcanvas.Body className="Sidenavbar-Offcampus-body">
               <Nav className="justify-content-start flex-grow-1 pe-3">
                 <Nav.Link onClick={() => handleNavigation("/CompanyCard")}>Home</Nav.Link>
-                <Nav.Link onClick={() => handleNavigation("/UserDetails")}>USER Details</Nav.Link>
+                {/* <Nav.Link onClick={() => handleNavigation("/UserDetails")}>USER Details</Nav.Link> */}
+                <Nav.Link onClick={() => handleNavigation("/UserProfile")}>Profile Page </Nav.Link>
+                <Nav.Link onClick={() => handleNavigation("/BussinessProfile")}>Bussines Page </Nav.Link>
                 {/* Add more navigation links as needed */}
               </Nav>
             </Offcanvas.Body>

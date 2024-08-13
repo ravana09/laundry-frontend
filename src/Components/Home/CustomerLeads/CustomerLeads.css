@@ -1,3 +1,43 @@
-.Customer-leads-body{
-    background-color: crimson;
-}
+.business-profile-head {
+    padding: 0;
+    margin: 0;
+  }
+  
+  .fixed-header {
+    position: fixed;
+    top: 70px;
+    width: 100vw;
+    z-index: 1000;
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 20px ;
+    margin: 0px 0px 0px -25px;
+  }
+  
+  .icon-button {
+    margin: 0 5px;
+    height: 50px;
+    width: 60px;
+    background-color: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .icon-button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .icon-image {
+    width: 30px;
+    height: auto;
+  }
+  
+  #data-table {
+    padding-top: 22vh; 
+    padding: none;
+    width: 100vw;
+   margin: 0px 0px 0px -25px
+  }
+  

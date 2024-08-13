@@ -1,0 +1,43 @@
+.range-slider-container {
+    width: 100%; /* Full width container */
+    padding: 10px; /* Optional padding around the slider */
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+  }
+  
+  .range-slider-content {
+    width: 100%; /* Full width content */
+  }
+  
+  .range-slider {
+    position: relative;
+    width: 100%; /* Full width slider */
+  }
+  
+  .slider-track {
+    width: 50%; 
+    background-color: #FFECB3; 
+    height: 20px; 
+    border-radius: 40px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .Range-Colour {
+    width: 0%; /* Start at 0 width */
+    background-color: linear-gradient(to right, #2a6e70, #438c8f, #5bacaf, #75ccd0, #8feef3);
+    height: 100%; /* Match the height of the track */
+    border-radius: 40px;
+    transition: width 0.3s ease-in-out; /* Smooth transition */
+  }
+
+  .boostCard-card{
+    width: 80%;
+    margin: 0 auto;
+  
+    height: 10vh;
+  }
+  .BoostCard-Logos{
+    width: 50px;
+    height: 50px;
+  }
+  

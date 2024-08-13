@@ -1,10 +1,20 @@
 import React, { useEffect, useState } from "react";
 import "../CustomerLeads/CustomerLeads.css";
 import BussinessProfileCard from "../BussinesProfile/BussinesProfileCard";
-import { Col, Container, Row, Button } from "react-bootstrap";
+import {
+  Col,
+  Container,
+  Row,
+  Button,
+  Image,
+  OverlayTrigger,
+  Tooltip,
+} from "react-bootstrap";
 import DataTable from "react-data-table-component";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import Excel from "../../Images/excel.png";
+import Printer from "../../Images/printer.png";
 
 function CustomerLeads() {
   const [details, setDetails] = useState([]);
@@ -169,6 +179,7 @@ function CustomerLeads() {
         color: "white",
         backgroundColor: "black",
         borderRight: "1px solid white",
+  
       },
     },
     cells: {
@@ -201,6 +212,16 @@ function CustomerLeads() {
       selector: (row) => row.address,
       sortable: true,
     },
+    {
+      name: "Email ID",
+      selector: (row) => row.email,
+      sortable: true,
+    },
+    {
+      name: "Address",
+      selector: (row) => row.address,
+      sortable: true,
+    },
   ];
 
   const handleExport = () => {
@@ -219,8 +240,10 @@ function CustomerLeads() {
     const printWindow = window.open("", "", "height=600,width=800");
     const printContent = document.getElementById("data-table").outerHTML;
 
-    const styles = Array.from(document.querySelectorAll('link[rel="stylesheet"], style'))
-      .map(style => style.outerHTML)
+    const styles = Array.from(
+      document.querySelectorAll('link[rel="stylesheet"], style')
+    )
+      .map((style) => style.outerHTML)
       .join("");
 
     printWindow.document.write("<html><head><title>Print</title>");
@@ -232,57 +255,55 @@ function CustomerLeads() {
     printWindow.focus();
     printWindow.print();
   };
+  let All = sampleData.length;
 
-  // Calculate the number of rows for the "All" option
-  const paginationRowsPerPageOptions = [5, 10, 15, sampleData.length].map(num =>
-    num === sampleData.length ? "All" : num
-  );
+  const paginationRowsPerPageOptions = [5, 10, 15, All];
 
   return (
     <>
-      <Container fluid className="Bussiness-Profile-head">
-        <Row>
-          <Col xs={12} sm={2} md={2} lg={2} xl={2}>
-            <BussinessProfileCard />
+      <Container  fluid className="business-profile-head" >
+      <div className="fixed-header">
+        <Row className="align-items-center">
+          <Col xs={0} sm={5}></Col>
+          <Col xs={6} sm={5}>
+            <h4>Company Name</h4>
           </Col>
-          <Col
-            xs={12}
-            sm={10}
-            md={10}
-            lg={10}
-            xl={10}
-            style={{ backgroundColor: "white" }}
-          >
-            <Button
-              variant="primary"
-              onClick={handleExport}
-              style={{ marginBottom: "10px" }}
+          <Col xs={6} sm={2} className="d-flex justify-content-end">
+            <OverlayTrigger
+              placement="top"
+              overlay={<Tooltip id="tooltip-excel">Convert to Excel</Tooltip>}
             >
-              Export to Excel
-            </Button>
-            <Button
-              variant="secondary"
-              onClick={handlePrint}
-              style={{ marginBottom: "10px", marginLeft: "10px" }}
+              <Button variant="light" className="icon-button" onClick={handleExport}>
+                <Image src={Excel} alt="Excel" className="icon-image" />
+              </Button>
+            </OverlayTrigger>
+
+            <OverlayTrigger
+              placement="top"
+              overlay={<Tooltip id="tooltip-print">Print</Tooltip>}
             >
-              Print
-            </Button>
-            <div id="data-table">
-              <DataTable
-                columns={columns}
-                data={details}
-                customStyles={customStyles}
-                selectableRows
-                pagination
-                paginationPerPage={10}
-                paginationRowsPerPageOptions={paginationRowsPerPageOptions}
-                selectableRowsHighlight
-                highlightOnHover
-              />
-            </div>
+              <Button variant="light" className="icon-button" onClick={handlePrint}>
+                <Image src={Printer} alt="Print" className="icon-image" />
+              </Button>
+            </OverlayTrigger>
           </Col>
         </Row>
-      </Container>
+      </div>
+
+      <div id="data-table" >
+        <DataTable
+          columns={columns}
+          data={details}
+          customStyles={customStyles}
+          selectableRows
+          pagination
+          paginationPerPage={10}
+          paginationRowsPerPageOptions={paginationRowsPerPageOptions}
+          selectableRowsHighlight
+          highlightOnHover
+        />
+      </div>
+    </Container>
     </>
   );
 }

@@ -1,0 +1,48 @@
+.UserProfile-container  {
+   margin-top: 15vh;
+  }
+  
+  .UserProfile-container .profile-image {
+    width: 80%;
+    height: auto;
+    object-fit: cover;
+    border: 5px solid #eae2e2;
+    border-radius: 20px;
+  }
+  .user-name {
+    font-size: 40px !important; 
+    font-weight: bold;
+    color: #333; /* Dark color for contrast */
+    margin-bottom: 10px;
+  }
+  
+  .user-details {
+    font-size: 18px !important; 
+    color: #666;
+    margin-bottom: 8px;
+    margin-top: 10px;
+  }
+  
+  /* Responsive styling */
+  @media (max-width: 768px) {
+    .UserProfile-container .profile-image{
+        width: 100%;
+    }
+    .user-name {
+      font-size: 32px !important; 
+    }
+  
+    .user-details {
+      font-size: 14px; 
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .user-name {
+      font-size: 25px !important;
+    }
+  
+    .user-details {
+      font-size: 12px; 
+    }
+  }
