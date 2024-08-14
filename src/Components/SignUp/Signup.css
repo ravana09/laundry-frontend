@@ -1,0 +1,120 @@
+/* SignUp.css */
+
+/* General Container */
+.Login_Row {
+    padding: 0;
+    margin: 0;
+    position: relative;
+    background-color: #f8f9fa;
+  }
+  
+  /* Company Symbol */
+  .login-Company-Symbol {
+    width: 100%;
+    max-width: 100px;
+    height: 10vh;
+    margin: 10px 0;
+  }
+  
+  /* Company Name */
+  .login-Company_name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #000;
+  }
+  
+  /* Washing Machine Images */
+  
+  .login-Machine-Image {
+    width: 100%;
+    max-width: 400px;
+    height: 70vh;
+    margin: 20px 0;
+  }
+  .loginheader-Machine-Image{
+    width: 100%;
+    max-width: 300px;
+    height: 15vh;
+    margin: 20px 0;
+  }
+  
+  /* Card Styling */
+  .login-Inner-Card {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 75vh;
+  }
+  
+  .Login-login-tag {
+    font-size: 28px;
+    font-weight: bold;
+    color: #17a2b8;
+    margin-bottom: 20px;
+  }
+  
+  /* Input Fields */
+  .password-input-container {
+    position: relative;
+  }
+  
+  .password-input-container .eye-button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  /* Submit Button */
+  .Login-Submit-Button {
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 30px;
+    padding: 10px 20px;
+  }
+  
+  /* Link Styling */
+  .login-ForgetPassword {
+    color: #17a2b8;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  /* Media Queries for Responsiveness */
+  @media (max-width: 576px) {
+    /* Mobile Styles */
+    .login-Company_name {
+      font-size: 20px;
+    }
+  
+    .loginheader-Machine-Image,
+    .login-Machine-Image {
+      max-width: 200px;
+    }
+  
+    .Login-login-tag {
+      font-size: 24px;
+    }
+  
+    .Login-Submit-Button {
+      font-size: 16px;
+    }
+  }
+  
+  @media (min-width: 768px) and (max-width: 992px) {
+    /* Tablet Styles */
+    .login-Company_name {
+      font-size: 22px;
+    }
+  
+    .loginheader-Machine-Image,
+    .login-Machine-Image {
+      max-width: 250px;
+    }
+  
+    .Login-login-tag {
+      font-size: 26px;
+    }
+  }
+  

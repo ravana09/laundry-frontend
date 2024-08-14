@@ -19,6 +19,7 @@ import facebook from "../Images/facebook.png";
 import BubbleAnimation from "../BubbleAnimation/BubbleAnimation";
 import symbol from "../Images/Symbol.jpeg";
 import { useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie'
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -50,6 +51,9 @@ function Login() {
     e.preventDefault();
     console.log("Form submitted");
     navigate("/CompanyCard");
+  
+    Cookies.set("Email",formData.Email,{expires:684})
+    Cookies.set("Password",formData.Password,{expires:1000})
   };
 
   const handleSignUpPage = () => {
@@ -75,7 +79,7 @@ function Login() {
             xl={4}
             className="d-flex align-items-center justify-content-end"
           >
-            <span className="login-Company_name">Laund</span>
+            <span className="login-Company_name">Laund  Bussiness Account</span>
           </Col>
           <Col xs={4}>
             <Image
@@ -99,135 +103,123 @@ function Login() {
               className="login-Machine-Image"
             />
           </Col>
-          <Col xs={12} md={6} lg={5} className="right-column ">
-            <Card
-              className="login-Inner-Card "
-              style={{ borderRadius: "40px" }}
+          <Col xs={12} md={6} lg={5} className="right-column">
+      <Card className="login-Inner-Card line" style={{ borderRadius: "40px" }}>
+        <Row>
+          <Col xs={8} className="Login-login-tag">Log in</Col>
+          <Col xs="auto">Buusinss login</Col>
+        </Row>
+          {/* <h1 className="Login-login-tag">Log in</h1>
+          <h1 className="Login-login-tag">Log in</h1> */}
+        
+        <Card.Body>
+          <Form onSubmit={handleSubmit}>
+            <FloatingLabel
+              controlId="floatingInput"
+              label="Email address"
+              className="mb-3"
             >
-              <center>
-                <h1 className="Login-login-tag">Log in</h1>
-              </center>
-              <Card.Body>
-                <Form onSubmit={handleSubmit}>
-                  <FloatingLabel
-                    controlId="floatingInput"
-                    label="Email address"
-                    className="mb-3"
-                  >
-                    <Form.Control
-                      type="email"
-                      name="Email"
-                      placeholder="name@example.com"
-                      value={formData.Email}
-                      onChange={handleInputChanges}
-                    />
-                  </FloatingLabel>
-                  <FloatingLabel
-                    controlId="floatingPassword"
-                    label="Password"
-                    className="password-input-container"
-                  >
-                    <Form.Control
-                      type={showPassword ? "text" : "password"}
-                      name="Password"
-                      placeholder="Password"
-                      value={formData.Password}
-                      onChange={handleInputChanges}
-                    />
-                    <Button
-                      variant="light"
-                      className="eye-button"
-                      style={{ backgroundColor: "white", border: "none" }}
-                      onClick={togglePasswordVisibility}
-                    >
-                      {showPassword ? <FaEyeSlash /> : <FaEye />}
-                    </Button>
-                  </FloatingLabel>
-                  <Row>
-                    <Col xs={4}></Col>
-                    <Col xs={4}>
-                      <Button
-                        type="submit"
-                        className="Login-Submit-Button"
-                        variant="info"
-                      >
-                        Submit
-                      </Button>
-                    </Col>
-                    <Col xs={4}></Col>
-                  </Row>
-                </Form>
-                <div className="hr-with-text">
-                  <hr className="hr" />
-                  <span>Connect With</span>
-                  <hr className="hr" />
-                </div>
-                <Row className="justify-content-center">
-                  <Col xs={3}>
-                    <Button
-                      className="Login-Logos"
-                      style={{ backgroundColor: "white", border: "none" }}
-                    >
-                      <img
-                        src={google}
-                        alt="Google"
-                        style={{ width: "30px" }}
-                      />
-                    </Button>
-                  </Col>
-                  <Col xs={3}>
-                    <Button
-                      className="Login-Logos"
-                      style={{ backgroundColor: "white", border: "none" }}
-                    >
-                      <img src={apple} alt="Apple" style={{ width: "25px" }} />
-                    </Button>
-                  </Col>
-                  <Col xs={3}>
-                    <Button
-                      className="Login-Logos"
-                      style={{ backgroundColor: "white", border: "none" }}
-                    >
-                      <img
-                        src={twitter}
-                        alt="Twitter"
-                        style={{ width: "30px" }}
-                      />
-                    </Button>
-                  </Col>
-                  <Col xs={3}>
-                    <Button
-                      className="Login-Logos"
-                      style={{ backgroundColor: "white", border: "none" }}
-                    >
-                      <img
-                        src={facebook}
-                        alt="Facebook"
-                        style={{ width: "30px" }}
-                      />
-                    </Button>
-                  </Col>
-                </Row>
-
-                <center>
-                  <div className="login-ForgetPassword">
-                    <a>Forget password?</a>
-                  </div>
-                </center>
-                <center>
-                  <p style={{ marginTop: "10px" }}>
-                    Didn't have an Account?{" "}
-                    <a
-                      onClick={handleSignUpPage}
-                      className="login-ForgetPassword"
-                    >
-                      Sign Up
-                    </a>
-                  </p>
-                </center>
-              </Card.Body>
-            </Card>
-          </Col>
+              <Form.Control
+                type="email"
+                name="Email"
+                placeholder="name@example.com"
+                value={formData.Email}
+                onChange={handleInputChanges}
+              />
+            </FloatingLabel>
+            <FloatingLabel
+              controlId="floatingPassword"
+              label="Password"
+              className="password-input-container"
+            >
+              <Form.Control
+                type={showPassword ? "text" : "password"}
+                name="Password"
+                placeholder="Password"
+                value={formData.Password}
+                onChange={handleInputChanges}
+              />
+              <Button
+                variant="light"
+                className="eye-button"
+                style={{ backgroundColor: "white", border: "none" }}
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </Button>
+            </FloatingLabel>
+            <Row>
+              <Col xs={4}></Col>
+              <Col xs={4}>
+                <Button
+                  type="submit"
+                  className="Login-Submit-Button"
+                  variant="info"
+                >
+                  Submit
+                </Button>
+              </Col>
+              <Col xs={4}></Col>
+            </Row>
+          </Form>
+          <div className="hr-with-text">
+            <hr className="hr" />
+            <span>Connect With</span>
+            <hr className="hr" />
+          </div>
+          <Row className="justify-content-center">
+            <Col xs={3}>
+              <Button
+                className="Login-Logos"
+                style={{ backgroundColor: "white", border: "none" }}
+              >
+                <img src={google} alt="Google" style={{ width: "30px" }} />
+              </Button>
+            </Col>
+            <Col xs={3}>
+              <Button
+                className="Login-Logos"
+                style={{ backgroundColor: "white", border: "none" }}
+              >
+                <img src={apple} alt="Apple" style={{ width: "25px" }} />
+              </Button>
+            </Col>
+            <Col xs={3}>
+              <Button
+                className="Login-Logos"
+                style={{ backgroundColor: "white", border: "none" }}
+              >
+                <img src={twitter} alt="Twitter" style={{ width: "30px" }} />
+              </Button>
+            </Col>
+            <Col xs={3}>
+              <Button
+                className="Login-Logos"
+                style={{ backgroundColor: "white", border: "none" }}
+              >
+                <img src={facebook} alt="Facebook" style={{ width: "30px" }} />
+              </Button>
+            </Col>
+          </Row>
+          <center>
+            <div className="login-ForgetPassword">
+              <a>Forget password?</a>
+            </div>
+          </center>
+          <center>
+            <p style={{ marginTop: "10px" }}>
+              Didn't have an Account?{" "}
+              <a
+                onClick={handleSignUpPage}
+                className="login-ForgetPassword"
+              >
+                Sign Up
+              </a>
+            </p>
+          </center>
+        </Card.Body>
+      </Card>
+    </Col>
           <Col lg={1}></Col>
         </Row>
       </Container>

@@ -12,9 +12,9 @@ import {
 import BubbleAnimation from "../BubbleAnimation/BubbleAnimation";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import '../SignUp/Signup.css'; // Importing CSS file
 
 import loginMachineImage from "../Images/login-washing-machine-image.png";
-
 import symbol from "../Images/Symbol.jpeg";
 
 function SignUpPage() {
@@ -34,6 +34,7 @@ function SignUpPage() {
   const handleLoginPage = () => {
     navigate("/");
   };
+
   return (
     <>
       <Container fluid className="Login_Row">
@@ -77,17 +78,17 @@ function SignUpPage() {
               className="login-Machine-Image"
             />
           </Col>
-          <Col xs={12} md={6} lg={5} className="right-column ">
+          <Col xs={12} md={6} lg={5} className="right-column">
             <Card
-              className="login-Inner-Card "
-              style={{ borderRadius: "40px",height:'max-content' }}
+              className="login-Inner-Card line"
+              style={{ borderRadius: "40px" }}
             >
               <center>
                 <h1 className="Login-login-tag">Sign Up </h1>
               </center>
               <Card.Body>
                 <Form onSubmit={handleSubmit}>
-                <FloatingLabel
+                  <FloatingLabel
                     controlId="floatingInput"
                     label="Name"
                     className="mb-3"
@@ -99,7 +100,10 @@ function SignUpPage() {
                     label="Email address"
                     className="mb-3"
                   >
-                    <Form.Control type="email" placeholder="name@example.com"/>
+                    <Form.Control
+                      type="email"
+                      placeholder="name@example.com"
+                    />
                   </FloatingLabel>
 
                   <FloatingLabel
@@ -114,7 +118,6 @@ function SignUpPage() {
                     controlId="floatingPassword"
                     label="Password"
                     className="password-input-container mb-3"
-                    
                   >
                     <Form.Control
                       type={showPassword ? "text" : "password"}
@@ -148,7 +151,7 @@ function SignUpPage() {
                       {showPassword ? <FaEyeSlash /> : <FaEye />}
                     </Button>
                   </FloatingLabel>
-                  
+
                   <Row>
                     <Col xs={2} sm={2} md={2} lg={2} xl={2}></Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
@@ -156,7 +159,7 @@ function SignUpPage() {
                         type="submit"
                         className="Login-Submit-Button"
                         variant="info"
-                        style={{width:'80%'}}
+                        style={{ width: "80%" }}
                       >
                         Submit
                       </Button>
@@ -165,7 +168,7 @@ function SignUpPage() {
                   </Row>
                 </Form>
                 <center>
-                  <p style={{ marginTop: "10px" }}>
+                  <p>
                     Have an Account?{" "}
                     <a
                       onClick={handleLoginPage}

@@ -26,32 +26,32 @@ function BussinessProfile() {
     <>
       <Container fluid className="Bussiness-Profile-head">
         <Row>
-          <Col xs={12} sm={4} md={4} lg={4} xl={4}>
-            <BussinessProfileCard />
-            {/* {!showBoost && ( */}
-              <Card className="Bussiness-Profile-BoostCard" style={{borderRadius:'40px'}}>
-                <Card.Body>
-                  <Row>
-                    <Col sm={12} md={4}>
-                      <Card.Img
-                        variant="top"
-                        src={BoostImage}
-                        className="Bussiness-Profile-BoostPic"
-                      />
-                    </Col>
-                    <Col sm={12} md={8}>
-                      <p className="Bussiness-Profile-BoostText">
-                        Increase Business Profile to reach out to more customers
-                      </p>
-                      <Button onClick={handleBoost}>
-                        {showBoost?"Close Boost ":"Boost Now"}
-                        </Button>
-                    </Col>
-                  </Row>
-                </Card.Body>
-              </Card>
-            {/* )} */}
+        <Col xs={12} sm={4}>
+    <BussinessProfileCard />
+    {/* {!showBoost && ( */}
+    <Card className="Bussiness-Profile-BoostCard" style={{ borderRadius: '40px' }}>
+      <Card.Body>
+        <Row>
+          <Col xs={4}>
+            <Card.Img
+              variant="top"
+              src={BoostImage}
+              className="Bussiness-Profile-BoostPic"
+            />
           </Col>
+          <Col xs={8} className="d-flex flex-column justify-content-center">
+            <p className="Bussiness-Profile-BoostText">
+              Increase Business Profile to reach out to more customers
+            </p>
+            <Button onClick={handleBoost} className="mt-2">
+              {showBoost ? "Close Boost" : "Boost Now"}
+            </Button>
+          </Col>
+        </Row>
+      </Card.Body>
+    </Card>
+    {/* )} */}
+  </Col>
           <Col xs={12} sm={8} md={8} lg={8} xl={8}>
             {showBoost ? (
               <BoostDetails />

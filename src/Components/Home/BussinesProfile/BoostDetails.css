@@ -30,14 +30,46 @@
     transition: width 0.3s ease-in-out; /* Smooth transition */
   }
 
-  .boostCard-card{
-    width: 80%;
+ 
+  .boostCard-card {
+    width: auto !important;
     margin: 0 auto;
-  
-    height: 10vh;
-  }
+    margin-top: 10px;
+    height: 120px !important; /* Set a fixed height */
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
   .BoostCard-Logos{
     width: 50px;
     height: 50px;
   }
+  .BoostCard-Title{
+    font-size: 15px;
+  }
+  @media (max-width: 786px) {
+    .BoostCard-Title{
+      font-size: 15px !important;
+    }
+    .boostCard-card{
+      
+      padding: 0px;
+    }
+    .BoostCard-Logos{
+      width: 40px;
+      height: 40px;
+    }
+  }
   
+  @media (max-width: 378px) {
+    .BoostCard-Title{
+      font-size: 15px !important;
+    }
+    .boostCard-card{
+      
+      padding: 0px;
+    }
+    
+  }

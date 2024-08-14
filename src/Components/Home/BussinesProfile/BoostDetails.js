@@ -78,33 +78,37 @@ function BoostDetails() {
                     Logos: uploadPhotos,
                   },
                 ].map((item, index) => (
+                 
                   <Col
-                    xs={12}
-                    sm={12}
+                    xs={6}
+                    sm={6}
                     md={6}
                     lg={6}
                     xl={6}
                     key={index}
-                    className={index === 4 ? "mx-auto" : ""} // Center the 5th card
+                    className={index === 4 ? "mx-auto" : ""}
+                 
                   >
-                    <Card className="boostCard-card">
+                    <Card
+                      className="boostCard-card"
+                      
+                    >
+                      <center>
                       <Card.Body>
-                        <Row>
-                          <Col>
-                            <Card.Img
-                              variant="top"
-                              src={item.Logos}
-                              className="BoostCard-Logos"
-                              style={{ width: "50px" }}
-                            />
-                          </Col>
-                          <Col>
-                            <Card.Title>{item.title}</Card.Title>
-                          </Col>
-                        </Row>
+                        <Card.Img
+                          variant="top"
+                          src={item.Logos}
+                          className="BoostCard-Logos"
+                          style={{ width: "50px" }}
+                        />
+
+                        <Card.Title className="BoostCard-Title">{item.title}</Card.Title>
+                       
                       </Card.Body>
+                      </center>
                     </Card>
                   </Col>
+            
                 ))}
               </Row>
             </Col>

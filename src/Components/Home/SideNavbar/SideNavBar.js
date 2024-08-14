@@ -35,7 +35,9 @@ function SideNavBar() {
               <Navbar.Toggle aria-controls="offcanvasNavbar" />
             </Col>
             <Col className="text-center" xs={4}>
-              <Navbar.Brand onClick={() => handleNavigation("/CompanyCard")}>Company Name</Navbar.Brand>
+              <Navbar.Brand onClick={() => handleNavigation("/CompanyCard")}>
+                Company Name
+              </Navbar.Brand>
             </Col>
             <Col xs={4} className="text-end">
               <Button
@@ -43,7 +45,7 @@ function SideNavBar() {
                 style={{ border: "none", height: "50px" }}
                 onClick={() => handleNavigation("/BussinessProfile")}
               >
-                 <CgProfile />
+                <CgProfile />
               </Button>
               {/* <Button
                 variant="transparent"
@@ -61,14 +63,24 @@ function SideNavBar() {
             <Offcanvas.Header closeButton>
               <Offcanvas.Title id="offcanvasNavbarLabel">Laund</Offcanvas.Title>
             </Offcanvas.Header>
-            <Offcanvas.Body className="Sidenavbar-Offcampus-body">
+            <Offcanvas.Body className="Sidenavbar-Offcampus-body d-flex flex-column">
               <Nav className="justify-content-start flex-grow-1 pe-3">
-                <Nav.Link onClick={() => handleNavigation("/CompanyCard")}>Home</Nav.Link>
+                <Nav.Link onClick={() => handleNavigation("/CompanyCard")}>
+                  Home
+                </Nav.Link>
                 {/* <Nav.Link onClick={() => handleNavigation("/UserDetails")}>USER Details</Nav.Link> */}
-                <Nav.Link onClick={() => handleNavigation("/UserProfile")}>Profile Page </Nav.Link>
-                <Nav.Link onClick={() => handleNavigation("/BussinessProfile")}>Bussines Page </Nav.Link>
-                {/* Add more navigation links as needed */}
+                <Nav.Link onClick={() => handleNavigation("/UserProfile")}>
+                  Profile Page
+                </Nav.Link>
+                <Nav.Link onClick={() => handleNavigation("/BussinessProfile")}>
+                  Bussines Page
+                </Nav.Link>
               </Nav>
+              <div className="mt-auto">
+                <Button variant="outline-danger" onClick={() => handleNavigation("/")}>
+                  Sign Out
+                </Button>
+              </div>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
         </Container>
