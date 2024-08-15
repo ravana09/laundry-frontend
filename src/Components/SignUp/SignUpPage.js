@@ -139,17 +139,17 @@ function SignUpPage() {
                     className="password-input-container"
                   >
                     <Form.Control
-                      type={showPassword ? "text" : "password"}
+                      type="password"
                       placeholder="Password"
                     />
-                    <Button
+                    {/* <Button
                       variant="light"
                       className="eye-button"
                       style={{ backgroundColor: "white", border: "none" }}
                       onClick={togglePasswordVisibility}
                     >
                       {showPassword ? <FaEyeSlash /> : <FaEye />}
-                    </Button>
+                    </Button> */}
                   </FloatingLabel>
 
                   <Row>

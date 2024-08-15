@@ -58,6 +58,42 @@
   width: 90%;
 }
 
+.animated-button {
+  background-color: white;
+  border: 2px solid black;
+  color: BLACK;
+  border-radius: 20px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.animated-button .business-icon {
+  width: 30px;
+  margin-right: 10px;
+  /* opacity: 0; */
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+}
+
+.animated-button .download-text {
+  font-size: 18px;
+}
+
+.animated-button:hover {
+  background-color: black;
+  color: white;
+}
+
+.animated-button:hover .business-icon {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+
 .Login_Row {
   background-image: linear-gradient(
     to bottom,
@@ -155,47 +191,7 @@
   transform: scale(1.2);
 }
 
-/* .line {
-  opacity: 0;
-  transform: translateX(100%); 
-  animation: slide-in 1s ease-in-out forwards; 
-}
 
-.line:nth-child(1) {
-  animation-delay: 0.5s;
-}
-
-.line:nth-child(2) {
-  animation-delay: 1.5s;
-}
-
-@keyframes slide-in {
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-} */
-
-/* .line {
-  opacity: 0;
-  transform: translateX(100%) scale(0.5);
-  animation: slide-in 1s ease-in-out forwards;
-}
-
-.line:nth-child(1) {
-  animation-delay: 0.5s;
-}
-
-.line:nth-child(2) {
-  animation-delay: 1.5s;
-}
-
-@keyframes slide-in {
-  100% {
-    opacity: 1;
-    transform: translateX(0) scale(1); 
-  }
-} */
 .line {
   opacity: 0;
   transform: translateX(100%) scale(0.5);
@@ -204,12 +200,21 @@
   animation: slide-in 1s ease-in-out forwards;
 }
 
-.line:nth-child(1) {
-  animation-delay: 0.5s;
+
+
+.line2 {
+  opacity: 0;
+  transform: translateX(-100%) scale(0.5);
+  transform-origin: center;
+  animation: slide-in 1s ease-in-out forwards;
 }
 
-.line:nth-child(2) {
-  animation-delay: 1.5s;
+
+@keyframes slide-in {
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
 }
 
 @keyframes slide-in {

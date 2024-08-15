@@ -12,6 +12,9 @@ import CustomerLeads from './Components/Home/CustomerLeads/CustomerLeads';
 import BussinessProfileCard from './Components/Home/BussinesProfile/BussinesProfileCard';
 import UserProfile from './Components/Home/UserProfile/UserProfile';
 import BoostDetails from './Components/Home/BussinesProfile/BoostDetails';
+import BussinessLogin from './Components/login/BussinessLogin';
+import BussinesSignUp from './Components/SignUp/BussinesSignUp';
+import BussinessMobileVErification from './Components/Verification/BussinessMobileVErification';
 
 
 function App() {
@@ -19,9 +22,12 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/BussinessLogin" element={<BussinessLogin />} />
         <Route path="/Bubbles" element={<BubbleAnimation />} />
         <Route path="/SignUpPage" element={<SignUpPage />} />
+        <Route path="/BussinesSignUp" element={<BussinesSignUp />} />
         <Route path="/MobileVerification" element={<MobileVerification />} />
+        <Route path="/BussinessMobileVerification" element={<BussinessMobileVErification />} />
         <Route path="/Home" element={<Home showSideBar={true} />} />
         <Route path="/SideNavBar" element={<SideNavBar />} />
         <Route path="/BussinessProfileCard" element={<BussinessProfileCard />} />

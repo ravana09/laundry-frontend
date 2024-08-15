@@ -14,6 +14,7 @@ import loginMachineImage from "../Images/login-washing-machine-image.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import google from "../Images/GoogleIcon.png";
 import apple from "../Images/AppleLogo.png";
+import Bussiness from "../Images/cooperation.png";
 import twitter from "../Images/TwitterLogo.png";
 import facebook from "../Images/facebook.png";
 import BubbleAnimation from "../BubbleAnimation/BubbleAnimation";
@@ -67,6 +68,10 @@ function Login() {
     navigate("/SignUpPage");
   };
 
+  const handleNavigation = (pages) => {
+    navigate(pages);
+  };
+
   return (
     <>
       <Container fluid className="Login_Row">
@@ -101,23 +106,32 @@ function Login() {
               </a>
             ) : (
               <a
-              href="https://play.google.com/store"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="PlayStoreButton"
+                href="https://play.google.com/store"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="PlayStoreButton"
+              >
+                <Image
+                  src={playStoreLogo}
+                  alt="Play Store"
+                  style={{ width: "30px" }}
+                />
+                <span className="download-text">Download App</span>
+              </a>
+            )}
+            <Button
+              className="animated-button"
+              onClick={() => {
+                handleNavigation("/BussinessLogin");
+              }}
             >
               <Image
-                src={playStoreLogo}
-                alt="Play Store"
-                style={{ width: "30px" }}
+                src={Bussiness}
+                alt="For Business"
+                className="business-icon"
               />
-              <span className="download-text">Download App</span>
-            </a>
-            
-            )}
-            <span className="login-Company_name" style={{ fontSize: "18px" }}>
-              For Business
-            </span>
+              <span className="download-text">For Business</span>
+            </Button>
           </Col>
           <Col xs={4}>
             <Image
@@ -133,22 +147,44 @@ function Login() {
             xs={12}
             md={6}
             lg={4}
-            className="left-column Login-Container-left"
+            className="left-column Login-Container-left line  "
           >
+            <div className="">
             <Image
               src={loginMachineImage}
               alt="Washing Machine"
-              className="login-Machine-Image"
+              className="login-Machine-Image "
             />
+            
+            </div>
           </Col>
           <Col xs={12} md={6} lg={5} className="right-column">
             <Card
-              className="login-Inner-Card line"
+              className="login-Inner-Card line2"
               style={{ borderRadius: "40px" }}
             >
-              <center>
-                <h1 className="Login-login-tag">Log in</h1>
+              {/* <Row>
+                <Col xs={4}>
+                <center>
+                <h1 className="Login-login-tag" style={{fontSize:'25px'}}>Log in</h1>
+              
               </center>
+                </Col>
+                <Col xs={4}>
+                </Col>
+                <Col xs={4}>
+                <center>
+                <h1 className="Login-login-tag" style={{fontSize:'15px'}}>For Bussiness</h1>
+              
+              </center>
+                </Col>
+              </Row> */}
+              <center>
+                <h1 className="Login-login-tag" style={{ fontSize: "25px" }}>
+                  Log In
+                </h1>
+              </center>
+
               <Card.Body>
                 <Form onSubmit={handleSubmit}>
                   <FloatingLabel
