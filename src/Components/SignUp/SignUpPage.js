@@ -27,7 +27,7 @@ function SignUpPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted");
-    navigate("/MobileVerification");
+    navigate("/MobileVerification", { state: {redirectTo: "/"}});
   };
 
   let navigate = useNavigate();

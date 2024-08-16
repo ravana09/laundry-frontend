@@ -68,7 +68,8 @@ function BussinessLogin() {
         navigate("/BussinesSignUp");
       };
       const handleNavigation=(pages)=>{
-        navigate(pages);
+ 
+        navigate(pages, { state: {redirectTo: "/BussinessForgetPassword"}});
       }
     
   return (
@@ -272,7 +273,10 @@ function BussinessLogin() {
                   </Col>
                 </Row>
                 <center>
-                  <div className="login-ForgetPassword">
+                  <div className="login-ForgetPassword" onClick={()=>{
+                    handleNavigation("/BussinessForgetMobileVerification")
+
+                  }}>
                     <a>Forget password?</a>
                   </div>
                 </center>

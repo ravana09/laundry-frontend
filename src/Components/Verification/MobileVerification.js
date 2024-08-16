@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Button, Card, Col, Container, Form, Image, Row } from "react-bootstrap";
 import BubbleAnimation from "../BubbleAnimation/BubbleAnimation";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import loginMachineImage from "../Images/login-washing-machine-image.png";
 import symbol from "../Images/Symbol.jpeg";
 import '../Verification/MobileVerification.css';
@@ -9,6 +9,9 @@ import '../Verification/MobileVerification.css';
 function MobileVerification() {
   const [otp, setOtp] = useState(["", "", "", ""]);
   const inputs = useRef([]);
+
+  let location=useLocation();
+  const { redirectTo  } = location.state || {};
 
   const handleChange = (e, index) => {
     const value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
@@ -39,7 +42,7 @@ function MobileVerification() {
 
     if (enteredOtp === correctOtp) {
       console.log("OTP verified successfully");
-      navigate("/");
+      navigate(redirectTo );
     } else {
       console.log("Incorrect OTP");
       alert("Incorrect OTP");

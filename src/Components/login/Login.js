@@ -18,7 +18,7 @@ import Bussiness from "../Images/cooperation.png";
 import twitter from "../Images/TwitterLogo.png";
 import facebook from "../Images/facebook.png";
 import BubbleAnimation from "../BubbleAnimation/BubbleAnimation";
-import symbol from "../Images/Symbol.jpeg";
+import symbol from "../Images/LaundLogo.jpg";
 import playStoreLogo from "../Images/playStore.png"; // Add your Play Store logo here
 import appleStoreLogo from "../Images/AppleLogo.png"; // Add your Apple Store logo here
 import { useNavigate } from "react-router-dom";
@@ -60,8 +60,7 @@ function Login() {
     console.log("Form submitted");
     navigate("/CompanyCard");
 
-    Cookies.set("Email", formData.Email, { expires: 684 });
-    Cookies.set("Password", formData.Password, { expires: 1000 });
+  
   };
 
   const handleSignUpPage = () => {
@@ -150,12 +149,11 @@ function Login() {
             className="left-column Login-Container-left line  "
           >
             <div className="">
-            <Image
-              src={loginMachineImage}
-              alt="Washing Machine"
-              className="login-Machine-Image "
-            />
-            
+              <Image
+                src={loginMachineImage}
+                alt="Washing Machine"
+                className="login-Machine-Image "
+              />
             </div>
           </Col>
           <Col xs={12} md={6} lg={5} className="right-column">
@@ -163,22 +161,6 @@ function Login() {
               className="login-Inner-Card line2"
               style={{ borderRadius: "40px" }}
             >
-              {/* <Row>
-                <Col xs={4}>
-                <center>
-                <h1 className="Login-login-tag" style={{fontSize:'25px'}}>Log in</h1>
-              
-              </center>
-                </Col>
-                <Col xs={4}>
-                </Col>
-                <Col xs={4}>
-                <center>
-                <h1 className="Login-login-tag" style={{fontSize:'15px'}}>For Bussiness</h1>
-              
-              </center>
-                </Col>
-              </Row> */}
               <center>
                 <h1 className="Login-login-tag" style={{ fontSize: "25px" }}>
                   Log In
@@ -289,7 +271,13 @@ function Login() {
                   </Col>
                 </Row>
                 <center>
-                  <div className="login-ForgetPassword">
+                  {/* UserForgetMobileVerification */}
+                  <div
+                    className="login-ForgetPassword"
+                    onClick={() => {
+                      handleNavigation("/UserForgetMobileVerification");
+                    }}
+                  >
                     <a>Forget password?</a>
                   </div>
                 </center>

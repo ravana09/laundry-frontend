@@ -15,32 +15,49 @@ import BoostDetails from './Components/Home/BussinesProfile/BoostDetails';
 import BussinessLogin from './Components/login/BussinessLogin';
 import BussinesSignUp from './Components/SignUp/BussinesSignUp';
 import BussinessMobileVErification from './Components/Verification/BussinessMobileVErification';
+import BussinessForgetPassword from './Components/FogetPassword/BusinessForgetPassword/BusinessForgetePAssword';
+import BussinessForgetMobileVerification from './Components/Verification/ForgetPasswordVerification/BussinesFPwdVerify';
+import UserFPwdVerify from './Components/Verification/ForgetPasswordVerification/UserFPwdVerify';
+import UserForgetPassword from './Components/FogetPassword/userForgetPasword/UserForgetPassword';
+import OneCard from './Components/Home/OneCard/OneCard';
 
 
 function App() {
   return (
     <Router>
       <Routes>
+        {/* User */}
         <Route path="/" element={<Login />} />
-        <Route path="/BussinessLogin" element={<BussinessLogin />} />
         <Route path="/Bubbles" element={<BubbleAnimation />} />
         <Route path="/SignUpPage" element={<SignUpPage />} />
-        <Route path="/BussinesSignUp" element={<BussinesSignUp />} />
         <Route path="/MobileVerification" element={<MobileVerification />} />
+        <Route path="/UserForgetMobileVerification" element={<UserFPwdVerify />} />
+        <Route path="/UserForgetPassword" element={<UserForgetPassword />} />
+        <Route path="/BussinessLogin" element={<BussinessLogin />} />
+        
+        {/* Bussiness */}
+        <Route path="/BussinesSignUp" element={<BussinesSignUp />} />
         <Route path="/BussinessMobileVerification" element={<BussinessMobileVErification />} />
+        <Route path="/BussinessProfileCard" element={<BussinessProfileCard />} />
+        <Route path="/BussinessForgetMobileVerification" element={<BussinessForgetMobileVerification />} />
+        <Route path="/BussinessForgetPassword" element={<BussinessForgetPassword />} />
+
+
+        {/* common */}
         <Route path="/Home" element={<Home showSideBar={true} />} />
         <Route path="/SideNavBar" element={<SideNavBar />} />
-        <Route path="/BussinessProfileCard" element={<BussinessProfileCard />} />
         <Route path="/BoostDetails" element={<BoostDetails />} />
       
         
        
    
-        
-
-        <Route path="/CompanyCard" element={<WithHomeLayout component={<CompanyCard />} />} />
-        <Route path="/BussinessProfile" element={<WithHomeLayout component={<BussinessProfile />} />} />
+        {/* User Profile */}
         <Route path="/UserProfile" element={<WithHomeLayout component={<UserProfile />} />} />
+        <Route path="/CompanyCard" element={<WithHomeLayout component={<CompanyCard />} />} />
+        <Route path="/OneCard" element={<WithHomeLayout component={<OneCard />} />} />
+        
+        {/* Business Profile */}
+        <Route path="/BussinessProfile" element={<WithHomeLayout component={<BussinessProfile />} />} />
         <Route path="/CustomerLeads" element={<WithHomeLayout component={<CustomerLeads />} showSideBar={false} />} />
       </Routes>
     </Router>

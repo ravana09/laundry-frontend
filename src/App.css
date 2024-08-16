@@ -4,3 +4,20 @@
 
   
 }
+
+.line {
+  opacity: 0;
+  transform: translateX(100%) scale(0.5);
+  transform-origin: center;
+  
+  animation: slide-in 1s ease-in-out forwards;
+}
+
+
+
+.line2 {
+  opacity: 0;
+  transform: translateX(-100%) scale(0.5);
+  transform-origin: center;
+  animation: slide-in 1s ease-in-out forwards;
+}
