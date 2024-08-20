@@ -11,7 +11,7 @@ import {
 } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import loginMachineImage from "../../Images/login-washing-machine-image.png";
-import symbol from "../../Images/Symbol.jpeg";
+import symbol from "../../Images/symbol.jpg";
 import BubbleAnimation from "../../BubbleAnimation/BubbleAnimation";
 
 function UserFPwdVerify() {

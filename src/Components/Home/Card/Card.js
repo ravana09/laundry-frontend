@@ -77,7 +77,7 @@ function CompanyCard() {
           >
             <Row>
               <Col sm={3}>
-                {/* Image section */}
+                
                 <Carousel
                   fade
                   indicators={false}

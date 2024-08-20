@@ -11,7 +11,7 @@ import {
 import BubbleAnimation from "../BubbleAnimation/BubbleAnimation";
 import {   useLocation, useNavigate } from "react-router-dom";
 import loginMachineImage from "../Images/LaundryBUSSINESSiMAGE.png";
-import symbol from "../Images/Symbol.jpeg";
+ import symbol from "../Images/symbol.jpg";
 import "../Verification/MobileVerification.css";
 
 function BussinessMobileVErification() {

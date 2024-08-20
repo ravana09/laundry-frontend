@@ -18,7 +18,7 @@ import Bussiness from "../Images/cooperation.png";
 import twitter from "../Images/TwitterLogo.png";
 import facebook from "../Images/facebook.png";
 import BubbleAnimation from "../BubbleAnimation/BubbleAnimation";
-import symbol from "../Images/LaundLogo.jpg";
+import symbol from "../Images/symbol.jpg";
 import playStoreLogo from "../Images/playStore.png"; // Add your Play Store logo here
 import appleStoreLogo from "../Images/AppleLogo.png"; // Add your Apple Store logo here
 import { useNavigate } from "react-router-dom";

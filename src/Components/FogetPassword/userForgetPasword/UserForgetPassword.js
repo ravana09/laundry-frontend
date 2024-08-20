@@ -16,7 +16,7 @@ import BubbleAnimation from "../../BubbleAnimation/BubbleAnimation";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import loginMachineImage from "../../Images/login-washing-machine-image.png";
 import Bussiness from "../../Images/cooperation.png";
-import symbol from "../../Images/Symbol.jpeg";
+import symbol from "../../Images/symbol.jpg";
 import playStoreLogo from "../../Images/playStore.png";
 import appleStoreLogo from "../../Images/AppleLogo.png";
 

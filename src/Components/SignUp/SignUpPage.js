@@ -15,7 +15,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import '../SignUp/Signup.css'; // Importing CSS file
 
 import loginMachineImage from "../Images/login-washing-machine-image.png";
-import symbol from "../Images/Symbol.jpeg";
+ import symbol from "../Images/symbol.jpg";
 
 function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);

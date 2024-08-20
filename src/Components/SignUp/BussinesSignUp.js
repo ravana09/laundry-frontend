@@ -15,7 +15,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "../SignUp/Signup.css";
 
 import loginMachineImage from "../Images/LaundryBUSSINESSiMAGE.png";
-import symbol from "../Images/Symbol.jpeg";
+ import symbol from "../Images/symbol.jpg";
 
 function BussinesSignUp() {
   const [userData, setUserData] = useState({

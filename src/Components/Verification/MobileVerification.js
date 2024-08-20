@@ -3,7 +3,7 @@ import { Button, Card, Col, Container, Form, Image, Row } from "react-bootstrap"
 import BubbleAnimation from "../BubbleAnimation/BubbleAnimation";
 import { useLocation, useNavigate } from "react-router-dom";
 import loginMachineImage from "../Images/login-washing-machine-image.png";
-import symbol from "../Images/Symbol.jpeg";
+ import symbol from "../Images/symbol.jpg";
 import '../Verification/MobileVerification.css';
 
 function MobileVerification() {
