@@ -1,22 +1,114 @@
-
-
-.singleCard-CardBody{
-    width: 100%;
-    height: max-content;
+.singleCard-CardBody {
+  width: 100%;
+  height: max-content;
 }
 .singleCard-CompanyName {
-    font-size: 50px !important; /* Adjust font size as needed */
-    font-weight: bold !important;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
-    font-size: 72px;
-    background: -webkit-linear-gradient(left, #21a2a6, #438c8f, #5bacaf, #75ccd0, #8feef3);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-decoration:double !important;
+  font-size: 50px !important; /* Adjust font size as needed */
+  font-weight: bold !important;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
+  font-size: 72px;
+  background: -webkit-linear-gradient(
+    left,
+    #21a2a6,
+    #438c8f,
+    #5bacaf,
+    #75ccd0,
+    #8feef3
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-decoration: double !important;
 }
 
 .companyCard-Carousel {
-    margin: 0;
+  margin: 0;
+}
+.sticky-header {
+  position: sticky;
+  top: 10vh;
+  background-color: white; /* or whatever color you prefer */
+  z-index: 1000; /* Ensure it stays above other content */
+  padding: 10px;
+}
+.sticky-CompanyDetails{
+  position: sticky;
+  top: 22vh;
+  background-color: white; /* or whatever color you prefer */
+  z-index: 1000; /* Ensure it stays above other content */
+  padding: 10px;
+}
+.OneCard-Services-Card {
+  width: 100%;
+  border: 0.5px solid grey;
+  margin: 5px;
+  border-radius: 20px;
+}
+
+.OneCard-Services-text {
+  position: relative;
+  cursor: pointer;
+  font-weight: normal;
+  transition: color 0.3s ease, font-size 0.3s ease;
+}
+
+.OneCard-Services-text::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -10px; 
+  width: 100%;
+  height: 2px;
+  background-color: rgb(7, 123, 217);
+  transform: scaleX(0);
+  transform-origin: left right;
+  transition: transform 0.3s ease;
+}
+
+.OneCard-Services-text:hover {
+  color: black; 
+  font-weight: bold;
+  font-size: larger;
+}
+
+.OneCard-Services-text:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.OneCard-Services-text.active {
+  color: rgb(7, 123, 217); /* Active text color */
+  font-weight: bold;
+  font-size: larger;
+}
+
+.OneCard-Services-text.active::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+  .ServicesCard{
+    width: 100% !important;
+
+    padding: 20px;
+    background-color: #c1ebed !important;
+    border: 1px solid grey !important;
+    border-radius: 20px;
+  }
+  .servicesImages{
+    width: 100%;
+    max-width: 100px !important;
+font-weight: bold !important;
+  }
+  .ServicesName{
+    font-size: 20px !important;
+  }
+
+  @media (max-width: 450px) {
+    .ServicesCard{
+      width: 100% !important;
+      
+    } 
   }
   
-  
+
+

@@ -20,6 +20,7 @@ import BussinessForgetMobileVerification from './Components/Verification/ForgetP
 import UserFPwdVerify from './Components/Verification/ForgetPasswordVerification/UserFPwdVerify';
 import UserForgetPassword from './Components/FogetPassword/userForgetPasword/UserForgetPassword';
 import OneCard from './Components/Home/OneCard/OneCard';
+import LocationLink from './Components/Home/GoogleMap/LocationLink';
 
 
 function App() {
@@ -47,6 +48,8 @@ function App() {
         <Route path="/Home" element={<Home showSideBar={true} />} />
         <Route path="/SideNavBar" element={<SideNavBar />} />
         <Route path="/BoostDetails" element={<BoostDetails />} />
+        <Route path="/LocationLink" element={<LocationLink />} />
+       
       
         
        

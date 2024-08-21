@@ -16,9 +16,11 @@ import img3 from "../Card/sampleImages/wallpaperflare.com_wallpaper (1).jpg";
 import { FaLocationDot } from "react-icons/fa6";
 import star from "../../Images/Star.png";
 import Whatsapp from "../../Images/GreenWhatsapp.png";
+import Location from "../../Images/LocationCircle.png";
 import { TbPhoneCall } from "react-icons/tb";
 import { BsCart3 } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import LocationLink from "../GoogleMap/LocationLink";
 
 const cardData = [
   {
@@ -26,28 +28,28 @@ const cardData = [
     title:
       "Some quick example text to build on the card title and make up the bulk of the card's content.",
     address:
-      "Some quick example text to build on the card title and make up the bulk of the card's content.",
+      "Kamaraj Road, off Killiyur Falls Road, Post, Ondikadai, Yercaud, Tamil Nadu 636601",
     text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
     images: [img1, img2, img3],
   },
   {
     _id: 2,
     title: "Card Title 2",
-    address: "near something",
+    address: "No-1, AMC Rd, Y.M.R. Patty, Karunanidhi Nagar, Dindigul, Tamil Nadu 624001",
     text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
     images: [img1, img2, img3],
   },
   {
     _id: 3,
     title: "Some quick ",
-    address: "near something",
+    address: "opposite to sun marketing North south junction, Raja Mill Rd, Pollachi, Tamil Nadu 642001",
     text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
     images: [img1, img2, img3],
   },
   {
     _id: 4,
     title: "Card Title 2",
-    address: "near something",
+    address: "13, 37, Avinashi Rd, TNHB Colony, Civil Aerodrome Post, Nehru Nagar West, Coimbatore, Tamil Nadu 641014",
     text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
     images: [img1, img2, img3],
   },
@@ -60,6 +62,55 @@ function CompanyCard() {
   const handleNavigate = (page, id) => {
     navigate(page, { state: { data: id } });
   };
+  
+
+  const handleLocation = (givenaddress) => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+          (position) => {
+              const { latitude, longitude } = position.coords;
+              console.log(`Latitude: ${latitude}, Longitude: ${longitude}`); // Log position for debugging
+              
+              const address = encodeURIComponent(givenaddress);
+              const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${latitude},${longitude}&destination=${address}`;
+              window.open(mapsUrl, "_blank");
+          },
+          (error) => {
+              let errorMessage = "Unable to retrieve location.";
+              switch (error.code) {
+                  case error.PERMISSION_DENIED:
+                      errorMessage = "Location access denied. Please allow location access in your browser settings.";
+                      break;
+                  case error.POSITION_UNAVAILABLE:
+                      errorMessage = "Location information is unavailable.";
+                      break;
+                  case error.TIMEOUT:
+                      errorMessage = "The request to get user location timed out.";
+                      break;
+                  case error.UNKNOWN_ERROR:
+                      errorMessage = "An unknown error occurred.";
+                      break;
+                  default:
+                      errorMessage = "An unexpected error occurred.";
+              }
+              console.error(`Error Code: ${error.code} - ${errorMessage}`); // Log error details for debugging
+              alert(errorMessage);
+              
+              const address = encodeURIComponent(givenaddress);
+              const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${address}`;
+              window.open(mapsUrl, "_blank");
+          }
+      );
+  } else {
+      alert("Geolocation is not supported by this browser. Please use a modern browser.");
+      const address = encodeURIComponent(givenaddress);
+      const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${address}`;
+      window.open(mapsUrl, "_blank");
+  }
+  
+  
+  };
+  
 
   return (
     <Container fluid className="CompanyCard-body">
@@ -178,6 +229,23 @@ function CompanyCard() {
                     >
                       <BsCart3 style={{ marginRight: "8px" }} />
                       Share
+                    </Button>
+                    <Button
+                      className="hover-button"
+                      variant="outline-success"
+                     
+                     onClick={()=>{
+                  handleLocation(card.address)
+                     }}
+                      style={{ display: "flex", alignItems: "center" }}
+                    >
+                      <img
+                        src={Location}
+                        style={{ width: "28px", marginRight: "8px" }}
+                        alt="Chat"
+                      />
+                      {/* <LocationLink address={card.address} /> */}
+                      <span>Direction </span>
                     </Button>
                   </div>
                 </Card.Body>
