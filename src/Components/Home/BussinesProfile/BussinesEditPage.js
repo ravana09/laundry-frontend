@@ -192,7 +192,7 @@ function BussinesEditPage() {
           <Card className="BEditPage-Company-Card">
             <Card.Body>
               {isEditing ? (
-                <Form>
+                <Form className="BEditPage-Company-Form" >
                   <Form.Group as={Row} className="mb-3">
                     <Form.Label column sm={4}>
                       Company Name
