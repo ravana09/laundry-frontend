@@ -14,8 +14,14 @@ import Laundry from "../../Images/ServicesLaundey.png";
 import DryCleaning from "../../Images/ServicesDryCleaning.png";
 import Ironing from "../../Images/ServicesIron.png";
 import Fold from "../../Images/ServicesFold.png";
+import Employes from "../../Images/Employes.png";
+import office from "../../Images/office.png";
+import Client from "../../Images/Client.png";
+import Awards from "../../Images/Awards.png";
+import Share from "../../Images/Share.png";
+
 import { TbPhoneCall } from "react-icons/tb";
-import { BsCart3 } from "react-icons/bs";
+
 import {
   Badge,
   Button,
@@ -59,13 +65,29 @@ const cardData = [
     tagline: "Innovating the Future",
     description:
       "Our mission is to revolutionize the industry with cutting-edge technology. We are committed to delivering exceptional value and innovation through our products and services.",
-    keyMetrics: {
-      employees: 1200,
-      offices: 10,
-      clientsServed: 500,
-      awards: 15,
-    },
- 
+    keyMetrics: [
+      {
+        name: "Employees",
+        value: 1200,
+        icon: Employes,
+      },
+      {
+        name: "Offices",
+        value: 10,
+        icon: office,
+      },
+      {
+        name: "Clients Served",
+        value: 500,
+        icon: Client,
+      },
+      {
+        name: "Awards",
+        value: 15,
+        icon: Awards,
+      },
+    ],
+
     team: [
       { name: "John Doe", title: "CEO", photo: img1 },
       { name: "Jane Smith", title: "CTO", photo: img2 },
@@ -78,6 +100,11 @@ const cardData = [
     location: {
       address: "123 Business Avenue, City, Country",
       mapLink: "https://maps.google.com",
+    },
+    timing: {
+      weekdays: "9:00 AM - 6:00 PM",
+      Saturday: "10:00 AM - 4:00 PM",
+      sunday: "Sorry we are Closed",
     },
   },
 ];
@@ -234,7 +261,7 @@ function OneCard({ handleNavigate }) {
             style={{
               flex: "2",
               padding: "20px",
-              border: "0.5px solid grey",
+              // border: "0.5px solid grey",
               borderRadius: "20px",
               backgroundColor: "snow",
             }}
@@ -260,7 +287,7 @@ function OneCard({ handleNavigate }) {
             </Card.Title>
 
             <div
-              className="button-container"
+              className="button-container "
               style={{ marginTop: "auto", justifyContent: "flex-start" }}
             >
               <Button
@@ -313,16 +340,20 @@ function OneCard({ handleNavigate }) {
                 }}
                 style={{ display: "flex", alignItems: "center" }}
               >
-                <BsCart3 style={{ marginRight: "8px" }} />
+                <img
+                  src={Share}
+                  style={{ width: "28px", marginRight: "8px" }}
+                  alt="Chat"
+                />
                 Share
               </Button>
             </div>
-            <div></div>
+           
           </Card.Body>
           <Card.Body className="OneCard-Services-Card">
             <div>
               <Row className="text-center my-3">
-                <Col xs={6} sm={3} className="mb-2">
+                <Col xs={4} sm={4} className="mb-2">
                   <div
                     onClick={() => handleClick("Services")}
                     className={`OneCard-Services-text ${
@@ -332,7 +363,7 @@ function OneCard({ handleNavigate }) {
                     Services
                   </div>
                 </Col>
-                <Col xs={6} sm={3} className="mb-2">
+                <Col xs={4} sm={4} className="mb-2">
                   <div
                     onClick={() => handleClick("Review")}
                     className={`OneCard-Services-text ${
@@ -342,7 +373,7 @@ function OneCard({ handleNavigate }) {
                     Review
                   </div>
                 </Col>
-                <Col xs={6} sm={3} className="mb-2">
+                <Col xs={4} sm={4} className="mb-2">
                   <div
                     onClick={() => handleClick("Overview")}
                     className={`OneCard-Services-text ${
@@ -352,7 +383,7 @@ function OneCard({ handleNavigate }) {
                     Overview
                   </div>
                 </Col>
-                <Col xs={6} sm={3} className="mb-2">
+                {/* <Col xs={6} sm={3} className="mb-2">
                   <div
                     onClick={() => handleClick("Contact")}
                     className={`OneCard-Services-text ${
@@ -361,11 +392,11 @@ function OneCard({ handleNavigate }) {
                   >
                     Contact
                   </div>
-                </Col>
+                </Col> */}
               </Row>
 
               {activeTab === "Services" && (
-                <div className="container my-4">
+                <div className="container my-4 overview-section">
                   <h2 className="mb-4">Services Offered</h2>
                   <div className="row">
                     {services.map((service, index) => (
@@ -410,8 +441,8 @@ function OneCard({ handleNavigate }) {
               {/* {activeTab === "Review" && */}
 
               {activeTab === "Review" && (
-                <div>
-                  <div className="reviews-list">
+                <div className="overview-section">
+                  <div className="reviews-list ">
                     {reviews.map((review, index) => (
                       <div key={index} className="review-item">
                         <Row>
@@ -495,11 +526,130 @@ function OneCard({ handleNavigate }) {
 
               {/* } */}
               {activeTab === "Overview" && (
+                <div className="overview-section ">
+                  <h2 className="my-4 team-container">About {card.name}</h2>
+                  <p>{card.description}</p>
+                  <hr />
+                  <section className="company-timing-section">
+                    <h3 className="company-timing-heading">
+                      Our Business Hours
+                    </h3>
+                    <div className="company-timing">
+                      {Object.entries(cardData[0].timing).map(
+                        ([day, hours], index) => (
+                          <div key={index} className="timing-card">
+                            <span className="timing-day">
+                              {day.charAt(0).toUpperCase() + day.slice(1)}
+                            </span>
+                            <span className="timing-hours">{hours}</span>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  </section>
+                  <hr />
 
-                <div>overall</div>
-                
+                  <h3 className="my-4 team-container">Key Metrics</h3>
+                  <Row>
+                    {card.keyMetrics.map((metric, index) => (
+                      <div
+                        className="col-12 col-sm-6 col-md-6 col-lg-3  col-xl-3mb-4"
+                        key={index}
+                      >
+                        <Card
+                          style={{
+                            height: "110px",
+                            padding: "10px",
+                            border: "none",
+                            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                          }}
+                          className="testimonials-container"
+                        >
+                          <Row className="d-flex align-items-center">
+                            <Col
+                              xs={4}
+                              className="d-flex justify-content-center"
+                            >
+                              <Card.Img
+                                variant="top"
+                                src={metric.icon}
+                                className="img-fluid "
+                                alt={metric.name}
+                                style={{ width: "60px" }}
+                              />
+                            </Col>
+                            <Col xs={8} className="d-flex align-items-center">
+                              <Card.Body>
+                                <center>
+                                  <Card.Title className="ServicesName">
+                                    {metric.name}
+                                  </Card.Title>
+                                  <Card.Text className="metricValue">
+                                    {metric.value}
+                                  </Card.Text>
+                                </center>
+                              </Card.Body>
+                            </Col>
+                          </Row>
+                        </Card>
+                      </div>
+                    ))}
+                  </Row>
+                  <hr />
+
+                  <h3 className="my-4 team-container">Meet Our Team</h3>
+                  <div className="team-container">
+                    {card.team.map((member, index) => (
+                      <div key={index} className="team-member">
+                        <Card className="team-card">
+                          <Card.Img
+                            variant="top"
+                            src={member.photo}
+                            className="team-card-img"
+                          />
+                          <Card.Body>
+                            <Card.Title>{member.name}</Card.Title>
+                            <Card.Text>{member.title}</Card.Text>
+                          </Card.Body>
+                        </Card>
+                      </div>
+                    ))}
+                  </div>
+                  <hr />
+
+                  <section className="testimonials-section">
+                    <h3 className="testimonials-heading my-4 ">
+                      What Our Clients Say
+                    </h3>
+                    <div className="testimonials-container">
+                      {card.testimonials.map((testimonial, index) => (
+                        <div key={index} className="testimonial-card">
+                          <blockquote className="testimonial-content">
+                            <p className="testimonial-text">
+                              "{testimonial.review}"
+                            </p>
+                            <footer className="testimonial-footer">
+                              <span className="testimonial-author">
+                                {testimonial.name}
+                              </span>
+                              <span className="testimonial-rating">
+                                {testimonial.rating}
+                                <FaStar color="#ffc107" />
+                              </span>
+                            </footer>
+                          </blockquote>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                </div>
               )}
-              {activeTab === "Contact" && <div>Content for Contact tab</div>}
+
+              {/* {activeTab === "Contact" && 
+              
+              <div>Content for Contact tab</div>
+              
+              } */}
             </div>
           </Card.Body>
         </Card.Body>

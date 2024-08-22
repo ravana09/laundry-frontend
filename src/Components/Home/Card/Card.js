@@ -17,6 +17,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import star from "../../Images/Star.png";
 import Whatsapp from "../../Images/GreenWhatsapp.png";
 import Location from "../../Images/LocationCircle.png";
+import Share from "../../Images/Share.png";
 import { TbPhoneCall } from "react-icons/tb";
 import { BsCart3 } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
@@ -227,7 +228,11 @@ function CompanyCard() {
                       }}
                       style={{ display: "flex", alignItems: "center" }}
                     >
-                      <BsCart3 style={{ marginRight: "8px" }} />
+                     <img
+                  src={Share}
+                  style={{ width: "28px", marginRight: "8px" }}
+                  alt="Chat"
+                />
                       Share
                     </Button>
                     <Button

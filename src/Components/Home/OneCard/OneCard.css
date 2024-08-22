@@ -3,7 +3,7 @@
   height: max-content;
 }
 .singleCard-CompanyName {
-  font-size: 50px !important; /* Adjust font size as needed */
+  font-size: 200% !important; /* Adjust font size as needed */
   font-weight: bold !important;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
   font-size: 72px;
@@ -30,12 +30,12 @@
   z-index: 1000; /* Ensure it stays above other content */
   padding: 10px;
 }
-.sticky-CompanyDetails{
+.sticky-CompanyDetails {
   position: sticky;
-  top: 22vh;
+  top: 40vh;
   background-color: white; /* or whatever color you prefer */
-  z-index: 1000; /* Ensure it stays above other content */
-  padding: 10px;
+  z-index: 1200; /* Ensure it stays above other content */
+  /* padding: 10px; */
 }
 .OneCard-Services-Card {
   width: 100%;
@@ -52,10 +52,10 @@
 }
 
 .OneCard-Services-text::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
-  bottom: -10px; 
+  bottom: -10px;
   width: 100%;
   height: 2px;
   background-color: rgb(7, 123, 217);
@@ -65,7 +65,7 @@
 }
 
 .OneCard-Services-text:hover {
-  color: black; 
+  color: black;
   font-weight: bold;
   font-size: larger;
 }
@@ -76,7 +76,200 @@
 }
 
 .OneCard-Services-text.active {
-  color: rgb(7, 123, 217); /* Active text color */
+  color: rgb(7, 123, 217);
+  font-weight: bold;
+  font-size: larger;
+}
+
+.OneCard-Services-text.active::after {
+  transform: scaleX(0.5);
+  transform-origin: bottom left;
+}
+
+/* Media Query for Extra Small Screens (xs) */
+@media (max-width: 576px) {
+  .OneCard-Services-text {
+    font-size: 14px; /* Adjust as needed */
+  }
+
+  .OneCard-Services-text:hover {
+    font-size: 10px; /* Adjust as needed */
+  }
+
+  .OneCard-Services-text.active {
+    /* font-size: 12px; */
+    color: rgb(7, 123, 217);
+     font-weight:100;
+    font-size:unset;
+  }
+}
+
+.ServicesCard {
+  width: 100% !important;
+
+  padding: 20px;
+  background-color: #c1ebed !important;
+  border: 1px solid grey !important;
+  border-radius: 20px;
+}
+.servicesImages {
+  width: 100%;
+  max-width: 100px !important;
+  font-weight: bold !important;
+}
+.ServicesName {
+  font-size: 20px !important;
+}
+
+@media (max-width: 450px) {
+  .ServicesCard {
+    width: 100% !important;
+  }
+  .singleCard-CompanyName {
+    font-size: 150% !important;
+  }
+  .OneCard-Services-text.active {
+    color: rgb(7, 123, 217);
+    font-weight: bold;
+    font-size: 75px;
+  }
+}
+
+/* General Section Styles */
+.overview-section {
+  padding: 1rem;
+  background-color: #f9f9f9; /* Light background for the section */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.overview-section h2,
+.overview-section h3 {
+  color: #333; /* Dark text color for headings */
+}
+
+.overview-section p {
+  color: #555; /* Lighter text color for paragraphs */
+  line-height: 1.6;
+}
+
+/* Key Metrics Styles */
+.key-metrics {
+  margin-bottom: 2rem;
+}
+
+.key-metrics .card {
+  border: 1px solid #ddd; /* Light border for cards */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff; /* White background for cards */
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.key-metrics .card img {
+  width: 60px; /* Set a consistent width for icons */
+}
+
+.key-metrics .card-body {
+  text-align: center;
+  flex: 1;
+}
+
+.key-metrics .card-body .card-title {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.key-metrics .card-body .card-text {
+  font-size: 1rem;
+  color: #666; /* Slightly lighter text color */
+}
+
+/* Company Card Styles */
+.singleCard-CardBody {
+  width: 100%;
+  height: auto; /* Adjust height as needed */
+}
+
+.singleCard-CompanyName {
+  font-size: 72px;
+  font-weight: bold;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: -webkit-linear-gradient(
+    left,
+    #21a2a6,
+    #438c8f,
+    #5bacaf,
+    #75ccd0,
+    #8feef3
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-decoration: double;
+}
+
+/* Sticky Header Styles */
+.sticky-header,
+.sticky-CompanyDetails {
+  position: sticky;
+  background-color: white;
+  z-index: 1000;
+  padding: 10px;
+}
+
+.sticky-header {
+  top: 10vh;
+}
+
+.sticky-CompanyDetails {
+  top: 22vh;
+}
+
+/* Services Card Styles */
+.OneCard-Services-Card {
+  width: 100%;
+  border: 0.5px solid grey;
+  margin: 5px;
+  border-radius: 20px;
+  background-color: #ffffff; /* Ensure background consistency */
+}
+
+.OneCard-Services-text {
+  position: relative;
+  cursor: pointer;
+  font-weight: normal;
+  transition: color 0.3s ease, font-size 0.3s ease;
+}
+
+.OneCard-Services-text::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  width: 100%;
+  height: 2px;
+  background-color: rgb(7, 123, 217);
+  transform: scaleX(0);
+  transform-origin: left right;
+  transition: transform 0.3s ease;
+}
+
+.OneCard-Services-text:hover {
+  color: black;
+  font-weight: bold;
+  font-size: larger;
+}
+
+.OneCard-Services-text:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.OneCard-Services-text.active {
+  color: rgb(7, 123, 217);
   font-weight: bold;
   font-size: larger;
 }
@@ -86,29 +279,217 @@
   transform-origin: bottom left;
 }
 
-  .ServicesCard{
-    width: 100% !important;
+/* Services Card Image and Text */
+.ServicesCard {
+  width: 100% !important;
+  padding: 20px;
+  background-color: #c1ebed !important;
+  border: 1px solid grey !important;
+  border-radius: 20px;
+}
 
-    padding: 20px;
-    background-color: #c1ebed !important;
-    border: 1px solid grey !important;
-    border-radius: 20px;
+.servicesImages {
+  width: 100%;
+  max-width: 100px !important;
+  font-weight: bold !important;
+}
+
+.ServicesName {
+  font-size: 20px !important;
+}
+
+/* Team Member Styles */
+.team-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem; /* Adjust spacing between cards as needed */
+  justify-content: center;
+}
+
+.team-member {
+  flex: 1 1 calc(25% - 1rem); /* 4 cards per row, adjust based on the gap */
+  max-width: calc(25% - 1rem);
+  box-sizing: border-box;
+}
+
+.team-card {
+  width: 100%;
+  height: 100%;
+  border: none;
+  padding: "10px";
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.team-card-img {
+  height: 150px; 
+  object-fit: cover;
+}
+
+@media (max-width: 1024px) {
+  .team-member {
+    flex: 1 1 calc(33.33% - 1rem); /* 3 cards per row */
+    max-width: calc(33.33% - 1rem);
   }
-  .servicesImages{
-    width: 100%;
-    max-width: 100px !important;
-font-weight: bold !important;
+}
+
+@media (max-width: 600px) {
+  .team-member {
+    flex: 1 1 calc(50% - 1rem); /* 2 cards per row */
+    max-width: calc(50% - 1rem);
   }
-  .ServicesName{
+}
+
+@media (max-width: 450px) {
+  .company-timing-heading,
+  .testimonials-heading{
     font-size: 20px !important;
   }
-
-  @media (max-width: 450px) {
-    .ServicesCard{
-      width: 100% !important;
-      
-    } 
+ 
+  .team-member {
+    flex: 1 1 100%; /* 1 card per row */
+    max-width: 100%;
   }
-  
+  .timing-card-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    gap: 10px; /* Space between grid items */
+  }
 
+  .timing-card {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 10px;
+    border: 1px solid #ccc; /* Optional: Add border for better visibility */
+    border-radius: 5px; /* Optional: Rounded corners */
+    background-color: #f9f9f9; /* Optional: Background color */
+  }
 
+  .timing-day {
+    font-size: 15px;
+  }
+  .timing-hours{
+    font-size: 80%;
+  }
+}
+@media (max-width: 350px) {
+  .timing-hours{
+    font-size: 10px;
+  }
+}
+
+/* Testimonials Section Styles */
+.testimonials-section {
+  padding: 2rem;
+  background-color: #f9f9f9; /* Light background color */
+  text-align: center;
+}
+
+.testimonials-heading {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #333; /* Dark text color */
+}
+
+.testimonials-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem; /* Spacing between cards */
+  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.testimonial-card {
+  background: #fff; /* White background for cards */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 300px;
+  box-sizing: border-box;
+}
+
+.testimonial-content {
+  margin: 0;
+}
+
+.testimonial-text {
+  font-size: 1rem;
+  color: #555; /* Slightly lighter text color for reviews */
+  font-style: italic;
+}
+
+.testimonial-footer {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: #777; /* Slightly lighter color for author and rating */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.testimonial-author {
+  font-weight: bold;
+}
+
+.testimonial-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+@media (max-width: 768px) {
+  .testimonial-card {
+    max-width: 100%;
+  }
+}
+
+/* Company Timing Section Styles */
+.company-timing-section {
+  padding: 2rem;
+  background-color: #f4f4f4; /* Light background color */
+}
+
+.company-timing-heading {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #333; /* Dark text color */
+  text-align: center;
+}
+
+.company-timing {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem; /* Spacing between timing cards */
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.timing-card {
+  background: #fff; /* White background for timing cards */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  width: 100%;
+  max-width: 250px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+}
+
+.timing-day {
+  font-weight: bold;
+}
+
+.timing-hours {
+  color: #666; /* Slightly lighter text color */
+}
+
+@media (max-width: 768px) {
+  .timing-card {
+    max-width: 100%;
+  }
+}
