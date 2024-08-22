@@ -155,7 +155,7 @@ function OneCard({ handleNavigate }) {
   const location = useLocation();
   const { data } = location.state || {};
   const card = cardData[0]; // Assuming only one hotel for simplicity
-  const visibleImages = card.images; // Show all images
+  const visibleImages = card.images;
 
   const handleLikeButton = () => {
     setHeart(!heart);

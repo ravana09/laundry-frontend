@@ -21,6 +21,7 @@ import UserFPwdVerify from './Components/Verification/ForgetPasswordVerification
 import UserForgetPassword from './Components/FogetPassword/userForgetPasword/UserForgetPassword';
 import OneCard from './Components/Home/OneCard/OneCard';
 import LocationLink from './Components/Home/GoogleMap/LocationLink';
+import BussinesEditPage from './Components/Home/BussinesProfile/BussinesEditPage';
 
 
 function App() {
@@ -62,6 +63,7 @@ function App() {
         {/* Business Profile */}
         <Route path="/BussinessProfile" element={<WithHomeLayout component={<BussinessProfile />} />} />
         <Route path="/CustomerLeads" element={<WithHomeLayout component={<CustomerLeads />} showSideBar={false} />} />
+        <Route path="/BussinessEditPage" element={<WithHomeLayout component={<BussinesEditPage />} showSideBar={false} />} />
       </Routes>
     </Router>
   );

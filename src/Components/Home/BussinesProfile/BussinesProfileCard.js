@@ -23,7 +23,7 @@ const BussinessProfileCard = () => {
         padding: "10px",
       }}
       onClick={()=>{
-        handleNavigation("/BussinessProfile");
+        handleNavigation("/BussinessEditPage");
       }}
     >
       <Card.Img
@@ -38,7 +38,7 @@ const BussinessProfileCard = () => {
         </Card.Text>
       </Card.Body>
       <Card.Body>
-        <Card.Link href="#">Edit</Card.Link>
+        {/* <Card.Link href="#">Edit</Card.Link> */}
       </Card.Body>
     </Card>
   );
