@@ -150,6 +150,7 @@ function OneCard({ handleNavigate }) {
   const [comment, setComment] = useState("");
   const [reviews, setReviews] = useState([]);
   const [likes, setLikes] = useState(false);
+  
 
   const [activeTab, setActiveTab] = useState("Services");
   const location = useLocation();
@@ -165,6 +166,7 @@ function OneCard({ handleNavigate }) {
     setActiveTab(tab);
     console.log(`${tab} clicked`);
   };
+  
 
   const handleLocationClick = () => {
     if (navigator.geolocation) {
@@ -252,6 +254,7 @@ function OneCard({ handleNavigate }) {
                     border: "2px solid white",
                     borderRadius: "10px",
                   }}
+                  
                 />
               </div>
             ))}
@@ -265,7 +268,6 @@ function OneCard({ handleNavigate }) {
               borderRadius: "20px",
               backgroundColor: "snow",
             }}
-            // className="sticky-CompanyDetails"
           >
             <Card.Text>
               <Row>
@@ -348,7 +350,6 @@ function OneCard({ handleNavigate }) {
                 Share
               </Button>
             </div>
-           
           </Card.Body>
           <Card.Body className="OneCard-Services-Card">
             <div>

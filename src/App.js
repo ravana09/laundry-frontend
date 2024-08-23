@@ -63,7 +63,7 @@ function App() {
         {/* Business Profile */}
         <Route path="/BussinessProfile" element={<WithHomeLayout component={<BussinessProfile />} />} />
         <Route path="/CustomerLeads" element={<WithHomeLayout component={<CustomerLeads />} showSideBar={false} />} />
-        <Route path="/BussinessEditPage" element={<WithHomeLayout component={<BussinesEditPage />} showSideBar={false} />} />
+        <Route path="/BussinessEditPage" element={<WithHomeLayout component={<BussinesEditPage />} />} />
       </Routes>
     </Router>
   );

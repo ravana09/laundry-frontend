@@ -4,6 +4,8 @@ import {
   Card,
   Col,
   Container,
+  Dropdown,
+  DropdownButton,
   Form,
   Image,
   Row,
@@ -18,10 +20,14 @@ import img2 from "../Card/sampleImages/sanji-and-one-piece-zoro-4k-99b5u5n1oeu8t
 import img3 from "../Card/sampleImages/wallpaperflare.com_wallpaper (1).jpg";
 import Location from "../../Images/LocationCircle.png";
 import twitter from "../../Images/TwitterLogo.png";
+import Edit from "../../Images/edit.png";
+import Preview from "../../Images/Preview.png";
 import { useNavigate } from "react-router-dom";
 
 function BussinesEditPage() {
   const [isEditing, setIsEditing] = useState(false);
+  const [isLeaveChecked, setIsLeaveChecked] = useState(false);
+  const [selectedDay, setSelectedDay] = useState("");
   const [formData, setFormData] = useState({
     name: "Company Name",
     address: "123 Business Avenue, City, Country",
@@ -35,13 +41,14 @@ function BussinesEditPage() {
     saturdayEndTime: "16:00",
     sundayStartTime: "00:00",
     sundayEndTime: "00:00",
-    sundayLeave: true,
-    images: [img1, img2, img3, img1, img2, img3, img1, img2, img3],
+    sundayLeave: " ",
+    selectedDay: "",
+    images: [img1, img2, img3, img1, img2, img3], // image URLs go here
     instagram: "https://www.instagram.com/",
     twitter: "https://x.com/twitt_login?lang=en",
   });
 
-  const [formDataCopy, setFormDataCopy] = useState(formData); // Copy of formData for editing
+  const [formDataCopy, setFormDataCopy] = useState(formData);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -56,12 +63,12 @@ function BussinesEditPage() {
   };
 
   const handleSave = () => {
-    setFormData(formDataCopy); // Update the formData with the latest values
+    setFormData(formDataCopy);
     setIsEditing(false);
   };
 
   const handleCancel = () => {
-    setFormDataCopy(formData); // Revert to the original formData if canceled
+    setFormDataCopy(formData);
     setIsEditing(false);
   };
 
@@ -70,14 +77,27 @@ function BussinesEditPage() {
     const imageUrls = files.map((file) => URL.createObjectURL(file));
     setFormDataCopy((prev) => ({
       ...prev,
-      images: [...prev.images, ...imageUrls], // Append new images to existing ones
+      images: [...prev.images, ...imageUrls],
     }));
   };
 
   const handleImageDelete = (index) => {
     setFormDataCopy((prev) => ({
       ...prev,
-      images: prev.images.filter((_, i) => i !== index), // Remove image at the specified index
+      images: prev.images.filter((_, i) => i !== index),
+    }));
+  };
+
+  const handleCheckboxChange = () => {
+    setIsLeaveChecked(!isLeaveChecked);
+    setSelectedDay(""); // Reset selected day when checkbox is toggled
+  };
+
+  const handleSelect = (eventKey) => {
+    setSelectedDay(eventKey);
+    setFormDataCopy((prev) => ({
+      ...prev,
+      selectedDay: eventKey,
     }));
   };
 
@@ -85,7 +105,7 @@ function BussinesEditPage() {
     dots: true,
     infinite: false,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: 3,
     slidesToScroll: 4,
     initialSlide: 0,
     responsive: [
@@ -122,10 +142,17 @@ function BussinesEditPage() {
   };
 
   return (
-    <Container fluid className="UserProfile-container">
+    <Container
+      fluid
+      className="UserProfile-container"
+      style={{ marginTop: "10vh" }}
+    >
       <Row>
         <Col xs={12} md={4}>
-          <Card className="BEditPage-Company-Card">
+          <Card
+            className="BEditPage-Company-Card"
+            style={{ backgroundColor: "white" }}
+          >
             <Card.Img
               variant="top"
               src={ProfileImg}
@@ -172,15 +199,43 @@ function BussinesEditPage() {
                 )}
               </div>
               <Row>
-                <Col xs={4}>
+                <Col xs={6} className="d-flex justify-content-center">
                   {!isEditing && (
-                    <Button variant="primary" onClick={handleEdit}>
+                    <Button
+                      variant="outline-info"
+                      style={{
+                        color: "black",
+                        display: "flex",
+                        alignItems: "center",
+                        // gap: '5px',
+                      }}
+                      onClick={handleEdit}
+                    >
+                      {/* <Image
+          src={Edit}
+          style={{ width: "20px", border: 'none', padding: '0px' }}
+          alt="Edit Icon"
+        /> */}
                       Edit Profile
                     </Button>
                   )}
                 </Col>
-                <Col xs="auto">
-                  <Button variant="primary" onClick={handlePreview}>
+                <Col xs="auto" className="d-flex justify-content-start ">
+                  <Button
+                    variant="outline-info"
+                    style={{
+                      color: "black",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "5px",
+                    }}
+                    onClick={handlePreview}
+                  >
+                    {/* <Image
+        src={Preview}
+        style={{ width: "30px" }}
+        alt="Preview Icon"
+      /> */}
                     Preview
                   </Button>
                 </Col>
@@ -189,277 +244,326 @@ function BussinesEditPage() {
           </Card>
         </Col>
         <Col xs={12} md={8}>
-          <Card className="BEditPage-Company-Card">
-            <Card.Body>
+          <Card
+            style={{
+              backgroundColor: "transparent",
+              border: "none",
+              padding: "0px",
+              marginTop: "3vh",
+            }}
+          >
+            <Card.Body style={{ padding: "0px", margin: "0px" }}>
               {isEditing ? (
-                <Form className="BEditPage-Company-Form" >
-                  <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm={4}>
-                      Company Name
-                    </Form.Label>
-                    <Col sm={8}>
-                      <Form.Control
-                        type="text"
-                        name="name"
-                        value={formDataCopy.name}
-                        onChange={handleChange}
-                      />
-                    </Col>
-                  </Form.Group>
-                  <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm={4}>
-                      Address
-                    </Form.Label>
-                    <Col sm={8}>
-                      <Form.Control
-                        type="text"
-                        name="address"
-                        value={formDataCopy.address}
-                        onChange={handleChange}
-                      />
-                    </Col>
-                  </Form.Group>
-                  <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm={4}>
-                      Contact
-                    </Form.Label>
-                    <Col sm={8}>
-                      <Form.Control
-                        type="text"
-                        name="contact"
-                        value={formDataCopy.contact}
-                        onChange={handleChange}
-                      />
-                    </Col>
-                  </Form.Group>
-                  <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm={4}>
-                      Official Website
-                    </Form.Label>
-                    <Col sm={8}>
-                      <Form.Control
-                        type="text"
-                        name="website"
-                        value={formDataCopy.website}
-                        onChange={handleChange}
-                      />
-                    </Col>
-                  </Form.Group>
-                  <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm={4}>
-                      Year of Establishment
-                    </Form.Label>
-                    <Col sm={8}>
-                      <Form.Control
-                        type="text"
-                        name="yearOfEstablishment"
-                        value={formDataCopy.yearOfEstablishment}
-                        onChange={handleChange}
-                      />
-                    </Col>
-                  </Form.Group>
-                  {/* Weekdays Timing */}
-                  <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm={4}>
-                      Weekdays Timing
-                    </Form.Label>
-                    <Col sm={4}>
-                      <Form.Control
-                        type="time"
-                        name="weekdaysStartTime"
-                        value={formDataCopy.weekdaysStartTime}
-                        onChange={handleChange}
-                      />
-                    </Col>
-                    <Col sm={4}>
-                      <Form.Control
-                        type="time"
-                        name="weekdaysEndTime"
-                        value={formDataCopy.weekdaysEndTime}
-                        onChange={handleChange}
-                      />
-                    </Col>
-                  </Form.Group>
-                  {/* Saturday Timing */}
-                  <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm={4}>
-                      Saturday Timing
-                    </Form.Label>
-                    <Col sm={4}>
-                      <Form.Control
-                        type="time"
-                        name="saturdayStartTime"
-                        value={formDataCopy.saturdayStartTime}
-                        onChange={handleChange}
-                      />
-                    </Col>
-                    <Col sm={4}>
-                      <Form.Control
-                        type="time"
-                        name="saturdayEndTime"
-                        value={formDataCopy.saturdayEndTime}
-                        onChange={handleChange}
-                      />
-                    </Col>
-                  </Form.Group>
-                  {/* Sunday Timing */}
-                  <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm={4}>
-                      Sunday Timing
-                    </Form.Label>
-                    <Col sm={2}>
-                      <Form.Check
-                        type="checkbox"
-                        label="Leave"
-                        name="sundayLeave"
-                        checked={formDataCopy.sundayLeave}
-                        onChange={handleChange}
-                      />
-                    </Col>
-                    <Col sm={3}>
-                      <Form.Control
-                        type="time"
-                        name="sundayStartTime"
-                        value={formDataCopy.sundayStartTime}
-                        onChange={handleChange}
-                        disabled={formDataCopy.sundayLeave} // Disable input if "Leave" is checked
-                      />
-                    </Col>
-                    <Col sm={3}>
-                      <Form.Control
-                        type="time"
-                        name="sundayEndTime"
-                        value={formDataCopy.sundayEndTime}
-                        onChange={handleChange}
-                        disabled={formDataCopy.sundayLeave} // Disable input if "Leave" is checked
-                      />
-                    </Col>
-                  </Form.Group>
-                  <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm={4}>
-                      Instagram URL
-                    </Form.Label>
-                    <Col sm={8}>
-                      <Form.Control
-                        type="url"
-                        name="instagram"
-                        value={formDataCopy.instagram}
-                        onChange={handleChange}
-                        placeholder="https://instagram.com/yourprofile"
-                      />
-                    </Col>
-                  </Form.Group>
-                  <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm={4}>
-                      Twitter URL
-                    </Form.Label>
-                    <Col sm={8}>
-                      <Form.Control
-                        type="url"
-                        name="twitter"
-                        value={formDataCopy.twitter}
-                        onChange={handleChange}
-                        placeholder="https://twitter.com/yourprofile"
-                      />
-                    </Col>
-                  </Form.Group>
-                  <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm={4}>
-                      Upload Images
-                    </Form.Label>
-                    <Col sm={8}>
-                      <Form.Control
-                        type="file"
-                        name="images"
-                        accept="image/*"
-                        multiple
-                        onChange={handleImageChange}
-                      />
-                    </Col>
-                  </Form.Group>
-                  {/* Image Preview */}
-                  <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm={4}>
-                      Image Preview
-                    </Form.Label>
-                    <Col sm={8}>
-                      <div className="image-preview">
-                        {formDataCopy.images.map((image, index) => (
-                          <div
-                            key={index}
-                            style={{
-                              position: "relative",
-                              display: "inline-block",
-                              marginRight: "10px",
-                            }}
+                <div>
+                  <Form
+                    className="BEditPage-Company-Form"
+                    style={{ padding: "10px" }}
+                  >
+                    <Form.Group as={Row} className="mb-3">
+                      <Form.Label column sm={4}>
+                        Company Name
+                      </Form.Label>
+                      <Col sm={8}>
+                        <Form.Control
+                          type="text"
+                          name="name"
+                          value={formDataCopy.name}
+                          onChange={handleChange}
+                        />
+                      </Col>
+                    </Form.Group>
+                    <Form.Group as={Row} className="mb-3">
+                      <Form.Label column sm={4}>
+                        Address
+                      </Form.Label>
+                      <Col sm={8}>
+                        <Form.Control
+                          type="text"
+                          name="address"
+                          value={formDataCopy.address}
+                          onChange={handleChange}
+                        />
+                      </Col>
+                    </Form.Group>
+                    <Form.Group as={Row} className="mb-3">
+                      <Form.Label column sm={4}>
+                        Contact
+                      </Form.Label>
+                      <Col sm={8}>
+                        <Form.Control
+                          type="text"
+                          name="contact"
+                          value={formDataCopy.contact}
+                          onChange={handleChange}
+                        />
+                      </Col>
+                    </Form.Group>
+                    <Form.Group as={Row} className="mb-3">
+                      <Form.Label column sm={4}>
+                        Official Website
+                      </Form.Label>
+                      <Col sm={8}>
+                        <Form.Control
+                          type="text"
+                          name="website"
+                          value={formDataCopy.website}
+                          onChange={handleChange}
+                        />
+                      </Col>
+                    </Form.Group>
+                    <Form.Group as={Row} className="mb-3">
+                      <Form.Label column sm={4}>
+                        Year of Establishment
+                      </Form.Label>
+                      <Col sm={8}>
+                        <Form.Control
+                          type="text"
+                          name="yearOfEstablishment"
+                          value={formDataCopy.yearOfEstablishment}
+                          onChange={handleChange}
+                        />
+                      </Col>
+                    </Form.Group>
+                    {/* Weekdays Timing */}
+                    <Form.Group as={Row} className="mb-3">
+                      <Form.Label column sm={4}>
+                        Weekdays Timing
+                      </Form.Label>
+                      <Col sm={4}>
+                        <Form.Control
+                          type="time"
+                          name="weekdaysStartTime"
+                          value={formDataCopy.weekdaysStartTime}
+                          onChange={handleChange}
+                        />
+                      </Col>
+                      <Col sm={4}>
+                        <Form.Control
+                          type="time"
+                          name="weekdaysEndTime"
+                          value={formDataCopy.weekdaysEndTime}
+                          onChange={handleChange}
+                        />
+                      </Col>
+                    </Form.Group>
+                    <Form.Group as={Row} className="mb-3">
+                      <Col sm={4}>
+                        <Form.Check
+                          type="checkbox"
+                          label="Any leave in weekdays?"
+                          checked={isLeaveChecked}
+                          onChange={handleCheckboxChange}
+                        />
+                      </Col>
+                      <Col sm={4}>
+                        {isLeaveChecked && (
+                          <DropdownButton
+                            id="dropdown-weekday-selector"
+                            title={selectedDay ? selectedDay : "Select a day"}
+                            onSelect={handleSelect}
+                            className="mt-2"
                           >
-                            <img
-                              src={image}
-                              alt={`Preview ${index + 1}`}
+                            <Dropdown.Item eventKey="Monday">
+                              Monday
+                            </Dropdown.Item>
+                            <Dropdown.Item eventKey="Tuesday">
+                              Tuesday
+                            </Dropdown.Item>
+                            <Dropdown.Item eventKey="Wednesday">
+                              Wednesday
+                            </Dropdown.Item>
+                            <Dropdown.Item eventKey="Thursday">
+                              Thursday
+                            </Dropdown.Item>
+                            <Dropdown.Item eventKey="Friday">
+                              Friday
+                            </Dropdown.Item>
+                          </DropdownButton>
+                        )}
+                      </Col>
+                    </Form.Group>
+
+                    {/* Saturday Timing */}
+                    <Form.Group as={Row} className="mb-3">
+                      <Form.Label column sm={4}>
+                        Saturday Timing
+                      </Form.Label>
+                      <Col sm={4}>
+                        <Form.Control
+                          type="time"
+                          name="saturdayStartTime"
+                          value={formDataCopy.saturdayStartTime}
+                          onChange={handleChange}
+                        />
+                      </Col>
+                      <Col sm={4}>
+                        <Form.Control
+                          type="time"
+                          name="saturdayEndTime"
+                          value={formDataCopy.saturdayEndTime}
+                          onChange={handleChange}
+                        />
+                      </Col>
+                    </Form.Group>
+                    {/* Sunday Timing */}
+                    <Form.Group as={Row} className="mb-3">
+                      <Form.Label column sm={4}>
+                        Sunday Timing
+                      </Form.Label>
+                      <Col sm={2}>
+                        <Form.Check
+                          type="checkbox"
+                          label="Leave"
+                          name="sundayLeave"
+                          checked={formDataCopy.sundayLeave}
+                          onChange={handleChange}
+                        />
+                      </Col>
+                      <Col sm={3}>
+                        <Form.Control
+                          type="time"
+                          name="sundayStartTime"
+                          value={formDataCopy.sundayStartTime}
+                          onChange={handleChange}
+                          disabled={formDataCopy.sundayLeave} // Disable input if "Leave" is checked
+                        />
+                      </Col>
+                      <Col sm={3}>
+                        <Form.Control
+                          type="time"
+                          name="sundayEndTime"
+                          value={formDataCopy.sundayEndTime}
+                          onChange={handleChange}
+                          disabled={formDataCopy.sundayLeave} // Disable input if "Leave" is checked
+                        />
+                      </Col>
+                    </Form.Group>
+                    <Form.Group as={Row} className="mb-3">
+                      <Form.Label column sm={4}>
+                        Instagram URL
+                      </Form.Label>
+                      <Col sm={8}>
+                        <Form.Control
+                          type="url"
+                          name="instagram"
+                          value={formDataCopy.instagram}
+                          onChange={handleChange}
+                          placeholder="https://instagram.com/yourprofile"
+                        />
+                      </Col>
+                    </Form.Group>
+                    <Form.Group as={Row} className="mb-3">
+                      <Form.Label column sm={4}>
+                        Twitter URL
+                      </Form.Label>
+                      <Col sm={8}>
+                        <Form.Control
+                          type="url"
+                          name="twitter"
+                          value={formDataCopy.twitter}
+                          onChange={handleChange}
+                          placeholder="https://twitter.com/yourprofile"
+                        />
+                      </Col>
+                    </Form.Group>
+                    <Form.Group as={Row} className="mb-3">
+                      <Form.Label column sm={4}>
+                        Upload Images
+                      </Form.Label>
+                      <Col sm={8}>
+                        <Form.Control
+                          type="file"
+                          name="images"
+                          accept="image/*"
+                          multiple
+                          onChange={handleImageChange}
+                        />
+                      </Col>
+                    </Form.Group>
+                    {/* Image Preview */}
+                    <Form.Group as={Row} className="mb-3">
+                      <Form.Label column sm={4}>
+                        Image Preview
+                      </Form.Label>
+                      <Col sm={8}>
+                        <div className="image-preview">
+                          {formDataCopy.images.map((image, index) => (
+                            <div
+                              key={index}
                               style={{
-                                width: "100px",
-                                height: "100px",
-                                objectFit: "cover",
+                                position: "relative",
+                                display: "inline-block",
                                 marginRight: "10px",
                               }}
-                            />
-                            <Button
-                              variant="danger"
-                              size="sm"
-                              style={{
-                                position: "absolute",
-                                top: "0",
-                                right: "0",
-                                borderRadius: "50%",
-                                padding: "0.2rem 0.5rem",
-                                fontSize: "0.75rem",
-                              }}
-                              onClick={() => handleImageDelete(index)}
                             >
-                              X
-                            </Button>
-                          </div>
-                        ))}
-                      </div>
-                    </Col>
-                  </Form.Group>
-                  <Button
-                    variant="primary"
-                    onClick={handleSave}
-                    className="me-2"
-                  >
-                    Save
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    onClick={handleCancel}
-                  >
-                    Cancel
-                  </Button>
-                </Form>
+                              <img
+                                src={image}
+                                alt={`Preview ${index + 1}`}
+                                style={{
+                                  width: "50px",
+                                  height: "50px",
+                                  objectFit: "cover",
+                                  marginRight: "10px",
+                                }}
+                              />
+                              <Button
+                                variant="danger"
+                                size="xs"
+                                style={{
+                                  position: "absolute",
+                                  top: "0",
+                                  right: "0",
+                                  borderRadius: "50%",
+                                  padding: "0.2rem 0.5rem",
+                                  fontSize: "0.75rem",
+                                }}
+                                onClick={() => handleImageDelete(index)}
+                              >
+                                X
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      </Col>
+                    </Form.Group>
+                    <Button
+                      variant="primary"
+                      onClick={handleSave}
+                      className="me-2"
+                    >
+                      Save
+                    </Button>
+                    <Button variant="secondary" onClick={handleCancel}>
+                      Cancel
+                    </Button>
+                  </Form>
+                </div>
               ) : (
                 <>
-                  <Card.Title className="BEditFront-Title">
-                    {formData.name}
-                  </Card.Title>
-                  <strong>Photos:</strong>
-                  <Slider {...settings}>
-                    {formData.images.map((image, index) => (
-                      <div key={index} style={{ position: "relative" }}>
-                        <img
-                          src={image}
-                          alt={`Company Image ${index + 1}`}
-                          style={{
-                            width: "100%",
-                            height: "200px",
-                            objectFit: "cover",
-                            border: "2px solid white",
-                            borderRadius: "10px",
-                          }}
-                        />
-                      </div>
-                    ))}
-                  </Slider>
+                  <Card style={{ padding: "20px", borderRadius: "20px" }}>
+                    <Card.Title className="BEditFront-Title">
+                      {formData.name}
+                    </Card.Title>
+                    <strong>Photos:</strong>
+                    <Slider {...settings}>
+                      {formData.images.map((image, index) => (
+                        <div key={index} style={{ position: "relative" }}>
+                          <img
+                            src={image}
+                            alt={`Company Image ${index + 1}`}
+                            style={{
+                              width: "100%",
+                              height: "200px",
+                              objectFit: "cover",
+                              border: "2px solid white",
+                              borderRadius: "10px",
+                            }}
+                          />
+                        </div>
+                      ))}
+                    </Slider>
+                  </Card>
+
                   <div className="details-card">
                     <div className="details-item">
                       <div className="details-label">
@@ -472,15 +576,29 @@ function BussinesEditPage() {
                         <strong>Business Timing (Weekdays):</strong>
                       </div>
                       <div className="details-value">
-                        {formData.weekdaysStartTime} - {formData.weekdaysEndTime}
+                        {formData.weekdaysStartTime} -{" "}
+                        {formData.weekdaysEndTime}
                       </div>
                     </div>
+
+                    {formData.selectedDay.length !== 0 && (
+                      <div className="details-item">
+                        <div className="details-label">
+                          <strong>Leave of Weekdays</strong>
+                        </div>
+                        <div className="details-value">
+                          {formData.selectedDay}
+                        </div>
+                      </div>
+                    )}
+
                     <div className="details-item">
                       <div className="details-label">
                         <strong>Business Timing (Saturday):</strong>
                       </div>
                       <div className="details-value">
-                        {formData.saturdayStartTime} - {formData.saturdayEndTime}
+                        {formData.saturdayStartTime} -{" "}
+                        {formData.saturdayEndTime}
                       </div>
                     </div>
                     <div className="details-item">
