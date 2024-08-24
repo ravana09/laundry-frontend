@@ -85,7 +85,7 @@ function BussinesSignUp() {
 
   return (
     <>
-      <Container fluid className="Login_Row">
+      <Container fluid className="Login_Row" style={{overflowY:'scroll'}}>
         <BubbleAnimation />
         <Row
           className="justify-content-end"
@@ -100,11 +100,11 @@ function BussinesSignUp() {
             md={4}
             lg={4}
             xl={4}
-            className="d-flex align-items-center justify-content-end"
+            className="d-flex align-items-end justify-content-end"
           >
             <span className="login-Company_name">Laund</span>
           </Col>
-          <Col xs={4}>
+          <Col xs={4} className="d-flex align-items-end justify-content-end">
             <Image
               src={loginMachineImage}
               alt="Washing Machine"
@@ -232,11 +232,11 @@ function BussinesSignUp() {
               </Card.Body>
             </Card>
           </Col>
-          <Col lg={1}></Col>
+          <Col md={1} lg={1}></Col>
           <Col
-            xs={12}
-            md={6}
-            lg={4}
+             xs={0}
+             md={5}
+             lg={4}
             className="left-column Login-Container-left"
           >
             <Image

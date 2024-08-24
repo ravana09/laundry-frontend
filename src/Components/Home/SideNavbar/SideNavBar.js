@@ -12,12 +12,28 @@ import NavbarBubbleAnimation from "./NavbarAnimation";
 import "../SideNavbar/SideNavBar.css";
 import { CgProfile } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 function SideNavBar() {
   let navigate = useNavigate();
 
   const handleNavigation = (page) => {
     navigate(page);
+  };
+
+  const handleSignOut = (page) => {
+    Cookies.remove("AccountType");
+
+    // Cookies.remove("BusinessAccountType");
+
+    // Use a short delay to ensure cookies are removed
+    setTimeout(() => {
+      if (!Cookies.get("AccountType") ) {
+        navigate(page);
+      } else {
+        console.error("Failed to remove cookies.");
+      }
+    }, 100);
   };
 
   return (
@@ -77,7 +93,10 @@ function SideNavBar() {
                 </Nav.Link>
               </Nav>
               <div className="mt-auto">
-                <Button variant="outline-danger" onClick={() => handleNavigation("/")}>
+                <Button
+                  variant="outline-danger"
+                  onClick={() => handleSignOut("/")}
+                >
                   Sign Out
                 </Button>
               </div>

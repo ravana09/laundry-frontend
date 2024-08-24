@@ -56,7 +56,7 @@ function SignUpPage() {
           >
             <span className="login-Company_name">Laund</span>
           </Col>
-          <Col xs={4}>
+          <Col xs={4} className="d-flex align-items-end justify-content-end">
             <Image
               src={loginMachineImage}
               alt="Washing Machine"

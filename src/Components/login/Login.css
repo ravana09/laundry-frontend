@@ -17,7 +17,7 @@
   font-size: 12px;
   display: flex;
   align-items: center;
-  overflow: hidden;
+  /* overflow: hidden; */
   transition: width 0.3s ease;
   white-space: nowrap;
   width: 40px; /* Initial width to only show the logo */
@@ -229,12 +229,15 @@
 
 
 @media only screen and (max-width: 769px) {
+  .LOgin_Header{
+    height: 15vh;
+  }
   .loginheader-Machine-Image {
     display: block;
   }
   .loginheader-Machine-Image {
-    width: 100px;
-    height: 100px;
+    width: 50px;
+    height: 50px;
   }
   .login-Company_name {
     display: none;
@@ -269,4 +272,14 @@
   .right-column {
     height: auto;
   }
+}
+@media only screen and (max-width: 1000px) {
+ 
+  .login-Machine-Image {
+    display: flex;
+    width: 50%;
+    justify-content: flex-start;
+  }
+
+  
 }

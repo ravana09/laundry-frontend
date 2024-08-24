@@ -33,9 +33,9 @@
   }
   .loginheader-Machine-Image{
     width: 100%;
-    max-width: 300px;
+    max-width: 80px;
     height: 15vh;
-    margin: 20px 0;
+    
   }
   
   /* Card Styling */
@@ -88,9 +88,8 @@
       font-size: 20px;
     }
   
-    .loginheader-Machine-Image,
-    .login-Machine-Image {
-      max-width: 200px;
+    .loginheader-Machine-Image{
+      max-width: 50px;
     }
   
     .Login-login-tag {
@@ -108,9 +107,9 @@
       font-size: 22px;
     }
   
-    .loginheader-Machine-Image,
-    .login-Machine-Image {
-      max-width: 250px;
+    .loginheader-Machine-Image
+    {
+      max-width: 50px !important;
     }
   
     .Login-login-tag {

@@ -55,13 +55,22 @@ function Login() {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = (e) => {
+   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted");
-    navigate("/CompanyCard");
+    // Cookies.remove("AccountType");
+    Cookies.set("AccountType", "user", { expires: 684 });
 
-  
+    setTimeout(() => {
+      if (Cookies.get("AccountType") === "user") {
+        navigate("/CompanyCard");
+        window.location.reload(); 
+      } else {
+        console.error("Failed to set AccountType cookie.");
+      }
+    }, 100);
   };
+
 
   const handleSignUpPage = () => {
     navigate("/SignUpPage");
@@ -132,7 +141,7 @@ function Login() {
               <span className="download-text">For Business</span>
             </Button>
           </Col>
-          <Col xs={4}>
+          <Col xs={4} className="d-flex align-items-end justify-content-end">
             <Image
               src={loginMachineImage}
               alt="Washing Machine"
