@@ -55,7 +55,7 @@ function Login() {
     setShowPassword(!showPassword);
   };
 
-   const handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted");
     // Cookies.remove("AccountType");
@@ -64,13 +64,12 @@ function Login() {
     setTimeout(() => {
       if (Cookies.get("AccountType") === "user") {
         navigate("/CompanyCard");
-        window.location.reload(); 
+        window.location.reload();
       } else {
         console.error("Failed to set AccountType cookie.");
       }
     }, 100);
   };
-
 
   const handleSignUpPage = () => {
     navigate("/SignUpPage");
@@ -88,58 +87,62 @@ function Login() {
           className="justify-content-end"
           style={{ borderBottom: "2px solid white" }}
         >
-          <Col xs={4} sm={4} md={8} lg={8} xl={8}>
+          <Col xs={4} sm={4} md={9} >
             <Image src={symbol} className="login-Company-Symbol" />
           </Col>
           <Col
             xs={4}
             sm={4}
-            md={4}
-            lg={4}
-            xl={4}
-            className="d-flex align-items-center justify-content-end"
+            md={3}
+            
+            className="d-flex align-items-center justify-content-end "
           >
-            {isMac ? (
-              <a
-                href="https://apps.apple.com/us/app"
-                target="_blank"
-                rel="noopener noreferrer"
+            <Col xs={5}>
+              {isMac ? (
+                <a
+                  href="https://apps.apple.com/us/app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ padding: "10px" }}
+                >
+                  <Image
+                    src={appleStoreLogo}
+                    alt="Apple Store"
+                    style={{ width: "30px", marginRight: "10px" }}
+                  />
+                  Download on the Apple Store
+                </a>
+              ) : (
+                <a
+                  href="https://play.google.com/store"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="PlayStoreButton"
+                >
+                  <Image
+                    src={playStoreLogo}
+                    alt="Play Store"
+                    style={{ width: "30px" }}
+                  />
+                  <span className="download-text">Download App</span>
+                </a>
+              )}
+            </Col>
+            <Col xs="auto">
+              <Button
+                className="animated-button"
+                onClick={() => {
+                  handleNavigation("/BussinessLogin");
+                }}
               >
                 <Image
-                  src={appleStoreLogo}
-                  alt="Apple Store"
-                  style={{ width: "30px", marginRight: "10px" }}
+                  src={Bussiness}
+                  alt="For Business"
+                  className="business-icon"
                 />
-                Download on the Apple Store
-              </a>
-            ) : (
-              <a
-                href="https://play.google.com/store"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="PlayStoreButton"
-              >
-                <Image
-                  src={playStoreLogo}
-                  alt="Play Store"
-                  style={{ width: "30px" }}
-                />
-                <span className="download-text">Download App</span>
-              </a>
-            )}
-            <Button
-              className="animated-button"
-              onClick={() => {
-                handleNavigation("/BussinessLogin");
-              }}
-            >
-              <Image
-                src={Bussiness}
-                alt="For Business"
-                className="business-icon"
-              />
-              <span className="download-text">For Business</span>
-            </Button>
+                <span className="download-text">For Business</span>
+              </Button>
+            </Col>
           </Col>
           <Col xs={4} className="d-flex align-items-end justify-content-end">
             <Image

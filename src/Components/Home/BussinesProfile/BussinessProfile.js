@@ -29,7 +29,7 @@ function BussinessProfile() {
         <Col xs={12} sm={4}>
     <BussinessProfileCard />
     {/* {!showBoost && ( */}
-    <Card className="Bussiness-Profile-BoostCard" style={{ borderRadius: '40px' }}>
+    <Card className="Bussiness-Profile-BoostCard" style={{ marginTop:'3vh'}}>
       <Card.Body>
         <Row>
           <Col xs={4}>
@@ -58,9 +58,9 @@ function BussinessProfile() {
             ) : (
               <Card
                 className="Bussiness-Profile-MyBussinesCard"
-                style={{ backgroundColor: "transparent", border: 'none' }}
+                style={{  width:"90%" }}
               >
-                <Card.Body>
+                <Card.Body style={{padding:'0px'}}>
                   {[
                     { title: "My Leads", subtitle: "Tap to View your Leads", Navigate: "/CustomerLeads" },
                     { title: "Catalogue", subtitle: "Show your Product and Services", Navigate: "/CompanyCard" },
@@ -71,10 +71,13 @@ function BussinessProfile() {
                       key={index}
                       className="Bussiness-Profile-MyBussinessCards"
                       style={{
-                        borderRadius: "40px",
+                        width:"100%",
                         height: "min-content",
                         backgroundColor: "white",
-                        marginBottom: "15px",
+                        marginBottom: "12px",
+                        border:'none'
+                       
+                       
                       }}
                       onClick={() => handleNavigation(item.Navigate)}
                     >
@@ -94,11 +97,11 @@ function BussinessProfile() {
                               />
                             </Col>
                             <Col xs={8} sm={9}>
-                              <h2
+                              <h3
                                 className="MYbussinessCard-Title"
                               >
                                 {item.title}
-                              </h2>
+                              </h3>
                               <h5 className="MYbussinessCard-SubTitle">{item.subtitle}</h5>
                             </Col>
                           </Row>

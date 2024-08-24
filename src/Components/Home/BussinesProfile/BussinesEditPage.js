@@ -211,11 +211,7 @@ function BussinesEditPage() {
                       }}
                       onClick={handleEdit}
                     >
-                      {/* <Image
-          src={Edit}
-          style={{ width: "20px", border: 'none', padding: '0px' }}
-          alt="Edit Icon"
-        /> */}
+               
                       Edit Profile
                     </Button>
                   )}
@@ -231,11 +227,7 @@ function BussinesEditPage() {
                     }}
                     onClick={handlePreview}
                   >
-                    {/* <Image
-        src={Preview}
-        style={{ width: "30px" }}
-        alt="Preview Icon"
-      /> */}
+            
                     Preview
                   </Button>
                 </Col>
@@ -252,12 +244,12 @@ function BussinesEditPage() {
               marginTop: "3vh",
             }}
           >
-            <Card.Body style={{ padding: "0px", margin: "0px" }}>
+            <Card.Body style={{ padding: "0px", margin: "0px" ,borderRadius:'0px'}}>
               {isEditing ? (
-                <div>
+                <div style={{ borderRadius:'0px' }}>
                   <Form
                     className="BEditPage-Company-Form"
-                    style={{ padding: "10px" }}
+                    style={{ padding: "20px",borderRadius:'0px' }}
                   >
                     <Form.Group as={Row} className="mb-3">
                       <Form.Label column sm={4}>
@@ -540,7 +532,7 @@ function BussinesEditPage() {
                 </div>
               ) : (
                 <>
-                  <Card style={{ padding: "20px", borderRadius: "20px" }}>
+                  <Card style={{ padding: "20px"}}>
                     <Card.Title className="BEditFront-Title">
                       {formData.name}
                     </Card.Title>

@@ -10,21 +10,23 @@
   width: 100%;
   max-width: 550px;
   margin-top: 3vh;
-  border-radius: 30px;
+  /* border-radius: 10px; */
 }
 
 .Bussiness-Profile-ProfilePic {
   width: 100% !important;
   height: 40vh;
   object-fit: cover;
-  border-radius: 20px;
+  /* border-radius: 20px; */
 }
 .Bussiness-Profile-MyBussinesCard{
-    margin-top: 2vh;
+    margin-top: 3vh;
+    padding: 0px 0px 0px 0px !important;
+    height:max-content !important;
 }
 .MYbussinessCard-Div {
-  border: 0.5px solid grey;
-  border-radius: 20px;
+  border: 0.5px solid rgb(193, 191, 191);
+  border-radius: 10px;
   padding: 1px;
 }
 .MYbussinessCard-Images{
@@ -36,6 +38,7 @@
 .MYbussinessCard-Title{
     color: rgb(12, 153, 209);
     margin-bottom: 10px;
+   
 }
 .MYbussinessCard-SubTitle{
     font-size: 21px;
@@ -53,6 +56,9 @@
 
 /* Responsive styles */
 @media (max-width: 576px) {
+  .Bussiness-Profile-MyBussinesCard{
+    width: 100% !important;
+  }
   .Bussiness-Profile-ComapnyCard {
     margin-top: 2vh;
     border-radius: 20px;

@@ -18,7 +18,7 @@ const BussinessProfileCard = () => {
       className="Bussiness-Profile-ComapnyCard"
       style={{
         width: "100%",
-        borderRadius: "20px",
+        // borderRadius: "20px",
         height: "auto",
         padding: "10px",
       }}
@@ -38,7 +38,7 @@ const BussinessProfileCard = () => {
         </Card.Text>
       </Card.Body>
       <Card.Body>
-        {/* <Card.Link href="#">Edit</Card.Link> */}
+       
       </Card.Body>
     </Card>
   );

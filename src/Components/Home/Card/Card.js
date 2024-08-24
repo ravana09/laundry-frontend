@@ -27,7 +27,7 @@ const cardData = [
   {
     _id: 1,
     title:
-      "Some quick example text to build on the card title and make up the bulk of the card's content.",
+      "Some quick example text to build ",
     address:
       "Kamaraj Road, off Killiyur Falls Road, Post, Ondikadai, Yercaud, Tamil Nadu 636601",
     text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
@@ -122,13 +122,13 @@ function CompanyCard() {
             className="CompanyCard-Card"
             style={{
               width: "100%",
-              borderRadius: "20px",
-              marginBottom: "20px",
-              border: "2px solid black",
+              // borderRadius: "20px",
+              marginBottom: "10px",
+              // border: "2px solid black",
             }}
           >
             <Row>
-              <Col sm={3}>
+              <Col xs={12} sm={3}>
                 
                 <Carousel
                   fade
@@ -138,6 +138,7 @@ function CompanyCard() {
                     width: "100%",
                     borderRadius: "20px",
                     overflow: "hidden",
+                  
                   }}
                 >
                   {card.images.map((image, i) => (
@@ -147,25 +148,22 @@ function CompanyCard() {
                         alt={`Slide ${i + 1}`}
                         fluid
                         className="companyCard-Carousel"
-                        style={{
-                          width: "100%",
-                          height: "30vh",
-                          objectFit: "fill",
-                          margin: "10px",
-                        }}
+                      
                         onClick={() => handleNavigate("/OneCard", card._id)}
                       />
                     </Carousel.Item>
                   ))}
                 </Carousel>
               </Col>
-              <Col sm={9} md={6} lg={6} xl={6}>
+              <Col sm={8}  >
                 {/* Details section */}
+               
                 <Card.Body style={{ flex: "2", padding: "20px" }}>
-                  <Card.Title onClick={() => handleNavigate("/OneCard", card._id)}>
+                <div onClick={() => handleNavigate("/OneCard", card._id)}>
+                  <Card.Title onClick={() => handleNavigate("/OneCard", card._id)} className="companyCard-Title">
                     {card.title}
                   </Card.Title>
-                  <Card.Text>
+                  <Card.Text style={{paddingBottom:'5px'}}>
                     <Row>
                       <Col xs={8}>
                         <Image src={star} style={{ width: "20px" }} />
@@ -174,9 +172,10 @@ function CompanyCard() {
                         </Badge>{" "}
                         Ratings
                       </Col>
-                      <Col xs="auto">reviews</Col>
+                     
                     </Row>
                   </Card.Text>
+                  </div>
                   <Card.Title onClick={() => handleNavigate("/OneCard", card._id)}>
                     <AddressWithShowMore address={card.address} />
                   </Card.Title>
@@ -204,7 +203,7 @@ function CompanyCard() {
                         style={{ width: "28px", marginRight: "8px" }}
                         alt="Chat"
                       />
-                      Chat
+                    <span> Chat</span> 
                     </Button>
 
                     <Button
@@ -233,7 +232,7 @@ function CompanyCard() {
                   style={{ width: "28px", marginRight: "8px" }}
                   alt="Chat"
                 />
-                      Share
+                    <span> Share</span> 
                     </Button>
                     <Button
                       className="hover-button"
@@ -255,7 +254,7 @@ function CompanyCard() {
                   </div>
                 </Card.Body>
               </Col>
-              <Col sm={0} md={3} lg={3} xl={3} onClick={() => handleNavigate("/OneCard", card._id)} ></Col>
+              <Col sm={1}   onClick={() => handleNavigate("/OneCard", card._id)} ></Col>
             </Row>
           </Card>
         ))}

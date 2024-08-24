@@ -174,24 +174,25 @@ function OneCard({ handleNavigate }) {
         (position) => {
           const { latitude, longitude } = position.coords;
           const address = encodeURIComponent(card.address);
-          const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${latitude},${longitude}&destination=${address}`;
+          const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${latitude},${longitude}&destination=${address}&travelmode=driving`;
           window.open(mapsUrl, "_blank");
         },
         (error) => {
-          console.error("Error getting location:", error);
-          // Fallback if location retrieval fails
+          console.error("Error getting location:", error.message);
           const address = encodeURIComponent(card.address);
-          const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${address}`;
+          const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${address}&travelmode=driving`;
           window.open(mapsUrl, "_blank");
-        }
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
       );
     } else {
-      // Geolocation is not supported by the browser
+      console.warn("Geolocation is not supported by this browser.");
       const address = encodeURIComponent(card.address);
-      const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${address}`;
+      const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${address}&travelmode=driving`;
       window.open(mapsUrl, "_blank");
     }
   };
+  
 
   const handleSubmitReview = (e) => {
     e.preventDefault();
