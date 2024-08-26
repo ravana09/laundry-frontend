@@ -26,6 +26,14 @@ import ProfileUodate from "../../Images/ProfileUpdate.png";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
+function getMediaType(file) {
+  const extension = file.name.split(".").pop().toLowerCase();
+  if (["jpg", "jpeg", "png", "bmp"].includes(extension)) return "image";
+  if (["gif"].includes(extension)) return "gif";
+  if (["mp4", "webm", "ogg"].includes(extension)) return "video";
+  return "unknown";
+}
+
 function BussinesEditPage() {
   const [isEditing, setIsEditing] = useState(false);
   const [isLeaveChecked, setIsLeaveChecked] = useState(false);
@@ -49,7 +57,7 @@ function BussinesEditPage() {
     sundayEndTime: "00:00",
     sundayLeave: " ",
     selectedDay: "",
-    images: [img1, img2, img3, img1, img2, img3],
+    media: [],
     instagram: "https://www.instagram.com/",
     twitter: "https://x.com/twitt_login?lang=en",
   });
@@ -91,17 +99,22 @@ function BussinesEditPage() {
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    const imageUrls = files.map((file) => URL.createObjectURL(file));
-    setFormDataCopy((prev) => ({
+    const newMedia = files.map((file) => ({
+      file,
+    preview: URL.createObjectURL(file),
+    }));
+    setFormData((prev) => ({
       ...prev,
-      images: [...prev.images, ...imageUrls],
+      media: [...prev.media, ...newMedia],
     }));
   };
 
+  console.log(formData);
+
   const handleImageDelete = (index) => {
-    setFormDataCopy((prev) => ({
+    setFormData((prev) => ({
       ...prev,
-      images: prev.images.filter((_, i) => i !== index),
+      media: prev.media.filter((_, i) => i !== index),
     }));
   };
 
@@ -255,7 +268,7 @@ function BussinesEditPage() {
                 )}
               </div>
               <Row>
-                <Col xs={6}  className="d-flex justify-content-end">
+                <Col xs={6} className="d-flex justify-content-end">
                   {!isEditing && (
                     <Button
                       variant="outline-info"
@@ -263,7 +276,6 @@ function BussinesEditPage() {
                         color: "black",
                         display: "flex",
                         alignItems: "center",
-                      
                       }}
                       onClick={handleEdit}
                     >
@@ -527,7 +539,100 @@ function BussinesEditPage() {
                         />
                       </Col>
                     </Form.Group>
-                    <Form.Group as={Row} className="mb-3">
+                    <div>
+                      <Form.Group as={Row} className="mb-3">
+                        <Form.Label column sm={4}>
+                          Upload Media (Images)
+                        </Form.Label>
+                        <Col sm={8}>
+                          <Form.Control
+                            type="file"
+                            accept="image/*"
+                            multiple
+                            onChange={handleImageChange}
+                          />
+                        </Col>
+                      </Form.Group>
+
+                      <Form.Group as={Row} className="mb-3">
+                        <Form.Label column sm={4}>
+                          Upload Media (Videos)
+                        </Form.Label>
+                        <Col sm={8}>
+                          <Form.Control
+                            type="file"
+                            accept="video/*"
+                            multiple
+                            onChange={handleImageChange}
+                          />
+                        </Col>
+                      </Form.Group>
+
+                      <Form.Group as={Row} className="mb-3">
+                        <Form.Label column sm={4}>
+                          Media Preview
+                        </Form.Label>
+                        <Col sm={8}>
+                          <div className="media-preview">
+                            {formData.media?.map((mediaItem, index) => (
+                              <div
+                                key={index}
+                                style={{
+                                  position: "relative",
+                                  display: "inline-block",
+                                  marginRight: "10px",
+                                }}
+                              >
+                                {mediaItem.type === "image" ||
+                                mediaItem.type === "gif" ? (
+                                  <img
+                                    src={mediaItem.file.url} // Ensure this is the correct property for the image URL
+                                    alt={`Media ${index + 1}`}
+                                    style={{
+                                      width: "100px",
+                                      height: "100px",
+                                      objectFit: "cover",
+                                      border: "2px solid white",
+                                      borderRadius: "10px",
+                                    }}
+                                  />
+                                ) : (
+                                  <video
+                                    src={mediaItem.file.url} // Ensure this is the correct property for the video URL
+                                    controls
+                                    style={{
+                                      width: "100px",
+                                      height: "100px",
+                                      objectFit: "cover",
+                                      border: "2px solid white",
+                                      borderRadius: "10px",
+                                    }}
+                                  />
+                                )}
+                                <button
+                                  style={{
+                                    position: "absolute",
+                                    top: "0",
+                                    right: "0",
+                                    borderRadius: "50%",
+                                    padding: "0.2rem 0.5rem",
+                                    fontSize: "0.75rem",
+                                    backgroundColor: "#f44336", // Bootstrap's 'danger' color
+                                    color: "white",
+                                    border: "none",
+                                    cursor: "pointer",
+                                  }}
+                                  onClick={() => handleImageDelete(index)}
+                                >
+                                  X
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        </Col>
+                      </Form.Group>
+                    </div>
+                    {/* <Form.Group as={Row} className="mb-3">
                       <Form.Label column sm={4}>
                         Upload Images
                       </Form.Label>
@@ -540,9 +645,9 @@ function BussinesEditPage() {
                           onChange={handleImageChange}
                         />
                       </Col>
-                    </Form.Group>
+                    </Form.Group> */}
                     {/* Image Preview */}
-                    <Form.Group as={Row} className="mb-3">
+                    {/* <Form.Group as={Row} className="mb-3">
                       <Form.Label column sm={4}>
                         Image Preview
                       </Form.Label>
@@ -586,7 +691,7 @@ function BussinesEditPage() {
                           ))}
                         </div>
                       </Col>
-                    </Form.Group>
+                    </Form.Group> */}
                     <Button
                       variant="primary"
                       onClick={handleSave}
@@ -607,7 +712,7 @@ function BussinesEditPage() {
                     </Card.Title> */}
                     <strong>Photos:</strong>
                     <Slider {...settings}>
-                      {formData.images.map((image, index) => (
+                      {formData.media.map((image, index) => (
                         <div key={index} style={{ position: "relative" }}>
                           <img
                             src={image}

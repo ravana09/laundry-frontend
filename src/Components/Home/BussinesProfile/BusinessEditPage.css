@@ -80,11 +80,19 @@
 
 .BEditFront-edit-profile {
   position: absolute;
-  bottom: 38%;
+  bottom: 45%;
   left: 50%;
   transform: translateX(-50%);
 }
 
+@media (max-width: 380px) {
+  .BEditFront-edit-profile {
+    position: absolute;
+    bottom: 45%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
 
 .BEditFront-edit-profile {
   background-color: white;

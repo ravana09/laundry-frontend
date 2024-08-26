@@ -35,6 +35,9 @@
     .user-details {
       font-size: 14px; 
     }
+    .EditUserPRofile-Card{
+      width: 100% !important;
+    }
   }
   
   @media (max-width: 576px) {
@@ -45,4 +48,13 @@
     .user-details {
       font-size: 12px; 
     }
+    .EditUserPRofile-Card{
+      width: 100% !important;
+    }
+  }
+
+  /* Edit user */
+
+  .EditUserPRofile-Card{
+    width: 50%;
   }

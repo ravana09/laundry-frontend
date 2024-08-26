@@ -4,6 +4,8 @@ import { useLocation } from "react-router-dom";
 import img1 from "../Card/sampleImages/luffy-3200-x-1800-picture-ao6tt30yuxjuvjlk.jpg";
 import img2 from "../Card/sampleImages/sanji-and-one-piece-zoro-4k-99b5u5n1oeu8tqja.jpg";
 import img3 from "../Card/sampleImages/wallpaperflare.com_wallpaper (1).jpg";
+import OnePIeceGif from "../Card/sampleImages/OnePieceGIf.gif";
+import SuryaVideo from "../Card/sampleImages/SampleVIdeo.mp4";
 import emptyHeart from "../../Images/EmptyHeart.png";
 import redHeart from "../../Images/heart.png";
 import { FaLocationDot, FaUsers } from "react-icons/fa6";
@@ -40,6 +42,20 @@ import "slick-carousel/slick/slick-theme.css";
 import { FaMapMarkerAlt, FaStar } from "react-icons/fa";
 import { FaAward } from "react-icons/fa";
 
+function getMediaType(url) {
+  const extension = url.split(".").pop().toLowerCase();
+
+  if (["jpg", "jpeg", "png", "bmp"].includes(extension)) {
+    return "image";
+  } else if (["gif"].includes(extension)) {
+    return "gif";
+  } else if (["mp4", "webm", "ogg"].includes(extension)) {
+    return "video";
+  }
+
+  return "unknown";
+}
+
 const cardData = [
   {
     _id: 1,
@@ -49,6 +65,8 @@ const cardData = [
     text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
     images: [
       img1,
+      OnePIeceGif,
+      SuryaVideo,
       img2,
       img3,
       img1,
@@ -59,6 +77,7 @@ const cardData = [
       img3,
       img1,
       img2,
+
       img3,
     ],
     name: "Company Name",
@@ -109,8 +128,6 @@ const cardData = [
   },
 ];
 
-
-
 const services = [
   { name: "Laundry", image: Laundry },
   { name: "Dry Cleaning", image: DryCleaning },
@@ -119,7 +136,7 @@ const services = [
 ];
 
 function OneCard({ handleNavigate }) {
-  const[formData,setFormData]=useState(cardData)
+  const [formData, setFormData] = useState(cardData);
   const settings = {
     dots: false,
     infinite: 2,
@@ -153,7 +170,6 @@ function OneCard({ handleNavigate }) {
   const [comment, setComment] = useState("");
   const [reviews, setReviews] = useState([]);
   const [likes, setLikes] = useState(false);
-  
 
   const [activeTab, setActiveTab] = useState("Services");
   const location = useLocation();
@@ -169,7 +185,6 @@ function OneCard({ handleNavigate }) {
     setActiveTab(tab);
     console.log(`${tab} clicked`);
   };
-  
 
   const handleLocationClick = () => {
     if (navigator.geolocation) {
@@ -195,7 +210,6 @@ function OneCard({ handleNavigate }) {
       window.open(mapsUrl, "_blank");
     }
   };
-  
 
   const handleSubmitReview = (e) => {
     e.preventDefault();
@@ -245,23 +259,55 @@ function OneCard({ handleNavigate }) {
           </div>
 
           <Slider {...settings}>
-            {visibleImages.map((image, index) => (
-              <div key={index} style={{ position: "relative" }}>
-                <Image
-                  src={image}
-                  alt={`Hotel Image ${index + 1}`}
-                  fluid
-                  style={{
-                    width: "100%",
-                    height: "200px",
-                    objectFit: "fill",
-                    border: "2px solid white",
-                    borderRadius: "10px",
-                  }}
-                  
-                />
-              </div>
-            ))}
+            {visibleImages.map((media, index) => {
+              const type = getMediaType(media);
+
+              return (
+                <div key={index} style={{ position: "relative" }}>
+                  {type === "image" && (
+                    <Image
+                      src={media}
+                      alt={`Media ${index + 1}`}
+                      fluid
+                      style={{
+                        width: "100%",
+                        height: "200px",
+                        objectFit: "fill",
+                        border: "2px solid white",
+                        borderRadius: "10px",
+                      }}
+                    />
+                  )}
+                  {type === "gif" && (
+                    <Image
+                      src={media}
+                      alt={`Media ${index + 1}`}
+                      fluid
+                      style={{
+                        width: "100%",
+                        height: "200px",
+                        objectFit: "cover",
+                        border: "2px solid white",
+                        borderRadius: "10px",
+                      }}
+                    />
+                  )}
+                  {type === "video" && (
+                    <video
+                      src={media}
+                      controls
+                      style={{
+                        width: "100%",
+                        height: "200px",
+                        objectFit: "cover",
+                        border: "2px solid white",
+                        borderRadius: "10px",
+                      }}
+                    />
+                  )}
+                </div>
+              );
+            })}
           </Slider>
 
           <Card.Body
@@ -322,7 +368,7 @@ function OneCard({ handleNavigate }) {
                   style={{ width: "28px", marginRight: "8px" }}
                   alt="Chat"
                 />
-               <span> Chat</span>
+                <span> Chat</span>
               </Button>
 
               <Button
@@ -351,7 +397,7 @@ function OneCard({ handleNavigate }) {
                   style={{ width: "28px", marginRight: "8px" }}
                   alt="Chat"
                 />
-               <span>Share</span> 
+                <span>Share</span>
               </Button>
             </div>
           </Card.Body>
@@ -388,16 +434,6 @@ function OneCard({ handleNavigate }) {
                     Overview
                   </div>
                 </Col>
-                {/* <Col xs={6} sm={3} className="mb-2">
-                  <div
-                    onClick={() => handleClick("Contact")}
-                    className={`OneCard-Services-text ${
-                      activeTab === "Contact" ? "active" : ""
-                    }`}
-                  >
-                    Contact
-                  </div>
-                </Col> */}
               </Row>
 
               {activeTab === "Services" && (
@@ -535,6 +571,11 @@ function OneCard({ handleNavigate }) {
                   <h2 className="my-4 team-container">About {card.name}</h2>
                   <p>{card.description}</p>
                   <hr />
+
+                  <h2 className="my-4 team-container">Details</h2>
+                  <p>{card.description}</p>
+                  <hr />
+
                   <section className="company-timing-section">
                     <h3 className="company-timing-heading">
                       Our Business Hours
@@ -600,9 +641,9 @@ function OneCard({ handleNavigate }) {
                       </div>
                     ))}
                   </Row>
-                  <hr />
+                  {/* <hr /> */}
 
-                  <h3 className="my-4 team-container">Meet Our Team</h3>
+                  {/* <h3 className="my-4 team-container">Meet Our Team</h3>
                   <div className="team-container">
                     {card.team.map((member, index) => (
                       <div key={index} className="team-member">
@@ -619,7 +660,7 @@ function OneCard({ handleNavigate }) {
                         </Card>
                       </div>
                     ))}
-                  </div>
+                  </div> */}
                   <hr />
 
                   <section className="testimonials-section">
