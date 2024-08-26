@@ -55,7 +55,7 @@ function SideNavBar() {
               <Navbar.Toggle aria-controls="offcanvasNavbar" />
             </Col>
             {cookiesType === "Bussiness" && (
-              <Col className="text-center" xs={4}>
+              <Col className="text-center" xs={3}>
                 <Navbar.Brand
                   onClick={() => handleNavigation("/BussinessProfile")}
                 >
@@ -64,14 +64,14 @@ function SideNavBar() {
               </Col>
             )}
             {cookiesType === "user" && (
-              <Col className="text-center" xs={4}>
+              <Col className="text-center" xs={3}>
                 <Navbar.Brand onClick={() => handleNavigation("/CompanyCard")}>
                   Company 
                 </Navbar.Brand>
               </Col>
             )}
 
-            <Col xs={4} className="text-end">
+            <Col xs={5} className="text-end">
               <div className="profile-buttons ">
                 {cookiesType === "Bussiness" && (
                   <Button
@@ -79,19 +79,20 @@ function SideNavBar() {
                     style={{ border: "none", padding: 0 }}
                     onClick={() => handleNavigation("/BussinessProfile")}
                   >
-                    <span style={{padding:'10px'}}>Bussiness Profile</span>
+                    
                     <Image
                       src={ProfileImg}
                       alt="Profile"
                       style={{
                         width: "50px",
                         borderRadius: "50%",
-                        marginRight: "8px",
+                        // marginRight: "2px",
                         height:'40px',
                         border:'3px solid white'
                       }}
-                      className="d-flex align-items-end justify-content-end"
+                      // className="d-flex align-items-end justify-content-end"
                     />
+                    <span style={{padding:'10px'}}>Bussiness Profile</span>
                     
                   </Button>
                 )}

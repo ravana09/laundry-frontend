@@ -109,6 +109,8 @@ const cardData = [
   },
 ];
 
+
+
 const services = [
   { name: "Laundry", image: Laundry },
   { name: "Dry Cleaning", image: DryCleaning },
@@ -117,6 +119,7 @@ const services = [
 ];
 
 function OneCard({ handleNavigate }) {
+  const[formData,setFormData]=useState(cardData)
   const settings = {
     dots: false,
     infinite: 2,
@@ -155,7 +158,7 @@ function OneCard({ handleNavigate }) {
   const [activeTab, setActiveTab] = useState("Services");
   const location = useLocation();
   const { data } = location.state || {};
-  const card = cardData[0]; // Assuming only one hotel for simplicity
+  const card = formData[0]; // Assuming only one hotel for simplicity
   const visibleImages = card.images;
 
   const handleLikeButton = () => {
@@ -319,7 +322,7 @@ function OneCard({ handleNavigate }) {
                   style={{ width: "28px", marginRight: "8px" }}
                   alt="Chat"
                 />
-                Chat
+               <span> Chat</span>
               </Button>
 
               <Button
@@ -348,7 +351,7 @@ function OneCard({ handleNavigate }) {
                   style={{ width: "28px", marginRight: "8px" }}
                   alt="Chat"
                 />
-                Share
+               <span>Share</span> 
               </Button>
             </div>
           </Card.Body>

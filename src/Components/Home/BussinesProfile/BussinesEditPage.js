@@ -22,14 +22,20 @@ import Location from "../../Images/LocationCircle.png";
 import twitter from "../../Images/TwitterLogo.png";
 import Edit from "../../Images/edit.png";
 import Preview from "../../Images/Preview.png";
+import ProfileUodate from "../../Images/ProfileUpdate.png";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 function BussinesEditPage() {
   const [isEditing, setIsEditing] = useState(false);
   const [isLeaveChecked, setIsLeaveChecked] = useState(false);
   const [selectedDay, setSelectedDay] = useState("");
+  const [isExpanded, setIsExpanded] = useState(false);
   const [formData, setFormData] = useState({
     name: "Company Name",
+    CompanyProfile: [ProfileImg],
+    description:
+      "Our mission is to revolutionize the industry with cutting-edge technology. We are committed to delivering exceptional value and innovation through our products and services.",
     address: "123 Business Avenue, City, Country",
     email: "email@gmail.com",
     contact: "9630258741",
@@ -43,13 +49,24 @@ function BussinesEditPage() {
     sundayEndTime: "00:00",
     sundayLeave: " ",
     selectedDay: "",
-    images: [img1, img2, img3, img1, img2, img3], // image URLs go here
+    images: [img1, img2, img3, img1, img2, img3],
     instagram: "https://www.instagram.com/",
     twitter: "https://x.com/twitt_login?lang=en",
   });
 
   const [formDataCopy, setFormDataCopy] = useState(formData);
+  const description = formData.description;
+  const words = description.split(" ");
+  const maxWords = 25;
+  const isLongDescription = words.length > maxWords;
+  const displayedText = isExpanded
+    ? description
+    : words.slice(0, maxWords).join(" ") + "...";
 
+  const handleToggle = (event) => {
+    event.preventDefault(); // Prevent default link behavior
+    setIsExpanded(!isExpanded);
+  };
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormDataCopy((prev) => ({
@@ -99,6 +116,36 @@ function BussinesEditPage() {
       ...prev,
       selectedDay: eventKey,
     }));
+  };
+
+  const handleUploadProfile = async () => {
+    const { value: file } = await Swal.fire({
+      title: "Select image",
+      input: "file",
+      inputAttributes: {
+        accept: "image/*",
+        "aria-label": "Upload your profile picture",
+      },
+    });
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        // Update the formData with the new profile image URL
+        setFormData((prevData) => ({
+          ...prevData,
+          CompanyProfile: e.target.result,
+        }));
+
+        // Show the uploaded image in the Swal dialog
+        Swal.fire({
+          title: "Your uploaded picture",
+          imageUrl: e.target.result,
+          imageAlt: "The uploaded picture",
+        });
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const settings = {
@@ -155,9 +202,18 @@ function BussinesEditPage() {
           >
             <Card.Img
               variant="top"
-              src={ProfileImg}
+              src={formData.CompanyProfile}
               className="BEditPage-Company-img"
             />
+            {isEditing && (
+              <Image
+                src={ProfileUodate}
+                alt="Profile"
+                name="CompanyProfile"
+                onClick={handleUploadProfile}
+                className="BEditFront-edit-profile"
+              />
+            )}
             <Card.Body>
               <Card.Title className="BEditFront-Title">
                 {formData.name}
@@ -199,7 +255,7 @@ function BussinesEditPage() {
                 )}
               </div>
               <Row>
-                <Col xs={6} className="d-flex justify-content-center">
+                <Col xs={6}  className="d-flex justify-content-end">
                   {!isEditing && (
                     <Button
                       variant="outline-info"
@@ -207,11 +263,10 @@ function BussinesEditPage() {
                         color: "black",
                         display: "flex",
                         alignItems: "center",
-                        // gap: '5px',
+                      
                       }}
                       onClick={handleEdit}
                     >
-               
                       Edit Profile
                     </Button>
                   )}
@@ -227,7 +282,6 @@ function BussinesEditPage() {
                     }}
                     onClick={handlePreview}
                   >
-            
                     Preview
                   </Button>
                 </Col>
@@ -244,12 +298,14 @@ function BussinesEditPage() {
               marginTop: "3vh",
             }}
           >
-            <Card.Body style={{ padding: "0px", margin: "0px" ,borderRadius:'0px'}}>
+            <Card.Body
+              style={{ padding: "0px", margin: "0px", borderRadius: "0px" }}
+            >
               {isEditing ? (
-                <div style={{ borderRadius:'0px' }}>
+                <div style={{ borderRadius: "0px" }}>
                   <Form
                     className="BEditPage-Company-Form"
-                    style={{ padding: "20px",borderRadius:'0px' }}
+                    style={{ padding: "20px", borderRadius: "0px" }}
                   >
                     <Form.Group as={Row} className="mb-3">
                       <Form.Label column sm={4}>
@@ -260,6 +316,19 @@ function BussinesEditPage() {
                           type="text"
                           name="name"
                           value={formDataCopy.name}
+                          onChange={handleChange}
+                        />
+                      </Col>
+                    </Form.Group>
+                    <Form.Group as={Row} className="mb-3">
+                      <Form.Label column sm={4}>
+                        About Company
+                      </Form.Label>
+                      <Col sm={8}>
+                        <Form.Control
+                          type="text"
+                          name="description"
+                          value={formDataCopy.description}
                           onChange={handleChange}
                         />
                       </Col>
@@ -532,10 +601,10 @@ function BussinesEditPage() {
                 </div>
               ) : (
                 <>
-                  <Card style={{ padding: "20px"}}>
-                    <Card.Title className="BEditFront-Title">
+                  <Card style={{ padding: "20px" }}>
+                    {/* <Card.Title className="BEditFront-Title">
                       {formData.name}
-                    </Card.Title>
+                    </Card.Title> */}
                     <strong>Photos:</strong>
                     <Slider {...settings}>
                       {formData.images.map((image, index) => (
@@ -545,7 +614,7 @@ function BussinesEditPage() {
                             alt={`Company Image ${index + 1}`}
                             style={{
                               width: "100%",
-                              height: "200px",
+                              height: "180px",
                               objectFit: "cover",
                               border: "2px solid white",
                               borderRadius: "10px",
@@ -554,6 +623,15 @@ function BussinesEditPage() {
                         </div>
                       ))}
                     </Slider>
+
+                    <Card.Text style={{ marginTop: "15px" }}>
+                      {displayedText}
+                    </Card.Text>
+                    {isLongDescription && (
+                      <a href="#" onClick={handleToggle}>
+                        {isExpanded ? "Show Less" : "Show More"}
+                      </a>
+                    )}
                   </Card>
 
                   <div className="details-card">

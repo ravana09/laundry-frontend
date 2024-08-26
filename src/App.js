@@ -24,6 +24,7 @@ import OneCard from "./Components/Home/OneCard/OneCard";
 import LocationLink from "./Components/Home/GoogleMap/LocationLink";
 import BussinesEditPage from "./Components/Home/BussinesProfile/BussinesEditPage";
 import { useEffect, useState } from "react";
+import EditUserProfile from "./Components/Home/UserProfile/EditUserProfile";
 
 function App() {
   const [AccountType, setAccountType] = useState(Cookies.get('AccountType'));
@@ -92,6 +93,15 @@ function App() {
             <Route
               path="/CompanyCard"
               element={<WithHomeLayout component={<CompanyCard />} />}
+            />
+             <Route
+              path="/EditUserProfile"
+              element={
+                <WithHomeLayout
+                  component={<EditUserProfile />}
+                  
+                />
+              }
             />
           </>
         )}

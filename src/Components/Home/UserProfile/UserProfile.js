@@ -3,6 +3,7 @@ import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { FaCamera } from "react-icons/fa";
 import ProfileImg from "../Card/sampleImages/wallpapersden.com_monkey-d-luffy-alone-at-war_5120x2880.jpg";
 import'../UserProfile/UserProfile.css'
+import { useNavigate } from "react-router-dom";
 
 function UserProfile() {
   const [showUserDetails, setShowUserDetails] = useState(false);
@@ -11,8 +12,13 @@ function UserProfile() {
     user_name: "Jane Doe",
     email: "janedoe@example.com",
     phone_number: "987-654-3210",
-    user_profile: "profile.jpg", // Example image URL
+    user_profile: ProfileImg, 
   };
+  let navigate=useNavigate()
+
+  const handleNavigate=()=>{
+    navigate("/EditUserProfile")
+  }
 
   return (
     <Container fluid className="UserProfile-container">
@@ -41,6 +47,9 @@ function UserProfile() {
               <Card.Text className="user-details">
                 Joined Date: 12.05.25
               </Card.Text>
+              <Button onClick={handleNavigate}>
+                Edit
+              </Button>
             </Col>
           </Row>
         </Card.Body>
