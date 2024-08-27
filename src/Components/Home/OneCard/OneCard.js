@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../OneCard/OneCard.css";
+import Cookies from "js-cookie";
 import { useLocation } from "react-router-dom";
 import img1 from "../Card/sampleImages/luffy-3200-x-1800-picture-ao6tt30yuxjuvjlk.jpg";
 import img2 from "../Card/sampleImages/sanji-and-one-piece-zoro-4k-99b5u5n1oeu8tqja.jpg";
@@ -137,6 +138,11 @@ const services = [
 
 function OneCard({ handleNavigate }) {
   const [formData, setFormData] = useState(cardData);
+  const [cookiesType, setCookiesType] = useState(Cookies.get("AccountType"));
+
+  useEffect(() => {
+    setCookiesType(Cookies.get("AccountType"));
+  }, [cookiesType]);
   const settings = {
     dots: false,
     infinite: 2,
@@ -337,68 +343,71 @@ function OneCard({ handleNavigate }) {
               <Image src={Location} style={{ width: "40px" }} />
               {card.address}
             </Card.Title>
-
-            <div
-              className="button-container "
-              style={{ marginTop: "auto", justifyContent: "flex-start" }}
-            >
-              <Button
-                className="hover-button"
-                variant="outline-success"
-                onClick={() => (window.location.href = "tel:+919940821893")}
-                style={{ display: "flex", alignItems: "center" }}
+            <div className="sticky-CompanyDetails">
+              <div
+                className="button-container  "
+                style={{ marginTop: "auto", justifyContent: "flex-start" }}
               >
-                <TbPhoneCall style={{ marginRight: "8px" }} />
-                <span>Call</span>
-              </Button>
+                <Button
+                  className="hover-button "
+                  variant="outline-success"
+                  onClick={() => (window.location.href = "tel:+919940821893")}
+                  style={{ display: "flex", alignItems: "center" }}
+                >
+                  <TbPhoneCall style={{ marginRight: "8px" }} />
+                  <span>Call</span>
+                </Button>
 
-              <Button
-                className="hover-button"
-                variant="outline-info"
-                onClick={() =>
-                  window.open(
-                    "https://wa.me/919940821893",
-                    "noopener noreferrer"
-                  )
-                }
-                style={{ display: "flex", alignItems: "center" }}
-              >
-                <img
-                  src={Whatsapp}
-                  style={{ width: "28px", marginRight: "8px" }}
-                  alt="Chat"
-                />
-                <span> Chat</span>
-              </Button>
-
-              <Button
-                className="hover-button"
-                variant="outline-info"
-                onClick={() => {
-                  if (navigator.share) {
-                    navigator
-                      .share({
-                        title: "Check out this card!",
-                        text: "Here’s a link to a great card:",
-                        url: "http://www.pradeepsathish.tech/card-link", // Replace with your card link
-                      })
-                      .then(() => console.log("Shared successfully!"))
-                      .catch((error) => console.error("Error sharing:", error));
-                  } else {
-                    alert(
-                      "Web Share API is not supported in this browser. Please copy and share the link manually."
-                    );
+                <Button
+                  className="hover-button"
+                  variant="outline-info"
+                  onClick={() =>
+                    window.open(
+                      "https://wa.me/919940821893",
+                      "noopener noreferrer"
+                    )
                   }
-                }}
-                style={{ display: "flex", alignItems: "center" }}
-              >
-                <img
-                  src={Share}
-                  style={{ width: "28px", marginRight: "8px" }}
-                  alt="Chat"
-                />
-                <span>Share</span>
-              </Button>
+                  style={{ display: "flex", alignItems: "center" }}
+                >
+                  <img
+                    src={Whatsapp}
+                    style={{ width: "28px", marginRight: "8px" }}
+                    alt="Chat"
+                  />
+                  <span> Chat</span>
+                </Button>
+
+                <Button
+                  className="hover-button"
+                  variant="outline-info"
+                  onClick={() => {
+                    if (navigator.share) {
+                      navigator
+                        .share({
+                          title: "Check out this card!",
+                          text: "Here’s a link to a great card:",
+                          url: "http://www.pradeepsathish.tech/card-link", // Replace with your card link
+                        })
+                        .then(() => console.log("Shared successfully!"))
+                        .catch((error) =>
+                          console.error("Error sharing:", error)
+                        );
+                    } else {
+                      alert(
+                        "Web Share API is not supported in this browser. Please copy and share the link manually."
+                      );
+                    }
+                  }}
+                  style={{ display: "flex", alignItems: "center" }}
+                >
+                  <img
+                    src={Share}
+                    style={{ width: "28px", marginRight: "8px" }}
+                    alt="Chat"
+                  />
+                  <span>Share</span>
+                </Button>
+              </div>
             </div>
           </Card.Body>
           <Card.Body className="OneCard-Services-Card">
@@ -484,84 +493,93 @@ function OneCard({ handleNavigate }) {
               {activeTab === "Review" && (
                 <div className="overview-section">
                   <div className="reviews-list ">
-                    {reviews.map((review, index) => (
-                      <div key={index} className="review-item">
-                        <Row>
-                          <Col xs={10}>
-                            <div> UserName </div>
-                            <div>
-                              {[...Array(review.rating)].map((_, i) => (
-                                <FaStar key={i} color="#ffc107" size={20} />
-                              ))}
-                            </div>
-                            <p> {review.comment}</p>
-                          </Col>
-                          <Col xs={2}>
-                            <Button
-                              onClick={() => handleLike()}
-                              style={{
-                                backgroundColor: "transparent",
-                                border: "none",
-                                padding: "10px",
-                              }}
-                            >
-                              <Image
-                                src={likes ? redHeart : emptyHeart}
-                                alt="Heart Image"
-                                style={{ width: "20px" }}
-                              />
-                            </Button>
-                          </Col>
-                          <hr />
-                        </Row>
-                      </div>
-                    ))}
+                    {reviews.length > 0 ? (
+                      reviews.map((review, index) => (
+                        <div key={index} className="review-item">
+                          <Row>
+                            <Col xs={10}>
+                              <div> UserName </div>
+                              <div>
+                                {[...Array(review.rating)].map((_, i) => (
+                                  <FaStar key={i} color="#ffc107" size={20} />
+                                ))}
+                              </div>
+                              <p>{review.comment}</p>
+                            </Col>
+                            <Col xs={2}>
+                              <Button
+                                onClick={() => handleLike()}
+                                style={{
+                                  backgroundColor: "transparent",
+                                  border: "none",
+                                  padding: "10px",
+                                }}
+                              >
+                                <Image
+                                  src={likes ? redHeart : emptyHeart}
+                                  alt="Heart Image"
+                                  style={{ width: "20px" }}
+                                />
+                              </Button>
+                            </Col>
+                            <hr />
+                          </Row>
+                        </div>
+                      ))
+                    ) : (
+                      <div>No reviews</div>
+                    )}
                   </div>
 
-                  <Form onSubmit={handleSubmitReview}>
-                    <Form.Group className="mb-3" controlId="rating">
-                      {[...Array(5)].map((_, index) => {
-                        const ratingValue = index + 1;
+                  {cookiesType === "user" && (
+                    <Form onSubmit={handleSubmitReview}>
+                      <Form.Group className="mb-3" controlId="rating">
+                        {[...Array(5)].map((_, index) => {
+                          const ratingValue = index + 1;
 
-                        return (
-                          <label key={index}>
-                            <input
-                              type="radio"
-                              name="rating"
-                              value={ratingValue}
-                              onClick={() => setRating(ratingValue)}
-                              style={{ display: "none" }}
-                            />
-                            <FaStar
-                              size={30}
-                              color={
-                                ratingValue <= (hover || rating)
-                                  ? "#ffc107"
-                                  : "#e4e5e9"
-                              }
-                              onMouseEnter={() => setHover(ratingValue)}
-                              onMouseLeave={() => setHover(null)}
-                              style={{ cursor: "pointer", marginRight: "5px" }}
-                            />
-                          </label>
-                        );
-                      })}
-                    </Form.Group>
+                          return (
+                            <label key={index}>
+                              <input
+                                type="radio"
+                                name="rating"
+                                value={ratingValue}
+                                onClick={() => setRating(ratingValue)}
+                                style={{ display: "none" }}
+                              />
+                              <FaStar
+                                size={30}
+                                color={
+                                  ratingValue <= (hover || rating)
+                                    ? "#ffc107"
+                                    : "#e4e5e9"
+                                }
+                                onMouseEnter={() => setHover(ratingValue)}
+                                onMouseLeave={() => setHover(null)}
+                                style={{
+                                  cursor: "pointer",
+                                  marginRight: "5px",
+                                }}
+                              />
+                            </label>
+                          );
+                        })}
+                      </Form.Group>
 
-                    <Form.Group className="mb-2" controlId="comment">
-                      <Form.Label>Comment</Form.Label>
-                      <Form.Control
-                        as="textarea"
-                        rows={3}
-                        value={comment}
-                        onChange={handleCommentChange}
-                        placeholder="Write your review here"
-                      />
-                    </Form.Group>
-                    <Button variant="primary" type="submit">
-                      Submit Review
-                    </Button>
-                  </Form>
+                      <Form.Group className="mb-2" controlId="comment">
+                        <Form.Label>Comment</Form.Label>
+                        <Form.Control
+                          as="textarea"
+                          rows={3}
+                          value={comment}
+                          onChange={handleCommentChange}
+                          placeholder="Write your review here"
+                        />
+                      </Form.Group>
+                      <Button variant="primary" type="submit">
+                        Submit Review
+                      </Button>
+                    </Form>
+                  )}
                 </div>
               )}
 

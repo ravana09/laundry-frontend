@@ -31,11 +31,24 @@
   padding: 10px;
 }
 .sticky-CompanyDetails {
-  position: sticky;
-  top: 40vh;
-  background-color: white; /* or whatever color you prefer */
-  z-index: 1200; /* Ensure it stays above other content */
-  /* padding: 10px; */
+  position: sticky !important;
+  top: calc(50 ) !important; 
+  background-color: rgb(220, 14, 14);
+  
+  padding: 10px;
+
+  gap: 10px; 
+}
+
+.button-container .hover-button {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px; /* Adjust for better spacing */
+}
+
+.button-container img {
+  width: 28px;
+  margin-right: 8px;
 }
 .OneCard-Services-Card {
   width: 100%;

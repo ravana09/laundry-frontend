@@ -1,5 +1,5 @@
 import React from "react";
-import { Card } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import { FaLocationDot } from "react-icons/fa6";
 import BussinesImage from "../../Images/BussinessProfile.jpg";
 import "../BussinesProfile/BussinessProfile.css";
@@ -18,9 +18,7 @@ const BussinessProfileCard = () => {
       className="Bussiness-Profile-ComapnyCard"
       style={{
         width: "100%",
-        // borderRadius: "20px",
-        height: "auto",
-        padding: "10px",
+        padding: "10px 10px 5px 10px",
       }}
       onClick={()=>{
         handleNavigation("/BussinessEditPage");
@@ -32,14 +30,15 @@ const BussinessProfileCard = () => {
         className="Bussiness-Profile-ProfilePic"
       />
       <Card.Body>
-        <Card.Title>Company Name</Card.Title>
-        <Card.Text>
+
+        <Card.Title className="BEditFront-Title">Company Name</Card.Title>
+        {/* <Card.Text>
           <FaLocationDot /> Company address
-        </Card.Text>
+        </Card.Text> */}
+        <Button>Company Details</Button>
       </Card.Body>
-      <Card.Body>
-       
-      </Card.Body>
+     
+      
     </Card>
   );
 };

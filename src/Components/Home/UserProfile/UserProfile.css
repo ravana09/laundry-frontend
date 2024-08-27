@@ -58,3 +58,56 @@
   .EditUserPRofile-Card{
     width: 50%;
   }
+
+  .ProfileFormLabel{
+    display: flex;
+    justify-content: end;
+    padding-right: 40px !important;
+  }
+  .ProfileFormText{
+    display: flex;
+    justify-content: start;
+  }
+
+  .UserProfile-Card{
+    width: 50% !important;
+  }
+  .ProfileButton{
+    width: 20% !important;
+  }
+  @media (max-width: 900px) {
+    .UserProfile-Card{
+      width: 75% !important;
+    }
+  }
+  @media (max-width: 590px) {
+    .UserProfile-Card{
+      width: 100% !important;
+    }
+    .ProfileFormText{
+      font-size: 90% !important;
+    }
+    .ProfileFormLabel{
+      font-size: medium !important;
+      justify-content: start;
+      font-size: 90% !important;
+      padding-right: 0px !important;
+    }
+    .ProfileButton{
+      width: 50% !important;
+    }
+    /* .ProfileFormEmail{
+      font-size: 70% !important;
+    } */
+  }
+  @media (max-width: 380px) {
+    .ProfileFormLabel{
+      font-size: medium !important;
+      justify-content: start;
+      font-size: 70% !important;
+      padding-right: 0px !important;
+    }
+    .ProfileFormText{
+      font-size: 70% !important;
+    }
+  }

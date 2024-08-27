@@ -10,6 +10,7 @@
   width: 100%;
   max-width: 550px;
   margin-top: 3vh;
+  height: min-content !important;
   /* border-radius: 10px; */
 }
 

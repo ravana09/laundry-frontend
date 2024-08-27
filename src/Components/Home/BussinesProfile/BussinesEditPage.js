@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Button,
   Card,
@@ -18,6 +18,9 @@ import "../BussinesProfile/BusinessEditPage.css";
 import img1 from "../Card/sampleImages/luffy-3200-x-1800-picture-ao6tt30yuxjuvjlk.jpg";
 import img2 from "../Card/sampleImages/sanji-and-one-piece-zoro-4k-99b5u5n1oeu8tqja.jpg";
 import img3 from "../Card/sampleImages/wallpaperflare.com_wallpaper (1).jpg";
+import OnePIeceGif from "../Card/sampleImages/OnePieceGIf.gif";
+import SuryaVideo from "../Card/sampleImages/SampleVIdeo.mp4";
+import SampleVideo from "../Card/sampleImages/sampleVideo2.mp4";
 import Location from "../../Images/LocationCircle.png";
 import twitter from "../../Images/TwitterLogo.png";
 import Edit from "../../Images/edit.png";
@@ -25,6 +28,25 @@ import Preview from "../../Images/Preview.png";
 import ProfileUodate from "../../Images/ProfileUpdate.png";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+
+function getMediasType(media) {
+  // Check if media is a file object (from file input)
+  if (media.file) {
+    const extension = media.file.name.split(".").pop().toLowerCase();
+    return getTypeFromExtension(extension);
+  }
+
+  // Otherwise, treat media as a URL string
+  const extension = media.split(".").pop().split("?")[0].toLowerCase();
+  return getTypeFromExtension(extension);
+}
+
+function getTypeFromExtension(extension) {
+  if (["jpg", "jpeg", "png", "bmp"].includes(extension)) return "image";
+  if (["gif"].includes(extension)) return "gif";
+  if (["mp4", "webm", "ogg"].includes(extension)) return "video";
+  return "unknown";
+}
 
 function getMediaType(file) {
   const extension = file.name.split(".").pop().toLowerCase();
@@ -35,6 +57,33 @@ function getMediaType(file) {
 }
 
 function BussinesEditPage() {
+  const videoRef = useRef(null);
+  const [isMuted, setIsMuted] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const togglePlay = () => {
+    if (isPlaying) {
+      videoRef.current.pause();
+    } else {
+      videoRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  const toggleMute = () => {
+    videoRef.current.muted = !isMuted;
+    setIsMuted(!isMuted);
+  };
+
+  const buttonStyle = {
+    padding: "5px 10px",
+    backgroundColor: "Transparent",
+    color: "white",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+  };
+
   const [isEditing, setIsEditing] = useState(false);
   const [isLeaveChecked, setIsLeaveChecked] = useState(false);
   const [selectedDay, setSelectedDay] = useState("");
@@ -57,10 +106,13 @@ function BussinesEditPage() {
     sundayEndTime: "00:00",
     sundayLeave: " ",
     selectedDay: "",
+    images: [img1, OnePIeceGif, SuryaVideo, SampleVideo],
     media: [],
     instagram: "https://www.instagram.com/",
     twitter: "https://x.com/twitt_login?lang=en",
   });
+
+  const visibleImages = formData.media;
 
   const [formDataCopy, setFormDataCopy] = useState(formData);
   const description = formData.description;
@@ -101,8 +153,9 @@ function BussinesEditPage() {
     const files = Array.from(e.target.files);
     const newMedia = files.map((file) => ({
       file,
-    preview: URL.createObjectURL(file),
+      type: getMediaType(file),
     }));
+
     setFormData((prev) => ({
       ...prev,
       media: [...prev.media, ...newMedia],
@@ -586,11 +639,15 @@ function BussinesEditPage() {
                                 {mediaItem.type === "image" ||
                                 mediaItem.type === "gif" ? (
                                   <img
-                                    src={mediaItem.file.url} // Ensure this is the correct property for the image URL
+                                    src={
+                                      mediaItem.file
+                                        ? URL.createObjectURL(mediaItem.file)
+                                        : mediaItem
+                                    } // Handle file and URL cases
                                     alt={`Media ${index + 1}`}
                                     style={{
-                                      width: "100px",
-                                      height: "100px",
+                                      width: "50px",
+                                      height: "50px",
                                       objectFit: "cover",
                                       border: "2px solid white",
                                       borderRadius: "10px",
@@ -598,13 +655,17 @@ function BussinesEditPage() {
                                   />
                                 ) : (
                                   <video
-                                    src={mediaItem.file.url} // Ensure this is the correct property for the video URL
+                                    src={
+                                      mediaItem.file
+                                        ? URL.createObjectURL(mediaItem.file)
+                                        : mediaItem
+                                    } // Handle file and URL cases
                                     controls
                                     style={{
-                                      width: "100px",
-                                      height: "100px",
+                                      width: "50px",
+                                      height: "50px",
                                       objectFit: "cover",
-                                      border: "2px solid white",
+                                      // border: "2px solid white",
                                       borderRadius: "10px",
                                     }}
                                   />
@@ -617,7 +678,7 @@ function BussinesEditPage() {
                                     borderRadius: "50%",
                                     padding: "0.2rem 0.5rem",
                                     fontSize: "0.75rem",
-                                    backgroundColor: "#f44336", // Bootstrap's 'danger' color
+                                    backgroundColor: "#f44336",
                                     color: "white",
                                     border: "none",
                                     cursor: "pointer",
@@ -632,66 +693,7 @@ function BussinesEditPage() {
                         </Col>
                       </Form.Group>
                     </div>
-                    {/* <Form.Group as={Row} className="mb-3">
-                      <Form.Label column sm={4}>
-                        Upload Images
-                      </Form.Label>
-                      <Col sm={8}>
-                        <Form.Control
-                          type="file"
-                          name="images"
-                          accept="image/*"
-                          multiple
-                          onChange={handleImageChange}
-                        />
-                      </Col>
-                    </Form.Group> */}
-                    {/* Image Preview */}
-                    {/* <Form.Group as={Row} className="mb-3">
-                      <Form.Label column sm={4}>
-                        Image Preview
-                      </Form.Label>
-                      <Col sm={8}>
-                        <div className="image-preview">
-                          {formDataCopy.images.map((image, index) => (
-                            <div
-                              key={index}
-                              style={{
-                                position: "relative",
-                                display: "inline-block",
-                                marginRight: "10px",
-                              }}
-                            >
-                              <img
-                                src={image}
-                                alt={`Preview ${index + 1}`}
-                                style={{
-                                  width: "50px",
-                                  height: "50px",
-                                  objectFit: "cover",
-                                  marginRight: "10px",
-                                }}
-                              />
-                              <Button
-                                variant="danger"
-                                size="xs"
-                                style={{
-                                  position: "absolute",
-                                  top: "0",
-                                  right: "0",
-                                  borderRadius: "50%",
-                                  padding: "0.2rem 0.5rem",
-                                  fontSize: "0.75rem",
-                                }}
-                                onClick={() => handleImageDelete(index)}
-                              >
-                                X
-                              </Button>
-                            </div>
-                          ))}
-                        </div>
-                      </Col>
-                    </Form.Group> */}
+
                     <Button
                       variant="primary"
                       onClick={handleSave}
@@ -707,30 +709,91 @@ function BussinesEditPage() {
               ) : (
                 <>
                   <Card style={{ padding: "20px" }}>
-                    {/* <Card.Title className="BEditFront-Title">
-                      {formData.name}
-                    </Card.Title> */}
-                    <strong>Photos:</strong>
+                    {/* <strong>Photos:</strong> */}
                     <Slider {...settings}>
-                      {formData.media.map((image, index) => (
-                        <div key={index} style={{ position: "relative" }}>
-                          <img
-                            src={image}
-                            alt={`Company Image ${index + 1}`}
-                            style={{
-                              width: "100%",
-                              height: "180px",
-                              objectFit: "cover",
-                              border: "2px solid white",
-                              borderRadius: "10px",
-                            }}
-                          />
-                        </div>
-                      ))}
-                    </Slider>
+                      {formData.images.map((media, index) => {
+                        const type = getMediasType(media);
 
-                    <Card.Text style={{ marginTop: "15px" }}>
-                      {displayedText}
+                        return (
+                          <div key={index} style={{ position: "relative" }}>
+                            {type === "image" || type === "gif" ? (
+                              <Image
+                                src={media}
+                                alt={`Media ${index + 1}`}
+                                fluid
+                                style={{
+                                  width: "100%",
+                                  height: "180px",
+                                  objectFit: "cover",
+                                  border: "2px solid white",
+                                  borderRadius: "10px",
+                                }}
+                              />
+                            ) : type === "video" ? (
+                              <video
+                              src={media}
+                              controls
+                              style={{
+                                width: "100%",
+                                height: "180px",
+                                objectFit: "cover",
+                                border: "2px solid white",
+                                borderRadius: "10px",
+                              }}
+                            />
+                              // <div
+                              //   className="video-container"
+                              //   style={{
+                              //     position: "relative",
+                              //     width: "100%",
+                              //     height: "200px",
+                              //   }}
+                              // >
+                              //   <video
+                              //     ref={videoRef}
+                              //     src={media}
+                              //     style={{
+                              //       width: "100%",
+                              //       height: "100%",
+                              //       objectFit: "cover",
+                              //       border: "2px solid white",
+                              //       borderRadius: "10px",
+                              //     }}
+                              //   />
+                              //   <div
+                              //     className="controls"
+                              //     style={{
+                              //       position: "absolute",
+                              //       bottom: "10px",
+                              //       left: "10px",
+                              //       display: "flex",
+                              //       gap: "10px",
+                              //     }}
+                              //   >
+                              //     <button
+                              //       onClick={togglePlay}
+                              //       style={buttonStyle}
+                              //     >
+                              //       {isPlaying ? "Pause" : "Play"}
+                              //     </button>
+                              //     <button
+                              //       onClick={toggleMute}
+                              //       style={buttonStyle}
+                              //     >
+                              //       {isMuted ? "Unmute" : "Mute"}
+                              //     </button>
+                              //   </div>
+                              // </div>
+                            ) : (
+                              <div>Unsupported media type</div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </Slider>
+                  
+                    <Card.Text style={{ marginTop: "20px" }}>
+                     <h6>Description:</h6> {displayedText}
                     </Card.Text>
                     {isLongDescription && (
                       <a href="#" onClick={handleToggle}>
