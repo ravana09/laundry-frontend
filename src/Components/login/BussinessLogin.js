@@ -23,6 +23,7 @@ import playStoreLogo from "../Images/playStore.png"; // Add your Play Store logo
 import appleStoreLogo from "../Images/AppleLogo.png"; // Add your Apple Store logo here
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import Swal from "sweetalert2";
 
 function BussinessLogin() {
   const [formData, setFormData] = useState({
@@ -57,22 +58,53 @@ function BussinessLogin() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted");
-    Cookies.remove("AccountType");
-    // Set the AccountType cookie
-    Cookies.set("AccountType", "Bussiness", { expires: 684 });
-    Cookies.set("AccountToken", "BusinessTokenqwertyuiop", { expires: 684 });
+    if (!formData.Email || !formData.Password) {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        },
+      });
 
+      Toast.fire({
+        icon: "error",
+        title: `Please fill all data`,
+      });
+      return;
+    } else {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        },
+      });
 
-    // Use a short delay to ensure the cookie is set
-    setTimeout(() => {
-      if (Cookies.get("AccountType") === "Bussiness") {
-        navigate("/BussinessProfile");
-        window.location.reload(); 
-      } else {
-        console.error("Failed to set AccountType cookie.");
-      }
-    }, 100);
+      Toast.fire({
+        icon: "success",
+        title: `Signed in successfully`,
+      });
+      console.log("Form submitted");
+      Cookies.set("AccountType", "Bussiness", { expires: 684 });
+      Cookies.set("AccountToken", "BusinessTokenqwertyuiop", { expires: 684 });
+      setTimeout(() => {
+        if (Cookies.get("AccountType") === "Bussiness") {
+          navigate("/BussinessProfile");
+          window.location.reload();
+        } else {
+          console.error("Failed to set AccountType cookie.");
+        }
+      }, 100);
+    }
   };
 
   const handleSignUpPage = () => {
@@ -160,7 +192,6 @@ function BussinessLogin() {
                 className="login-Inner-Card line"
                 style={{ borderRadius: "40px" }}
               >
-               
                 <center>
                   <h1 className="Login-login-tag" style={{ fontSize: "25px" }}>
                     Business Log In
@@ -300,12 +331,7 @@ function BussinessLogin() {
             </center>
           </Col>
           <Col md={1} lg={1}></Col>
-          <Col
-            xs={0}
-            md={5}
-            lg={4}
-            className="right-column  line2"
-          >
+          <Col xs={0} md={5} lg={4} className="right-column  line2">
             <Image
               src={loginMachineImage}
               alt="Washing Machine"

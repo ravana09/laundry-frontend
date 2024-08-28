@@ -39,7 +39,7 @@ function App() {
     } else if (accountToken === "BusinessTokenqwertyuiop" && accountType === "Bussiness") {
       navigate("/BussinessProfile");
     }
-  }, [navigate]);
+  }, []);
 
   return (
     <Routes>

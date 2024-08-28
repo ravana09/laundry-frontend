@@ -16,6 +16,7 @@ import "../SignUp/Signup.css"; // Importing CSS file
 
 import loginMachineImage from "../Images/login-washing-machine-image.png";
 import symbol from "../Images/symbol.jpg";
+import Swal from "sweetalert2";
 
 function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -27,20 +28,19 @@ function SignUpPage() {
     confirmPassword: "",
   });
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const validateForm = () => {
     const newErrors = {};
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const numberPattern = /^\d{10}$/;
-    const passwordPattern = /^.{6}$/; // Pattern to ensure exactly 6 characters
 
     if (!formData.name) newErrors.name = "Name is required";
     if (!formData.email || !emailPattern.test(formData.email))
       newErrors.email = "Valid email is required";
     if (!formData.mobileNumber || !numberPattern.test(formData.mobileNumber))
       newErrors.mobileNumber = "Mobile number must be 10 digits";
-    if (!formData.password || !passwordPattern.test(formData.password))
-      newErrors.password = "Password must be exactly 6 characters";
+    if (!formData.password) newErrors.password = "Password must be exactly 6 characters";
     if (formData.password !== formData.confirmPassword)
       newErrors.confirmPassword = "Passwords do not match";
 
@@ -49,28 +49,34 @@ function SignUpPage() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    const number = /^\d*$/;
 
-    if (name === "name" ) {
-      setFormData({ ...formData, [name]: value });
-    } else if (name === "Password") {
-      if (value.length <= 8) {
+    switch (name) {
+      case "name":
+        if (/^[A-Za-z\s]*$/.test(value)) {
+          setFormData({ ...formData, [name]: value });
+        }
+        break;
+
+      case "email":
         setFormData({ ...formData, [name]: value });
-      }
-    }
+        break;
 
-    const tempFormData = { ...formData, [name]: value };
+      case "mobileNumber":
+        if (value.length <= 10 && number.test(value)) {
+          setFormData({ ...formData, [name]: value });
+        }
+        break;
 
-    const validationErrors = validateForm(tempFormData);
+      case "password":
+      case "confirmPassword":
+        if (value.length <= 8 && (number.test(value) || value === " ")) {
+          setFormData({ ...formData, [name]: value });
+        }
+        break;
 
-    if (!validationErrors[name]) {
-      setFormData(tempFormData);
-
-      setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
-    } else {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        [name]: validationErrors[name],
-      }));
+      default:
+        break;
     }
   };
 
@@ -81,15 +87,57 @@ function SignUpPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
-    if (Object.keys(validationErrors).length === 0) {
-      console.log("Form submitted");
-      navigate("/MobileVerification", { state: { redirectTo: "/" } });
-    } else {
-      setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors); // Set errors in state
+
+      const errorMessage = Object.values(validationErrors).join(", ");
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        },
+      });
+
+      Toast.fire({
+        icon: "error",
+        title: `Please fill all data`,
+      });
+
+      return;
     }
+
+    setErrors({}); // Clear errors if validation passes
+
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 1000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      },
+    });
+
+    Toast.fire({
+      icon: "success",
+      title: "Signup Successfully",
+    });
+
+    console.log("Form submitted");
+
+    navigate("/MobileVerification", {
+      state: { redirectTo: "/BussinessLogin" },
+    });
   };
 
-  let navigate = useNavigate();
   const handleLoginPage = () => {
     navigate("/");
   };
@@ -157,7 +205,12 @@ function SignUpPage() {
                       placeholder="Name"
                       name="name"
                       value={formData.name}
-                      onChange={handleChange}
+                      onChange={(e) => {
+                        // Allow only numbers and limit to 10 digits
+                        if (/^[A-Za-z\s]*$/.test(e.target.value)) {
+                          handleChange(e);
+                        }
+                      }}
                       isInvalid={!!errors.name}
                     />
                     <Form.Control.Feedback type="invalid">
@@ -174,7 +227,7 @@ function SignUpPage() {
                       placeholder="name@example.com"
                       name="email"
                       value={formData.email}
-                      onChange={handleChange}
+                      onChange={(e)=>{handleChange(e)}}
                       isInvalid={!!errors.email}
                     />
                     <Form.Control.Feedback type="invalid">
@@ -188,12 +241,19 @@ function SignUpPage() {
                     className="mb-3"
                   >
                     <Form.Control
-                      type="text"
+                      type="text" // Changed to 'text' to use maxLength
                       placeholder="Mobile Number"
                       name="mobileNumber"
                       value={formData.mobileNumber}
-                      onChange={handleChange}
+                      // onChange={(e) => {
+                       
+                      //   if (/^\d{0,10}$/.test(e.target.value)) {
+                      //     handleChange(e);
+                      //   }
+                      // }}
+                      onChange={(e)=>{handleChange(e)}}
                       isInvalid={!!errors.mobileNumber}
+                      maxLength={10} // Enforces maximum length of 10 characters
                     />
                     <Form.Control.Feedback type="invalid">
                       {errors.mobileNumber}
@@ -210,8 +270,9 @@ function SignUpPage() {
                       placeholder="Password"
                       name="password"
                       value={formData.password}
-                      onChange={handleChange}
+                      onChange={(e)=>{handleChange(e)}}
                       isInvalid={!!errors.password}
+                      maxLength={8}
                     />
                     <Button
                       variant="light"
@@ -233,8 +294,9 @@ function SignUpPage() {
                       placeholder="Confirm Password"
                       name="confirmPassword"
                       value={formData.confirmPassword}
-                      onChange={handleChange}
+                      onChange={(e)=>{handleChange(e)}}
                       isInvalid={!!errors.confirmPassword}
+                      maxLength={8}
                     />
                     <Form.Control.Feedback type="invalid">
                       {errors.confirmPassword}

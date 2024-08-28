@@ -23,6 +23,7 @@ import playStoreLogo from "../Images/playStore.png"; // Add your Play Store logo
 import appleStoreLogo from "../Images/AppleLogo.png"; // Add your Apple Store logo here
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import Swal from "sweetalert2";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -32,8 +33,6 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [isMac, setIsMac] = useState(false);
 
-
- 
   useEffect(() => {
     const userAgent = window.navigator.userAgent;
     setIsMac(/Macintosh|MacIntel|MacPPC|Mac68K/.test(userAgent));
@@ -59,19 +58,56 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted");
-    // Cookies.remove("AccountType");
-    Cookies.set("AccountType", "user", { expires: 684 });
-    Cookies.set("AccountToken", "USerTokenpoiuytrewq", { expires: 684 });
 
-    setTimeout(() => {
-      if (Cookies.get("AccountType") === "user") {
-        navigate("/CompanyCard");
-        window.location.reload();
-      } else {
-        console.error("Failed to set AccountType cookie.");
-      }
-    }, 100);
+    if (!formData.Email || !formData.Password) {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        },
+      });
+
+      Toast.fire({
+        icon: "error",
+        title: `Please fill all data`,
+      });
+      return;
+    } else {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        },
+      });
+
+      Toast.fire({
+        icon: "success",
+        title: `Signed in successfully`,
+      });
+      console.log("Form submitted");
+
+      Cookies.set("AccountType", "user", { expires: 684 });
+      Cookies.set("AccountToken", "USerTokenpoiuytrewq", { expires: 684 });
+
+      setTimeout(() => {
+        if (Cookies.get("AccountType") === "user") {
+          navigate("/CompanyCard");
+          window.location.reload();
+        } else {
+          console.error("Failed to set AccountType cookie.");
+        }
+      }, 50);
+    }
   };
 
   const handleSignUpPage = () => {
@@ -90,14 +126,13 @@ function Login() {
           className="justify-content-end"
           style={{ borderBottom: "2px solid white" }}
         >
-          <Col xs={4} sm={4} md={9} >
+          <Col xs={4} sm={4} md={9}>
             <Image src={symbol} className="login-Company-Symbol" />
           </Col>
           <Col
             xs={4}
             sm={4}
             md={3}
-            
             className="d-flex align-items-center justify-content-end "
           >
             <Col xs={5}>

@@ -13,11 +13,14 @@ import BubbleAnimation from "../BubbleAnimation/BubbleAnimation";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "../SignUp/Signup.css";
+import Swal from "sweetalert2";
 
 import loginMachineImage from "../Images/LaundryBUSSINESSiMAGE.png";
- import symbol from "../Images/symbol.jpg";
+import symbol from "../Images/symbol.jpg";
 
 function BussinesSignUp() {
+
+  let navigate=useNavigate()
   const [userData, setUserData] = useState({
     CompanyName: "",
     Email: "",
@@ -26,11 +29,26 @@ function BussinesSignUp() {
     ConfirmPassword: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState({});
+  const validateForm = () => {
+    const newErrors = {};
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const numberPattern = /^\d{10}$/;
+
+    if (!userData.name) newErrors.name = "Name is required";
+    if (!userData.email || !emailPattern.test(userData.email))
+      newErrors.email = "Valid email is required";
+    if (!userData.mobileNumber || !numberPattern.test(userData.mobileNumber))
+      newErrors.mobileNumber = "Mobile number must be 10 digits";
+    if (!userData.password) newErrors.password = "Password must be exactly 6 characters";
+    if (userData.password !== userData.confirmPassword)
+      newErrors.confirmPassword = "Passwords do not match";
+
+    return newErrors;
+  };
 
   const handleChanges = (e) => {
     const { name, value } = e.target;
-
- 
 
     const number = /^\d*$/;
 
@@ -71,21 +89,89 @@ function BussinesSignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const validationErrors = validateForm();
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors); // Set errors in state
+
+      const errorMessage = Object.values(validationErrors).join(", ");
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        },
+      });
+
+      Toast.fire({
+        icon: "error",
+        title: `Please fill all data`,
+      });
+
+      return;
+    }
+
+    setErrors({}); // Clear errors if validation passes
+
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 1000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      },
+    });
+
+    Toast.fire({
+      icon: "success",
+      title: "Signup Successfully",
+    });
+
     console.log("Form submitted");
 
-    navigate("/BussinessMobileVerification", {
+    navigate("/MobileVerification", {
       state: { redirectTo: "/BussinessLogin" },
     });
   };
 
-  let navigate = useNavigate();
+  const showErrorToast = (message) => {
+    Swal.fire({
+      icon: "error",
+      title: message,
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+    });
+  };
+
+  const showSuccessToast = (message) => {
+    Swal.fire({
+      icon: "success",
+      title: message,
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 1000,
+      timerProgressBar: true,
+    });
+  };
+
   const handleLoginPage = () => {
     navigate("/BussinessLogin");
   };
 
   return (
     <>
-      <Container fluid className="Login_Row" style={{overflowY:'scroll'}}>
+      <Container fluid className="Login_Row" style={{ overflowY: "scroll" }}>
         <BubbleAnimation />
         <Row
           className="justify-content-end"
@@ -137,6 +223,9 @@ function BussinesSignUp() {
                       placeholder="name@example.com"
                       onChange={(e) => handleChanges(e)}
                     />
+                     <Form.Control.Feedback type="invalid">
+                      {errors.CompanyName}
+                    </Form.Control.Feedback>
                   </FloatingLabel>
                   <FloatingLabel
                     controlId="floatingInput"
@@ -150,6 +239,9 @@ function BussinesSignUp() {
                       value={userData.Email}
                       onChange={(e) => handleChanges(e)} // Pass the event object
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.Email}
+                    </Form.Control.Feedback>
                   </FloatingLabel>
 
                   <FloatingLabel
@@ -164,6 +256,10 @@ function BussinesSignUp() {
                       placeholder="name@example.com"
                       onChange={(e) => handleChanges(e)} // Pass the event object
                     />
+                     <Form.Control.Feedback type="invalid">
+                      {errors.MobileNumber}
+                    </Form.Control.Feedback>
+            
                   </FloatingLabel>
 
                   <FloatingLabel
@@ -187,6 +283,9 @@ function BussinesSignUp() {
                       {showPassword ? <FaEyeSlash /> : <FaEye />}
                     </Button>
                   </FloatingLabel>
+                  <Form.Control.Feedback type="invalid">
+                      {errors.Password}
+                    </Form.Control.Feedback>
 
                   <FloatingLabel
                     controlId="floatingPassword"
@@ -200,6 +299,9 @@ function BussinesSignUp() {
                       placeholder="ConfirmPassword"
                       onChange={(e) => handleChanges(e)} // Pass the event object
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.ConfirmPassword}
+                    </Form.Control.Feedback>
                   </FloatingLabel>
 
                   <Row>
@@ -234,9 +336,9 @@ function BussinesSignUp() {
           </Col>
           <Col md={1} lg={1}></Col>
           <Col
-             xs={0}
-             md={5}
-             lg={4}
+            xs={0}
+            md={5}
+            lg={4}
             className="left-column Login-Container-left"
           >
             <Image

@@ -8,12 +8,10 @@ import {
   Image,
   Row,
 } from "react-bootstrap";
-import { FaCamera } from "react-icons/fa";
-import ProfileImg from "../Card/sampleImages/wallpapersden.com_monkey-d-luffy-alone-at-war_5120x2880.jpg";
-import "../UserProfile/UserProfile.css";
 import { useNavigate } from "react-router-dom";
-import ProfileUpdateIcon from "../../Images/ProfileUpdate.png";
 import Swal from "sweetalert2";
+import ProfileImg from "../Card/sampleImages/wallpapersden.com_monkey-d-luffy-alone-at-war_5120x2880.jpg";
+import ProfileUpdateIcon from "../../Images/ProfileUpdate.png";
 
 const initialDetails = {
   user_name: "Jane Doe",
@@ -24,11 +22,55 @@ const initialDetails = {
 
 function EditUserProfile() {
   const [userDetails, setUserDetails] = useState(initialDetails);
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserDetails({ ...userDetails, [name]: value });
+  };
+
+  const validate = () => {
+    const newErrors = {};
+    const { user_name, email, phone_number } = userDetails;
+
+    if (!user_name.trim()) {
+      newErrors.user_name = "Name is required.";
+    }
+
+    if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+      newErrors.email = "Invalid email format.";
+    }
+
+    if (!phone_number.match(/^\d{10}$/)) {
+      newErrors.phone_number = "Phone number must be 10 digits.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = () => {
+    if (validate()) {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        },
+      });
+
+      Toast.fire({
+        icon: "success",
+        title: `Signed in successfully`,
+      }).then(() => {
+        navigate("/UserProfile");
+      });
+    }
   };
 
   const handleUploadProfile = async () => {
@@ -59,16 +101,6 @@ function EditUserProfile() {
     }
   };
 
-  const handleSubmit = () => {
-    Swal.fire({
-      title: "Profile Updated",
-      text: "Your profile has been updated successfully.",
-      icon: "success",
-    }).then(() => {
-      navigate("/UserProfile");
-    });
-  };
-
   const handleCancel = () => {
     navigate("/UserProfile");
   };
@@ -78,14 +110,10 @@ function EditUserProfile() {
       fluid
       className="UserProfile-container d-flex justify-content-center align-items-center"
     >
-      <Card className="mb-4 EditUserPRofile-Card  ">
+      <Card className="mb-4 EditUserPRofile-Card">
         <Card.Body>
           <Row>
-            <Col
-              xs={12}
-              // sm={5} md={5} lg={5}
-              className="text-center"
-            >
+            <Col xs={12} className="text-center">
               <Card.Img
                 variant="top"
                 src={userDetails.user_profile}
@@ -126,7 +154,11 @@ function EditUserProfile() {
                       name="user_name"
                       value={userDetails.user_name}
                       onChange={handleChange}
+                      isInvalid={!!errors.user_name}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.user_name}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3">
@@ -139,7 +171,11 @@ function EditUserProfile() {
                       name="email"
                       value={userDetails.email}
                       onChange={handleChange}
+                      isInvalid={!!errors.email}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.email}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3">
@@ -152,16 +188,26 @@ function EditUserProfile() {
                       name="phone_number"
                       value={userDetails.phone_number}
                       onChange={handleChange}
+                      isInvalid={!!errors.phone_number}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.phone_number}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
               </Form>
               <div>
                 <center>
-                <Button onClick={handleSubmit} className="me-2 " style={{paddingRight:'20px',paddingLeft:'20px'}}>
-                  Save
-                </Button>
-                <Button onClick={handleCancel} className="me-2">Cancel</Button>
+                  <Button
+                    onClick={handleSubmit}
+                    className="me-2"
+                    style={{ paddingRight: "20px", paddingLeft: "20px" }}
+                  >
+                    Save
+                  </Button>
+                  <Button onClick={handleCancel} className="me-2">
+                    Cancel
+                  </Button>
                 </center>
               </div>
             </Col>
