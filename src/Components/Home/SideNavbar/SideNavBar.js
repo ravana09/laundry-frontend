@@ -31,6 +31,7 @@ function SideNavBar() {
 
   const handleSignOut = (page) => {
     Cookies.remove("AccountType");
+    Cookies.remove("AccountToken");
     setTimeout(() => {
       if (!Cookies.get("AccountType")) {
         navigate(page);

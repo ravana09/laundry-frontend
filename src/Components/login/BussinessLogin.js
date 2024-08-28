@@ -61,6 +61,7 @@ function BussinessLogin() {
     Cookies.remove("AccountType");
     // Set the AccountType cookie
     Cookies.set("AccountType", "Bussiness", { expires: 684 });
+    Cookies.set("AccountToken", "BusinessTokenqwertyuiop", { expires: 684 });
 
 
     // Use a short delay to ensure the cookie is set

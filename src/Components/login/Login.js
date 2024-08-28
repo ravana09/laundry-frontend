@@ -32,6 +32,8 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [isMac, setIsMac] = useState(false);
 
+
+ 
   useEffect(() => {
     const userAgent = window.navigator.userAgent;
     setIsMac(/Macintosh|MacIntel|MacPPC|Mac68K/.test(userAgent));
@@ -60,6 +62,7 @@ function Login() {
     console.log("Form submitted");
     // Cookies.remove("AccountType");
     Cookies.set("AccountType", "user", { expires: 684 });
+    Cookies.set("AccountToken", "USerTokenpoiuytrewq", { expires: 684 });
 
     setTimeout(() => {
       if (Cookies.get("AccountType") === "user") {

@@ -12,13 +12,67 @@ import {
 import BubbleAnimation from "../BubbleAnimation/BubbleAnimation";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import '../SignUp/Signup.css'; // Importing CSS file
+import "../SignUp/Signup.css"; // Importing CSS file
 
 import loginMachineImage from "../Images/login-washing-machine-image.png";
- import symbol from "../Images/symbol.jpg";
+import symbol from "../Images/symbol.jpg";
 
 function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    mobileNumber: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    const newErrors = {};
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const numberPattern = /^\d{10}$/;
+    const passwordPattern = /^.{6}$/; // Pattern to ensure exactly 6 characters
+
+    if (!formData.name) newErrors.name = "Name is required";
+    if (!formData.email || !emailPattern.test(formData.email))
+      newErrors.email = "Valid email is required";
+    if (!formData.mobileNumber || !numberPattern.test(formData.mobileNumber))
+      newErrors.mobileNumber = "Mobile number must be 10 digits";
+    if (!formData.password || !passwordPattern.test(formData.password))
+      newErrors.password = "Password must be exactly 6 characters";
+    if (formData.password !== formData.confirmPassword)
+      newErrors.confirmPassword = "Passwords do not match";
+
+    return newErrors;
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    if (name === "name" ) {
+      setFormData({ ...formData, [name]: value });
+    } else if (name === "Password") {
+      if (value.length <= 8) {
+        setFormData({ ...formData, [name]: value });
+      }
+    }
+
+    const tempFormData = { ...formData, [name]: value };
+
+    const validationErrors = validateForm(tempFormData);
+
+    if (!validationErrors[name]) {
+      setFormData(tempFormData);
+
+      setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: validationErrors[name],
+      }));
+    }
+  };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -26,8 +80,13 @@ function SignUpPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted");
-    navigate("/MobileVerification", { state: {redirectTo: "/"}});
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length === 0) {
+      console.log("Form submitted");
+      navigate("/MobileVerification", { state: { redirectTo: "/" } });
+    } else {
+      setErrors(validationErrors);
+    }
   };
 
   let navigate = useNavigate();
@@ -93,7 +152,17 @@ function SignUpPage() {
                     label="Name"
                     className="mb-3"
                   >
-                    <Form.Control type="text" placeholder="name@example.com" />
+                    <Form.Control
+                      type="text"
+                      placeholder="Name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      isInvalid={!!errors.name}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.name}
+                    </Form.Control.Feedback>
                   </FloatingLabel>
                   <FloatingLabel
                     controlId="floatingInput"
@@ -103,15 +172,32 @@ function SignUpPage() {
                     <Form.Control
                       type="email"
                       placeholder="name@example.com"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      isInvalid={!!errors.email}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.email}
+                    </Form.Control.Feedback>
                   </FloatingLabel>
 
                   <FloatingLabel
                     controlId="floatingInput"
-                    label="Mobile Number "
+                    label="Mobile Number"
                     className="mb-3"
                   >
-                    <Form.Control type="text" placeholder="name@example.com" />
+                    <Form.Control
+                      type="text"
+                      placeholder="Mobile Number"
+                      name="mobileNumber"
+                      value={formData.mobileNumber}
+                      onChange={handleChange}
+                      isInvalid={!!errors.mobileNumber}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.mobileNumber}
+                    </Form.Control.Feedback>
                   </FloatingLabel>
 
                   <FloatingLabel
@@ -122,6 +208,10 @@ function SignUpPage() {
                     <Form.Control
                       type={showPassword ? "text" : "password"}
                       placeholder="Password"
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      isInvalid={!!errors.password}
                     />
                     <Button
                       variant="light"
@@ -135,21 +225,20 @@ function SignUpPage() {
 
                   <FloatingLabel
                     controlId="floatingPassword"
-                    label="Confirm Password "
+                    label="Confirm Password"
                     className="password-input-container"
                   >
                     <Form.Control
                       type="password"
-                      placeholder="Password"
+                      placeholder="Confirm Password"
+                      name="confirmPassword"
+                      value={formData.confirmPassword}
+                      onChange={handleChange}
+                      isInvalid={!!errors.confirmPassword}
                     />
-                    {/* <Button
-                      variant="light"
-                      className="eye-button"
-                      style={{ backgroundColor: "white", border: "none" }}
-                      onClick={togglePasswordVisibility}
-                    >
-                      {showPassword ? <FaEyeSlash /> : <FaEye />}
-                    </Button> */}
+                    <Form.Control.Feedback type="invalid">
+                      {errors.confirmPassword}
+                    </Form.Control.Feedback>
                   </FloatingLabel>
 
                   <Row>

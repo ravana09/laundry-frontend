@@ -1,6 +1,6 @@
 import "./App.css";
 import Cookies from "js-cookie";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom";
 import Login from "./Components/login/Login";
 import BubbleAnimation from "./Components/BubbleAnimation/BubbleAnimation";
 import SignUpPage from "./Components/SignUp/SignUpPage";
@@ -23,118 +23,63 @@ import UserForgetPassword from "./Components/FogetPassword/userForgetPasword/Use
 import OneCard from "./Components/Home/OneCard/OneCard";
 import LocationLink from "./Components/Home/GoogleMap/LocationLink";
 import BussinesEditPage from "./Components/Home/BussinesProfile/BussinesEditPage";
-import { useEffect, useState } from "react";
 import EditUserProfile from "./Components/Home/UserProfile/EditUserProfile";
+import { useEffect, useState } from "react";
 
 function App() {
-  const [AccountType, setAccountType] = useState(Cookies.get('AccountType'));
+  const [AccountType, setAccountType] = useState(Cookies.get("AccountType"));
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Update accountType when cookies change
-    const handleCookieChange = () => {
-      setAccountType(Cookies.get('AccountType'));
-    };
-    handleCookieChange()
-    // Add event listener for cookies change if needed
-    // This is a placeholder if using a library or custom logic
-    // window.addEventListener('cookiechange', handleCookieChange);
+    const accountToken = Cookies.get("AccountToken");
+    const accountType = Cookies.get("AccountType");
 
-    // Cleanup
-    return () => {
-      // Remove event listener
-      // window.removeEventListener('cookiechange', handleCookieChange);
-    };
-  }, [AccountType]);
-
-  console.log(AccountType);
+    if (accountToken === "USerTokenpoiuytrewq" && accountType === "user") {
+      navigate("/CompanyCard");
+    } else if (accountToken === "BusinessTokenqwertyuiop" && accountType === "Bussiness") {
+      navigate("/BussinessProfile");
+    }
+  }, [navigate]);
 
   return (
-    <Router>
-      <Routes>
-        {/* Common Routes */}
-        <Route path="/" element={<Login />} />
-        <Route path="/Bubbles" element={<BubbleAnimation />} />
-        <Route path="/SignUpPage" element={<SignUpPage />} />
-        <Route path="/MobileVerification" element={<MobileVerification />} />
-        <Route path="/Home" element={<Home showSideBar={true} />} />
-        <Route path="/SideNavBar" element={<SideNavBar />} />
-        <Route path="/BussinesSignUp" element={<BussinesSignUp />} />
-        <Route path="/BussinessLogin" element={<BussinessLogin />} />
-        <Route path="/LocationLink" element={<LocationLink />} />
-        <Route
-          path="/OneCard"
-          element={<WithHomeLayout component={<OneCard />} />}
-        />
-        <Route
-          path="/BussinessMobileVerification"
-          element={<BussinessMobileVErification />}
-        />
-        <Route
-          path="/BussinessForgetMobileVerification"
-          element={<BussinessForgetMobileVerification />}
-        />
-        <Route
-          path="/BussinessForgetPassword"
-          element={<BussinessForgetPassword />}
-        />
-        <Route
-          path="/UserForgetMobileVerification"
-          element={<UserFPwdVerify />}
-        />
-        <Route path="/UserForgetPassword" element={<UserForgetPassword />} />
+    <Routes>
+      {/* Common Routes */}
+      <Route path="/" element={<Login />} />
+      <Route path="/Bubbles" element={<BubbleAnimation />} />
+      <Route path="/SignUpPage" element={<SignUpPage />} />
+      <Route path="/MobileVerification" element={<MobileVerification />} />
+      <Route path="/Home" element={<Home showSideBar={true} />} />
+      <Route path="/SideNavBar" element={<SideNavBar />} />
+      <Route path="/BussinesSignUp" element={<BussinesSignUp />} />
+      <Route path="/BussinessLogin" element={<BussinessLogin />} />
+      <Route path="/LocationLink" element={<LocationLink />} />
+      <Route path="/OneCard" element={<WithHomeLayout component={<OneCard />} />} />
+      <Route path="/BussinessMobileVerification" element={<BussinessMobileVErification />} />
+      <Route path="/BussinessForgetMobileVerification" element={<BussinessForgetMobileVerification />} />
+      <Route path="/BussinessForgetPassword" element={<BussinessForgetPassword />} />
+      <Route path="/UserForgetMobileVerification" element={<UserFPwdVerify />} />
+      <Route path="/UserForgetPassword" element={<UserForgetPassword />} />
 
-        {/* Routes for User */}
-        {AccountType === "user" && (
-          <>
-            <Route
-              path="/UserProfile"
-              element={<WithHomeLayout component={<UserProfile />} />}
-            />
-            <Route
-              path="/CompanyCard"
-              element={<WithHomeLayout component={<CompanyCard />} />}
-            />
-             <Route
-              path="/EditUserProfile"
-              element={
-                <WithHomeLayout
-                  component={<EditUserProfile />}
-                  
-                />
-              }
-            />
-          </>
-        )}
+      {/* Routes for User */}
+      {AccountType === "user" && (
+        <>
+          <Route path="/UserProfile" element={<WithHomeLayout component={<UserProfile />} />} />
+          <Route path="/CompanyCard" element={<WithHomeLayout component={<CompanyCard />} />} />
+          <Route path="/EditUserProfile" element={<WithHomeLayout component={<EditUserProfile />} />} />
+        </>
+      )}
 
-        {AccountType === "Bussiness" && (
-          <>
-            <Route path="/BoostDetails" element={<BoostDetails />} />
-
-            <Route
-              path="/BussinessProfileCard"
-              element={<BussinessProfileCard />}
-            />
-            <Route
-              path="/BussinessProfile"
-              element={<WithHomeLayout component={<BussinessProfile />} />}
-            />
-            <Route
-              path="/CustomerLeads"
-              element={
-                <WithHomeLayout
-                  component={<CustomerLeads />}
-                  showSideBar={false}
-                />
-              }
-            />
-            <Route
-              path="/BussinessEditPage"
-              element={<WithHomeLayout component={<BussinesEditPage />} />}
-            />
-          </>
-        )}
-      </Routes>
-    </Router>
+      {/* Routes for Business */}
+      {AccountType === "Bussiness" && (
+        <>
+          <Route path="/BoostDetails" element={<BoostDetails />} />
+          <Route path="/BussinessProfileCard" element={<BussinessProfileCard />} />
+          <Route path="/BussinessProfile" element={<WithHomeLayout component={<BussinessProfile />} />} />
+          <Route path="/CustomerLeads" element={<WithHomeLayout component={<CustomerLeads />} showSideBar={false} />} />
+          <Route path="/BussinessEditPage" element={<WithHomeLayout component={<BussinesEditPage />} />} />
+        </>
+      )}
+    </Routes>
   );
 }
 
@@ -142,4 +87,10 @@ function WithHomeLayout({ component, showSideBar = true }) {
   return <Home showSideBar={showSideBar}>{component}</Home>;
 }
 
-export default App;
+export default function AppWrapper() {
+  return (
+    <Router>
+      <App />
+    </Router>
+  );
+}

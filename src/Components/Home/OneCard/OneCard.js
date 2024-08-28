@@ -108,11 +108,7 @@ const cardData = [
       },
     ],
 
-    team: [
-      { name: "John Doe", title: "CEO", photo: img1 },
-      { name: "Jane Smith", title: "CTO", photo: img2 },
-      { name: "Emily Davis", title: "COO", photo: img3 },
-    ],
+    
     testimonials: [
       { name: "Client A", review: "Excellent service!", rating: 5 },
       { name: "Client B", review: "Highly recommended!", rating: 4 },
