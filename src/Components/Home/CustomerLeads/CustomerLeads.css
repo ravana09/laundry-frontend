@@ -1,43 +1,117 @@
+
+
+/* Optional CSS to ensure horizontal scrolling */
+.data-table-container {
+  overflow-x: auto; /* Allows horizontal scrolling */
+}
+
 .business-profile-head {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.fixed-header {
+  position: fixed;
+  top: 70px;
+  width: 100vw;
+  z-index: 1000;
+  background-color: white;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 20px;
+  margin: 0px 0px 0px -25px;
+}
+
+.icon-button {
+  margin: 0 5px;
+  height: 50px;
+  width: 60px;
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-button:hover {
+  background-color: #f0f0f0;
+}
+
+.icon-image {
+  width: 30px;
+  height: auto;
+}
+
+#data-table {
+  padding-top: 22vh;
+  padding: none;
+  width: 100%;
+  margin: 0px 0px 0px 0px;
+}
+
+/* option color */
+.option-connected-sale {
+  background-color: #4caf50; 
+  color: white;
+}
+
+.option-connected-notsale {
+  background-color: #ff9800; 
+  color: white;
+}
+
+.option-not-connected {
+  background-color: #f44336; 
+  color: white;
+}
+
+.option-unable-to-connect {
+  background-color: #0a0a0a; 
+  color: white;
+}
+
+
+.remarks-container {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.remarks-input {
+  flex-grow: 1;
+  height: 40px;
+  width: 50%;
+  border: 1px solid #ccc;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.remarks-save-btn {
+  height: 40px;
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  /* padding: 0 5px; */
+  font-size: 16px;
+}
+
+
+/* Mobile styles */
+#data-table-card {
+  display: block;
+}
+
+/* Large screen styles */
+#data-table-large {
+  display: none;
+}
+
+/* Hide mobile layout on large screens */
+@media (min-width: 789px) {
+  #data-table-card {
+    display: none;
   }
-  
-  .fixed-header {
-    position: fixed;
-    top: 70px;
-    width: 100vw;
-    z-index: 1000;
-    background-color: white;
-    border-bottom: 1px solid #ddd;
-    padding: 10px 20px ;
-    margin: 0px 0px 0px -25px;
+
+  #data-table-large {
+    display: block;
   }
-  
-  .icon-button {
-    margin: 0 5px;
-    height: 50px;
-    width: 60px;
-    background-color: transparent;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .icon-button:hover {
-    background-color: #f0f0f0;
-  }
-  
-  .icon-image {
-    width: 30px;
-    height: auto;
-  }
-  
-  #data-table {
-    padding-top: 22vh; 
-    padding: none;
-    width: 100vw;
-   margin: 0px 0px 0px -25px
-  }
-  
+}

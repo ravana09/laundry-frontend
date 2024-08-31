@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "../CustomerLeads/CustomerLeads.css";
-import BussinessProfileCard from "../BussinesProfile/BussinesProfileCard";
 import {
   Col,
   Container,
@@ -9,167 +8,95 @@ import {
   Image,
   OverlayTrigger,
   Tooltip,
+  Card,
+  Collapse,
 } from "react-bootstrap";
 import DataTable from "react-data-table-component";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import Excel from "../../Images/excel.png";
 import Printer from "../../Images/printer.png";
+import { useLocation } from "react-router-dom";
+import { FaSave } from "react-icons/fa";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa"; // For arrow icons
 
 function CustomerLeads() {
   const [details, setDetails] = useState([]);
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [dataChanged, setDataChanged] = useState({});
+  const [changedRows, setChangedRows] = useState(new Set());
+  const [expandedRow, setExpandedRow] = useState(null);
 
-  const sampleData = [
-    {
-      id: 1,
-      name: "John Doe",
-      mobileNumber: "123-456-7890",
-      email: "john.doe@example.com",
-      address: "123 Main St, Anytown, USA",
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      mobileNumber: "987-654-3210",
-      email: "jane.smith@example.com",
-      address: "456 Oak Ave, Othertown, USA",
-    },
-    {
-      id: 3,
-      name: "Bob Johnson",
-      mobileNumber: "555-123-4567",
-      email: "bob.johnson@example.com",
-      address: "789 Pine Rd, Sometown, USA",
-    },
-    {
-      id: 4,
-      name: "Alice Brown",
-      mobileNumber: "444-555-6666",
-      email: "alice.brown@example.com",
-      address: "101 Maple St, Anycity, USA",
-    },
-    {
-      id: 5,
-      name: "Charlie Davis",
-      mobileNumber: "333-444-5555",
-      email: "charlie.davis@example.com",
-      address: "202 Birch Ln, Anytown, USA",
-    },
-    {
-      id: 6,
-      name: "Eve White",
-      mobileNumber: "222-333-4444",
-      email: "eve.white@example.com",
-      address: "303 Cedar Ct, Othertown, USA",
-    },
-    {
-      id: 7,
-      name: "Frank Green",
-      mobileNumber: "111-222-3333",
-      email: "frank.green@example.com",
-      address: "404 Elm St, Sometown, USA",
-    },
-    {
-      id: 8,
-      name: "Grace Black",
-      mobileNumber: "999-888-7777",
-      email: "grace.black@example.com",
-      address: "505 Spruce Ave, Anycity, USA",
-    },
-    {
-      id: 9,
-      name: "Hank Blue",
-      mobileNumber: "888-777-6666",
-      email: "hank.blue@example.com",
-      address: "606 Redwood Dr, Anytown, USA",
-    },
-    {
-      id: 10,
-      name: "Ivy Yellow",
-      mobileNumber: "777-666-5555",
-      email: "ivy.yellow@example.com",
-      address: "707 Ash St, Othertown, USA",
-    },
-    {
-      id: 11,
-      name: "Jack Red",
-      mobileNumber: "666-555-4444",
-      email: "jack.red@example.com",
-      address: "808 Fir Ln, Sometown, USA",
-    },
-    {
-      id: 12,
-      name: "Karen Orange",
-      mobileNumber: "555-444-3333",
-      email: "karen.orange@example.com",
-      address: "909 Sycamore Rd, Anycity, USA",
-    },
-    {
-      id: 13,
-      name: "Larry Purple",
-      mobileNumber: "444-333-2222",
-      email: "larry.purple@example.com",
-      address: "1010 Cedar Ct, Anytown, USA",
-    },
-    {
-      id: 14,
-      name: "Mona Gray",
-      mobileNumber: "333-222-1111",
-      email: "mona.gray@example.com",
-      address: "1111 Oak Ave, Othertown, USA",
-    },
-    {
-      id: 15,
-      name: "Nancy Pink",
-      mobileNumber: "222-111-0000",
-      email: "nancy.pink@example.com",
-      address: "1212 Pine Rd, Sometown, USA",
-    },
-    {
-      id: 16,
-      name: "Oscar Silver",
-      mobileNumber: "111-000-9999",
-      email: "oscar.silver@example.com",
-      address: "1313 Maple St, Anycity, USA",
-    },
-    {
-      id: 17,
-      name: "Paul Gold",
-      mobileNumber: "000-999-8888",
-      email: "paul.gold@example.com",
-      address: "1414 Birch Ln, Anytown, USA",
-    },
-    {
-      id: 18,
-      name: "Quincy Bronze",
-      mobileNumber: "999-888-7777",
-      email: "quincy.bronze@example.com",
-      address: "1515 Cedar Ct, Othertown, USA",
-    },
-    {
-      id: 19,
-      name: "Rachel White",
-      mobileNumber: "888-777-6666",
-      email: "rachel.white@example.com",
-      address: "1616 Elm St, Sometown, USA",
-    },
-    {
-      id: 20,
-      name: "Sam Blue",
-      mobileNumber: "777-666-5555",
-      email: "sam.blue@example.com",
-      address: "1717 Spruce Ave, Anycity, USA",
-    },
-  ];
+  const toggleRow = (rowId) => {
+    setExpandedRow(expandedRow === rowId ? null : rowId);
+  };
+
+  const location = useLocation();
+  const { title, sampleData } = location.state || {};
 
   useEffect(() => {
-    setDetails(sampleData);
-  }, []);
+    if (sampleData) {
+      setDetails(sampleData);
+    }
+  }, [sampleData]);
+
+  const renderCompanyServices = (
+    row,
+    handleTypeServicesChange,
+    dataChanged,
+    CompanyCationOptions
+  ) => {
+    const selectedOption = CompanyCationOptions.find(
+      (option) =>
+        option.value === (dataChanged[row.id]?.typeServices || row.typeServices)
+    );
+    const backgroundColor = selectedOption
+      ? selectedOption.backgroundColor
+      : "white";
+
+    return (
+      <select
+        value={dataChanged[row.id]?.typeServices || row.typeServices || ""}
+        onChange={(e) => handleTypeServicesChange(row.id, e)}
+        style={{
+          height: "40px",
+          width: "100%",
+          backgroundColor: backgroundColor,
+          color: "white",
+          fontSize: "16px",
+          cursor: "pointer",
+          textAlign: "center",
+        }}
+      >
+        <option
+          value=""
+          disabled
+          style={{ color: "black", backgroundColor: "white" }}
+        >
+          Choose an option
+        </option>
+        {CompanyCationOptions.map((option) => (
+          <option
+            key={option.value}
+            value={option.value}
+            style={{
+              color: option.backgroundColor,
+              backgroundColor: "white",
+              borderBottom: "2px solid grey ",
+            }}
+          >
+            {option.label}
+          </option>
+        ))}
+      </select>
+    );
+  };
 
   const customStyles = {
     rows: {
       style: {
-        minHeight: "60px",
+        minHeight: "50px",
+        width: "100%",
       },
     },
     headCells: {
@@ -179,7 +106,7 @@ function CustomerLeads() {
         color: "white",
         backgroundColor: "black",
         borderRight: "1px solid white",
-  
+        width: "100%",
       },
     },
     cells: {
@@ -187,9 +114,73 @@ function CustomerLeads() {
         paddingLeft: "8px",
         paddingRight: "8px",
         borderRight: "1px solid #ddd",
+        width: "100%",
       },
     },
   };
+
+  const handleTypeServicesChange = (rowId, e) => {
+    setDataChanged((prevDetails) => ({
+      ...prevDetails,
+      [rowId]: {
+        ...prevDetails[rowId],
+        typeServices: e.target.value,
+      },
+    }));
+    setChangedRows((prev) => new Set(prev.add(rowId)));
+  };
+
+  const handleRemarksChange = (rowId, e) => {
+    setDataChanged((prevDetails) => ({
+      ...prevDetails,
+      [rowId]: {
+        ...prevDetails[rowId],
+        Remarks: e.target.value,
+      },
+    }));
+    setChangedRows((prev) => new Set(prev.add(rowId)));
+  };
+
+  const handleSave = (rowId) => {
+    const updatedRow = details.find((row) => row.id === rowId);
+    console.log(
+      `Saving changes in row ${rowId}, typeServices is ${
+        dataChanged[rowId]?.typeServices || updatedRow?.typeServices
+      } and remark is ${dataChanged[rowId]?.Remarks || updatedRow?.Remarks}`
+    );
+    setChangedRows((prev) => {
+      const newSet = new Set(prev);
+      newSet.delete(rowId);
+      return newSet;
+    });
+  };
+
+  const CompanyCationOptions = [
+    {
+      value: "connected/sale",
+      label: "connected/sale",
+      backgroundColor: "#4caf50",
+      color: "white",
+    },
+    {
+      value: "connected/Notsale",
+      label: "connected/Notsale",
+      backgroundColor: "#ff9800",
+      color: "white",
+    },
+    {
+      value: "Not Connected",
+      label: "Not Connected",
+      backgroundColor: "#f44336",
+      color: "white",
+    },
+    {
+      value: "Unable to connect",
+      label: "Unable to connect",
+      backgroundColor: "#9e9e9e",
+      color: "white",
+    },
+  ];
 
   const columns = [
     {
@@ -213,14 +204,43 @@ function CustomerLeads() {
       sortable: true,
     },
     {
-      name: "Email ID",
-      selector: (row) => row.email,
+      name: "Services",
+      selector: (row) => row.service,
       sortable: true,
     },
     {
-      name: "Address",
-      selector: (row) => row.address,
+      name: "Company Services",
+      cell: (row) =>
+        renderCompanyServices(
+          row,
+          handleTypeServicesChange,
+          dataChanged,
+          CompanyCationOptions
+        ),
       sortable: true,
+    },
+    {
+      name: "Remarks",
+      cell: (row) => (
+        <div className="remarks-container d-flex align-items-center">
+          <input
+            type="text"
+            name="Remarks"
+            value={dataChanged[row.id]?.Remarks || row.Remarks || ""}
+            onChange={(e) => handleRemarksChange(row.id, e)}
+            placeholder="Enter remarks"
+            className="remarks-input flex-grow-1"
+          />
+          {changedRows.has(row.id) && (
+            <Button
+              className="remarks-save-btn "
+              onClick={() => handleSave(row.id)}
+            >
+              <FaSave />
+            </Button>
+          )}
+        </div>
+      ),
     },
   ];
 
@@ -237,8 +257,48 @@ function CustomerLeads() {
   };
 
   const handlePrint = () => {
+    const rowsToPrint = selectedRows.length > 0 ? selectedRows : details;
+
+    if (rowsToPrint.length === 0) {
+      alert("No data available to print.");
+      return;
+    }
+
     const printWindow = window.open("", "", "height=600,width=800");
-    const printContent = document.getElementById("data-table").outerHTML;
+    let printContent =
+      "<table border='1' style='border-collapse: collapse; width: 100%;'><thead><tr>";
+
+    columns.forEach((col) => {
+      printContent += `<th style='padding: 8px; text-align: left; border: 1px solid black;'>${
+        col.name || ""
+      }</th>`;
+    });
+
+    printContent += "</tr></thead><tbody>";
+
+    rowsToPrint.forEach((row) => {
+      printContent += "<tr>";
+      columns.forEach((col) => {
+        let cellValue = "-"; // Default value if no selector or row data
+
+        if (col.selector && typeof col.selector === "function") {
+          cellValue = col.selector(row);
+        }
+
+        if (typeof cellValue === "number") {
+          cellValue = cellValue.toLocaleString();
+        } else if (cellValue instanceof Date) {
+          cellValue = cellValue.toLocaleDateString();
+        } else if (typeof cellValue === "boolean") {
+          cellValue = cellValue ? "Yes" : "No";
+        }
+
+        printContent += `<td style='padding: 8px; border: 1px solid black;'>${cellValue}</td>`;
+      });
+      printContent += "</tr>";
+    });
+
+    printContent += "</tbody></table>";
 
     const styles = Array.from(
       document.querySelectorAll('link[rel="stylesheet"], style')
@@ -246,7 +306,6 @@ function CustomerLeads() {
       .map((style) => style.outerHTML)
       .join("");
 
-    printWindow.document.write("<html><head><title>Print</title>");
     printWindow.document.write(styles);
     printWindow.document.write("</head><body>");
     printWindow.document.write(printContent);
@@ -255,55 +314,151 @@ function CustomerLeads() {
     printWindow.focus();
     printWindow.print();
   };
-  let All = sampleData.length;
 
-  const paginationRowsPerPageOptions = [5, 10, 15, All];
+  const handleRowSelected = ({ selectedRows }) => {
+    setSelectedRows(selectedRows);
+  };
+
+  const paginationRowsPerPageOptions = [5, 10, 15];
 
   return (
     <>
-      <Container  fluid className="business-profile-head" >
-      <div className="fixed-header">
-        <Row className="align-items-center">
-          <Col xs={0} sm={5}></Col>
-          <Col xs={6} sm={5}>
-            <h4>Company Name</h4>
-          </Col>
-          <Col xs={6} sm={2} className="d-flex justify-content-end">
-            <OverlayTrigger
-              placement="top"
-              overlay={<Tooltip id="tooltip-excel">Convert to Excel</Tooltip>}
-            >
-              <Button variant="light" className="icon-button" onClick={handleExport}>
-                <Image src={Excel} alt="Excel" className="icon-image" />
-              </Button>
-            </OverlayTrigger>
+      <Container fluid className="business-profile-head">
+        <div className="fixed-header">
+          <Row className="align-items-center">
+            <Col xs={0} sm={5}></Col>
+            <Col xs={6} sm={5}>
+              <h4>{title}</h4>
+            </Col>
+            <Col xs={6} sm={2} className="d-flex justify-content-end">
+              <OverlayTrigger
+                placement="top"
+                overlay={<Tooltip id="tooltip-excel">Convert to Excel</Tooltip>}
+              >
+                <Button
+                  variant="light"
+                  className="icon-button"
+                  onClick={handleExport}
+                >
+                  <Image src={Excel} alt="Excel" className="icon-image" />
+                </Button>
+              </OverlayTrigger>
 
-            <OverlayTrigger
-              placement="top"
-              overlay={<Tooltip id="tooltip-print">Print</Tooltip>}
-            >
-              <Button variant="light" className="icon-button" onClick={handlePrint}>
-                <Image src={Printer} alt="Print" className="icon-image" />
-              </Button>
-            </OverlayTrigger>
-          </Col>
-        </Row>
-      </div>
+              <OverlayTrigger
+                placement="top"
+                overlay={<Tooltip id="tooltip-print">Print</Tooltip>}
+              >
+                <Button
+                  variant="light"
+                  className="icon-button"
+                  onClick={handlePrint}
+                >
+                  <Image src={Printer} alt="Print" className="icon-image" />
+                </Button>
+              </OverlayTrigger>
+            </Col>
+          </Row>
+        </div>
 
-      <div id="data-table" >
-        <DataTable
-          columns={columns}
-          data={details}
-          customStyles={customStyles}
-          selectableRows
-          pagination
-          paginationPerPage={10}
-          paginationRowsPerPageOptions={paginationRowsPerPageOptions}
-          selectableRowsHighlight
-          highlightOnHover
-        />
-      </div>
-    </Container>
+        <div id="data-table" className="data-table-container">
+          {/* Mobile view layout */}
+          <div id="data-table-card" className="data-table-container-mobile">
+            {details.map((row) => {
+              const isExpanded = expandedRow === row.id;
+              return (
+                <Card key={row.id} className="mb-3">
+                  <Card.Body>
+                    <div className="data-item-content">
+                      {columns.map((col) => {
+                        // Display specific columns at the top
+                        if (
+                          [
+                            "Name",
+                            "Mobile Number",
+                            "Company Services",
+                            "Remarks",
+                          ].includes(col.name)
+                        ) {
+                          const value =
+                            typeof col.cell === "function"
+                              ? col.cell(row)
+                              : typeof col.selector === "function"
+                              ? col.selector(row)
+                              : "-"; // Default value
+
+                          return (
+                            <div className="data-item-detail" key={col.name}>
+                              <Col xs={10}>
+                              <h5 className="data-item-detail-name">{col.name}:</h5>
+                              <p>{value}</p> 
+                              </Col>
+                            </div>
+                          );
+                        }
+                        return null;
+                      })}
+                    </div>
+
+                    <Button
+                      className="show-more-button"
+                      variant="link"
+                      onClick={() => toggleRow(row.id)}
+                    >
+                      {isExpanded ? <FaChevronUp /> : <FaChevronDown />} Show
+                      More
+                    </Button>
+
+                    <Collapse in={isExpanded}>
+                      <div className="data-item-expanded">
+                        {columns.map((col) => {
+                          // Display additional details in the dropdown
+                          if (
+                            ![
+                              "Name",
+                              "Mobile Number",
+                              "Company Services",
+                              "Remarks",
+                            ].includes(col.name)
+                          ) {
+                            const value =
+                              typeof col.cell === "function"
+                                ? col.cell(row)
+                                : typeof col.selector === "function"
+                                ? col.selector(row)
+                                : "-"; // Default value
+
+                            return (
+                              <div className="data-item-detail" key={col.name}>
+                                <strong>{col.name}:</strong> {value}
+                              </div>
+                            );
+                          }
+                          return null;
+                        })}
+                      </div>
+                    </Collapse>
+                  </Card.Body>
+                </Card>
+              );
+            })}
+          </div>
+          {/* Large screen layout */}
+          <div id="data-table-large" className="data-table-container-large">
+            <DataTable
+              columns={columns}
+              data={details}
+              customStyles={customStyles}
+              selectableRows
+              pagination
+              paginationPerPage={10}
+              paginationRowsPerPageOptions={paginationRowsPerPageOptions}
+              selectableRowsHighlight
+              highlightOnHover
+              onSelectedRowsChange={handleRowSelected}
+            />
+          </div>
+        </div>
+      </Container>
     </>
   );
 }

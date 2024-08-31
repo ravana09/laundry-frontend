@@ -62,7 +62,7 @@ function BussinessProfile() {
               >
                 <Card.Body style={{padding:'0px'}}>
                   {[
-                    { title: "My Leads", subtitle: "Tap to View your Leads", Navigate: "/CustomerLeads" },
+                    { title: "My Leads", subtitle: "Tap to View your Leads", Navigate: "/LeadsContainer" },
                     { title: "Catalogue", subtitle: "Show your Product and Services", Navigate: "/CompanyCard" },
                     { title: "KYC, Payments & Invoices", subtitle: "KYC, GST Update", Navigate: "/CompanyCard" },
                     { title: "Advertise On LAUND", subtitle: "Reach out to a wide range of customers" },

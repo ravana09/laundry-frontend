@@ -78,7 +78,7 @@ function SideNavBar() {
                   <Button
                     variant="transparent"
                     style={{ border: "none", padding: 0 }}
-                    onClick={() => handleNavigation("/BussinessProfile")}
+                    onClick={() => handleNavigation("/BussinessEditPage")}
                   >
                     
                     <Image

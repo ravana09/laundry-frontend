@@ -25,6 +25,7 @@ import LocationLink from "./Components/Home/GoogleMap/LocationLink";
 import BussinesEditPage from "./Components/Home/BussinesProfile/BussinesEditPage";
 import EditUserProfile from "./Components/Home/UserProfile/EditUserProfile";
 import { useEffect, useState } from "react";
+import LeadsContainer from "./Components/Home/LeadsContainer/LeadsContainer";
 
 function App() {
   const [AccountType, setAccountType] = useState(Cookies.get("AccountType"));
@@ -75,6 +76,7 @@ function App() {
           <Route path="/BoostDetails" element={<BoostDetails />} />
           <Route path="/BussinessProfileCard" element={<BussinessProfileCard />} />
           <Route path="/BussinessProfile" element={<WithHomeLayout component={<BussinessProfile />} />} />
+          <Route path="/LeadsContainer" element={<WithHomeLayout component={<LeadsContainer />} />} />
           <Route path="/CustomerLeads" element={<WithHomeLayout component={<CustomerLeads />} showSideBar={false} />} />
           <Route path="/BussinessEditPage" element={<WithHomeLayout component={<BussinesEditPage />} />} />
         </>
