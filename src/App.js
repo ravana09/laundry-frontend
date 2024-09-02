@@ -9,7 +9,7 @@ import SideNavBar from "./Components/Home/SideNavbar/SideNavBar";
 import Home from "./Components/Home/Home/Home";
 import CompanyCard from "./Components/Home/Card/Card";
 import BussinessProfile from "./Components/Home/BussinesProfile/BussinessProfile";
-import CustomerLeads from "./Components/Home/CustomerLeads/CustomerLeads";
+
 import BussinessProfileCard from "./Components/Home/BussinesProfile/BussinesProfileCard";
 import UserProfile from "./Components/Home/UserProfile/UserProfile";
 import BoostDetails from "./Components/Home/BussinesProfile/BoostDetails";
@@ -25,7 +25,13 @@ import LocationLink from "./Components/Home/GoogleMap/LocationLink";
 import BussinesEditPage from "./Components/Home/BussinesProfile/BussinesEditPage";
 import EditUserProfile from "./Components/Home/UserProfile/EditUserProfile";
 import { useEffect, useState } from "react";
-import LeadsContainer from "./Components/Home/LeadsContainer/LeadsContainer";
+
+import Analysispage from "./Components/Home/BussinesProfile/AnalysisPage/Analysispage";
+import LeadsContainer from "./Components/Home/BussinesProfile/LeadsContainer/LeadsContainer";
+import CustomerLeads from "./Components/Home/BussinesProfile/CustomerLeads/CustomerLeads";
+import AllAnalysisPage from "./Components/Home/BussinesProfile/AnalysisPage/AllAnalysisPage/AllAnalysisPage";
+import ReportsPage from "./Components/Home/BussinesProfile/ReportsPage/ReportsPage";
+import AllReportsPage from "./Components/Home/BussinesProfile/ReportsPage/AllReportsPage";
 
 function App() {
   const [AccountType, setAccountType] = useState(Cookies.get("AccountType"));
@@ -41,6 +47,35 @@ function App() {
       navigate("/BussinessProfile");
     }
   }, []);
+
+  // const location = useLocation();
+
+  
+  // useEffect(() => {
+
+  //   localStorage.setItem("lastPath", location.pathname);
+  // }, [location.pathname]);
+
+
+  // useEffect(() => {
+  //   const accountToken = Cookies.get("AccountToken");
+  //   const accountType = Cookies.get("AccountType");
+  //   const lastPath = localStorage.getItem("lastPath");
+
+   
+  //   if (lastPath && lastPath !== "/") {
+  //     navigate(lastPath);
+  //   } else {
+    
+  //     if (accountToken === "USerTokenpoiuytrewq" && accountType === "user") {
+  //       navigate("/CompanyCard");
+  //     } else if (accountToken === "BusinessTokenqwertyuiop" && accountType === "Bussiness") {
+  //       navigate("/BussinessProfile");
+  //     }
+  //   }
+  // }, [navigate]);
+
+  
 
   return (
     <Routes>
@@ -77,6 +112,9 @@ function App() {
           <Route path="/BussinessProfileCard" element={<BussinessProfileCard />} />
           <Route path="/BussinessProfile" element={<WithHomeLayout component={<BussinessProfile />} />} />
           <Route path="/LeadsContainer" element={<WithHomeLayout component={<LeadsContainer />} />} />
+          <Route path="/AllAnalysisPage" element={<WithHomeLayout component={<AllAnalysisPage />} />} />
+          <Route path="/ReportsPage" element={<WithHomeLayout component={<ReportsPage />}  />} />
+          <Route path="/AllReportsPage" element={<WithHomeLayout component={<AllReportsPage />} showSideBar={false}  />} />
           <Route path="/CustomerLeads" element={<WithHomeLayout component={<CustomerLeads />} showSideBar={false} />} />
           <Route path="/BussinessEditPage" element={<WithHomeLayout component={<BussinesEditPage />} />} />
         </>

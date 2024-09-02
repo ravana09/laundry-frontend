@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../CustomerLeads/CustomerLeads.css";
+import "./CustomerLeads.css";
 import {
   Col,
   Container,
@@ -14,18 +14,20 @@ import {
 import DataTable from "react-data-table-component";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
-import Excel from "../../Images/excel.png";
-import Printer from "../../Images/printer.png";
+import Excel from "../../../Images/excel.png";
+import Printer from "../../../Images/printer.png";
 import { useLocation } from "react-router-dom";
 import { FaSave } from "react-icons/fa";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa"; // For arrow icons
 
-function CustomerLeads() {
+function CustomerLeads({data,Reportstitle}) {
   const [details, setDetails] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
   const [dataChanged, setDataChanged] = useState({});
   const [changedRows, setChangedRows] = useState(new Set());
   const [expandedRow, setExpandedRow] = useState(null);
+
+  const[LeadsTitle,setLeadsTitle]=useState("")
 
   const toggleRow = (rowId) => {
     setExpandedRow(expandedRow === rowId ? null : rowId);
@@ -37,8 +39,14 @@ function CustomerLeads() {
   useEffect(() => {
     if (sampleData) {
       setDetails(sampleData);
+      setLeadsTitle(title)
     }
-  }, [sampleData]);
+
+    if(data){
+      setDetails(data)
+      setLeadsTitle(Reportstitle)
+    }
+  }, [sampleData,data]);
 
   const renderCompanyServices = (
     row,
@@ -175,8 +183,8 @@ function CustomerLeads() {
       color: "white",
     },
     {
-      value: "Unable to connect",
-      label: "Unable to connect",
+      value: "Unable to Connect",
+      label: "Unable to Connect",
       backgroundColor: "#9e9e9e",
       color: "white",
     },
@@ -324,11 +332,11 @@ function CustomerLeads() {
   return (
     <>
       <Container fluid className="business-profile-head">
-        <div className="fixed-header">
+       <div className="fixed-header">
           <Row className="align-items-center">
             <Col xs={0} sm={5}></Col>
             <Col xs={6} sm={5}>
-              <h4>{title}</h4>
+              <h4>{LeadsTitle}</h4>
             </Col>
             <Col xs={6} sm={2} className="d-flex justify-content-end">
               <OverlayTrigger
@@ -366,9 +374,12 @@ function CustomerLeads() {
             {details.map((row) => {
               const isExpanded = expandedRow === row.id;
               return (
-                <Card key={row.id} className="mb-3">
+                <Card key={row.id} className="mb-1" style={{ height: "auto" }}>
                   <Card.Body>
-                    <div className="data-item-content">
+                    <div
+                      className="data-item-content"
+                      style={{ padding: "0rem" }}
+                    >
                       {columns.map((col) => {
                         // Display specific columns at the top
                         if (
@@ -389,8 +400,12 @@ function CustomerLeads() {
                           return (
                             <div className="data-item-detail" key={col.name}>
                               <Col xs={10}>
-                              <h5 className="data-item-detail-name">{col.name}:</h5>
-                              <p>{value}</p> 
+                                <h5 className="data-item-detail-name">
+                                  {col.name}:
+                                </h5>
+                                <p className="data-item-detail-value">
+                                  {value}
+                                </p>
                               </Col>
                             </div>
                           );
@@ -400,9 +415,10 @@ function CustomerLeads() {
                     </div>
 
                     <Button
-                      className="show-more-button"
+                      // className="show-more-button"
                       variant="link"
                       onClick={() => toggleRow(row.id)}
+                      style={{ fontSize: "10px" }}
                     >
                       {isExpanded ? <FaChevronUp /> : <FaChevronDown />} Show
                       More
@@ -428,8 +444,13 @@ function CustomerLeads() {
                                 : "-"; // Default value
 
                             return (
-                              <div className="data-item-detail" key={col.name}>
-                                <strong>{col.name}:</strong> {value}
+                              <div  key={col.name}>
+                                <Row>
+                                <Col xs={3}>
+                                  <strong className="data-item-detail-name">{col.name}:</strong>
+                                </Col>
+                                <Col xs="auto"><p className="data-item-detail-value">{value}</p> </Col>
+                                </Row>
                               </div>
                             );
                           }

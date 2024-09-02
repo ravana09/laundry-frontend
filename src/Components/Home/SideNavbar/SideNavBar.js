@@ -160,8 +160,14 @@ function SideNavBar() {
                   <Nav.Link onClick={() => handleNavigation("/OneCard")}>
                     Preview
                   </Nav.Link>
-                  <Nav.Link onClick={() => handleNavigation("/CustomerLeads")}>
+                  <Nav.Link onClick={() => handleNavigation("/LeadsContainer")}>
                     My Leads
+                  </Nav.Link>
+                  <Nav.Link onClick={() => handleNavigation("/AllAnalysisPage")}>
+                    Analysis
+                  </Nav.Link>
+                  <Nav.Link onClick={() => handleNavigation("/ReportsPage")}>
+                    Reports
                   </Nav.Link>
                 </Nav>
               )}

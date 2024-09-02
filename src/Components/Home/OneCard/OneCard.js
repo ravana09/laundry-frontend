@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../OneCard/OneCard.css";
 import Cookies from "js-cookie";
 import { useLocation } from "react-router-dom";
@@ -136,6 +136,8 @@ function OneCard({ handleNavigate }) {
   const [formData, setFormData] = useState(cardData);
   const [cookiesType, setCookiesType] = useState(Cookies.get("AccountType"));
 
+
+
   useEffect(() => {
     setCookiesType(Cookies.get("AccountType"));
   }, [cookiesType]);
@@ -179,6 +181,21 @@ function OneCard({ handleNavigate }) {
   const card = formData[0]; // Assuming only one hotel for simplicity
   const visibleImages = card.images;
 
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+
+  const handlePlayPause = () => {
+    if (isPlaying) videoRef.current.pause();
+    else videoRef.current.play();
+    setIsPlaying(!isPlaying);
+  };
+
+  const handleMute = () => {
+    const currentVideo = videoRef.current;
+    currentVideo.muted = !isMuted;
+    setIsMuted(!isMuted);
+  };
   const handleLikeButton = () => {
     setHeart(!heart);
   };
@@ -295,6 +312,7 @@ function OneCard({ handleNavigate }) {
                     />
                   )}
                   {type === "video" && (
+                    //  src={media}
                     <video
                       src={media}
                       controls

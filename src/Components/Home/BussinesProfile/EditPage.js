@@ -10,24 +10,7 @@ import {
   Image,
   Row,
 } from "react-bootstrap";
-import ProfileImg from "../../Images/BussinessProfile.jpg";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import "../BussinesProfile/BusinessEditPage.css";
-import img1 from "../Card/sampleImages/luffy-3200-x-1800-picture-ao6tt30yuxjuvjlk.jpg";
-import img2 from "../Card/sampleImages/sanji-and-one-piece-zoro-4k-99b5u5n1oeu8tqja.jpg";
-import img3 from "../Card/sampleImages/wallpaperflare.com_wallpaper (1).jpg";
-import OnePIeceGif from "../Card/sampleImages/OnePieceGIf.gif";
-import SuryaVideo from "../Card/sampleImages/SampleVIdeo.mp4";
-import SampleVideo from "../Card/sampleImages/sampleVideo2.mp4";
-import Location from "../../Images/LocationCircle.png";
-import twitter from "../../Images/TwitterLogo.png";
-import Edit from "../../Images/edit.png";
-import Preview from "../../Images/Preview.png";
-import ProfileUodate from "../../Images/ProfileUpdate.png";
-import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+
 
 function getMediaType(file) {
   const extension = file.name.split(".").pop().toLowerCase();
@@ -157,6 +140,19 @@ function EditPage({formData,setFormData,setIsEditing} ) {
             type="text"
             name="contact"
             value={formDataCopy.contact}
+            onChange={handleChange}
+          />
+        </Col>
+      </Form.Group>
+      <Form.Group as={Row} className="mb-3">
+        <Form.Label column sm={4}>
+          Gst No
+        </Form.Label>
+        <Col sm={8}>
+          <Form.Control
+            type="text"
+            name="GstNo"
+            value={formDataCopy.GstNo}
             onChange={handleChange}
           />
         </Col>

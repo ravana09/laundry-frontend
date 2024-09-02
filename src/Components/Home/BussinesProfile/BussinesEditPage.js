@@ -69,6 +69,8 @@ function BussinesEditPage() {
       "Our mission is to revolutionize the industry with cutting-edge technology. We are committed to delivering exceptional value and innovation through our products and services.",
     address: "123 Business Avenue, City, Country",
     email: "email@gmail.com",
+    GstNo: "wgruiewgriewgrge",
+
     contact: "9630258741",
     website: "https://example.com",
     yearOfEstablishment: "1947",
@@ -82,7 +84,7 @@ function BussinesEditPage() {
     selectedDay: "",
     media: [],
     images: [img1, OnePIeceGif, SuryaVideo, SampleVideo],
-    
+
     instagram: "https://www.instagram.com/",
     twitter: "https://x.com/twitt_login?lang=en",
   });
@@ -103,12 +105,10 @@ function BussinesEditPage() {
     setIsExpanded(!isExpanded);
   };
 
-
   const handleEdit = () => {
     setIsEditing(true);
   };
 
- 
   //   setFormData(formDataCopy);
   //   setIsEditing(false);
   // };
@@ -338,7 +338,6 @@ function BussinesEditPage() {
                   formData={formData}
                   setFormData={setFormData}
                   setIsEditing={setIsEditing}
-                  
                 />
               ) : (
                 <>
@@ -375,7 +374,6 @@ function BussinesEditPage() {
                                 }}
                               />
                             ) : (
-                       
                               <div>Unsupported media type</div>
                             )}
                           </div>
@@ -398,8 +396,17 @@ function BussinesEditPage() {
                       <div className="details-label">
                         <strong>Contact:</strong>
                       </div>
+
                       <div className="details-value">{formData.contact}</div>
                     </div>
+                    <div className="details-item">
+                      <div className="details-label">
+                        <strong>Gst NUmber :</strong>
+                      </div>
+
+                      <div className="details-value">{formData.GstNo}</div>
+                    </div>
+
                     <div className="details-item">
                       <div className="details-label">
                         <strong>Business Timing (Weekdays):</strong>
