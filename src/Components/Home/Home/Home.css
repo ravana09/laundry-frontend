@@ -1,18 +1,6 @@
-.Home-Navbar{
-    position: fixed;
-    top: 0;
-    width:max-content;
-    height: 100%;
-    z-index: 1000;
-   background-color: rgb(190, 190, 190);
-    
-}
 
-.Home-Body{
-    overflow: hidden;
-    margin-top: 50px;
-    width:max-content;
-    height: 500vh;
-    margin: 0px 0px 0px 0px ;
-    padding: 0px;
-}
+.home-container {
+    background: linear-gradient(to bottom, rgb(235, 233, 233), #66def5, #8ce2f6, #abe6f6, #c6eaf5) !important;
+    min-height: 100vh;
+  }
+  

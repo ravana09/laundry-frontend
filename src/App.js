@@ -32,6 +32,7 @@ import CustomerLeads from "./Components/Home/BussinesProfile/CustomerLeads/Custo
 import AllAnalysisPage from "./Components/Home/BussinesProfile/AnalysisPage/AllAnalysisPage/AllAnalysisPage";
 import ReportsPage from "./Components/Home/BussinesProfile/ReportsPage/ReportsPage";
 import AllReportsPage from "./Components/Home/BussinesProfile/ReportsPage/AllReportsPage";
+import PopupCard from "./Components/Home/PopupCard/PopupCard";
 
 function App() {
   const [AccountType, setAccountType] = useState(Cookies.get("AccountType"));
@@ -102,6 +103,7 @@ function App() {
           <Route path="/UserProfile" element={<WithHomeLayout component={<UserProfile />} />} />
           <Route path="/CompanyCard" element={<WithHomeLayout component={<CompanyCard />} />} />
           <Route path="/EditUserProfile" element={<WithHomeLayout component={<EditUserProfile />} />} />
+          <Route path="/PopupCard" element={<WithHomeLayout component={<PopupCard />} />} />
         </>
       )}
 

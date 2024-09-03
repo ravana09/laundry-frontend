@@ -6,7 +6,7 @@ function Home({ children, showSideBar = false }) {
   return (
     <>
       <SideNavBar />
-      <Container fluid style={{ backgroundColor: 'rgb(190, 190, 190)' ,minHeight:'100vh'}}>
+      <Container fluid className="Home-Container" style={{ backgroundColor: 'rgb(235, 233, 233)' ,minHeight:'100vh'}}>
         <Row>
           {showSideBar ? (
             <>

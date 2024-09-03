@@ -50,7 +50,7 @@ function SideNavBar() {
         fixed="top"
       >
         <NavbarBubbleAnimation className="navbar-bubble-animation" />
-        <Container fluid>
+        <Container fluid className="">
           <Row className="w-100 align-items-center position-relative">
             <Col xs={4}>
               <Navbar.Toggle aria-controls="offcanvasNavbar" />

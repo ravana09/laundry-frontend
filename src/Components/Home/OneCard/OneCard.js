@@ -22,6 +22,9 @@ import office from "../../Images/office.png";
 import Client from "../../Images/Client.png";
 import Awards from "../../Images/Awards.png";
 import Share from "../../Images/Share.png";
+import Delete from "../../Images/delete.png";
+import Comment from "../../Images/comment.png";
+import Submit from "../../Images/upload.png";
 
 import { TbPhoneCall } from "react-icons/tb";
 
@@ -33,6 +36,7 @@ import {
   Carousel,
   Col,
   Container,
+  FloatingLabel,
   Form,
   Image,
   Row,
@@ -108,7 +112,6 @@ const cardData = [
       },
     ],
 
-    
     testimonials: [
       { name: "Client A", review: "Excellent service!", rating: 5 },
       { name: "Client B", review: "Highly recommended!", rating: 4 },
@@ -135,8 +138,6 @@ const services = [
 function OneCard({ handleNavigate }) {
   const [formData, setFormData] = useState(cardData);
   const [cookiesType, setCookiesType] = useState(Cookies.get("AccountType"));
-
-
 
   useEffect(() => {
     setCookiesType(Cookies.get("AccountType"));
@@ -172,30 +173,22 @@ function OneCard({ handleNavigate }) {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(null);
   const [comment, setComment] = useState("");
-  const [reviews, setReviews] = useState([]);
-  const [likes, setLikes] = useState(false);
+  const [reviews, setReviews] = useState([
+    { id: 1, title: "Review 1", comment: "This is the first comment" },
+    { id: 2, title: "Review 2", comment: "This is the second comment" },
+  ]);
+  const [commentsId, setCommentsId] = useState("");
+  const [LikedId, setLikedId] = useState("");
 
+  const [likedReviews, setLikedReviews] = useState(false);
+  const [BussinessComments, setBussinessComments] = useState(false);
   const [activeTab, setActiveTab] = useState("Services");
+
   const location = useLocation();
   const { data } = location.state || {};
-  const card = formData[0]; // Assuming only one hotel for simplicity
+  const card = formData[0];
   const visibleImages = card.images;
 
-  const videoRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-
-  const handlePlayPause = () => {
-    if (isPlaying) videoRef.current.pause();
-    else videoRef.current.play();
-    setIsPlaying(!isPlaying);
-  };
-
-  const handleMute = () => {
-    const currentVideo = videoRef.current;
-    currentVideo.muted = !isMuted;
-    setIsMuted(!isMuted);
-  };
   const handleLikeButton = () => {
     setHeart(!heart);
   };
@@ -230,20 +223,42 @@ function OneCard({ handleNavigate }) {
     }
   };
 
+  const handleLike = (id) => {
+    setLikedReviews((prevLikes) => ({
+      ...prevLikes,
+      [id]: !prevLikes[id], // Toggle liked status
+    }));
+  };
+
   const handleSubmitReview = (e) => {
     e.preventDefault();
-    const newReview = { rating, comment };
+    if (rating === 0 || comment.trim() === "") {
+      alert("Please provide a rating and comment.");
+      return;
+    }
+
+    const newReview = {
+      id: Date.now(),
+      rating,
+      comment,
+    };
+
     setReviews([...reviews, newReview]);
     setRating(0);
     setComment("");
   };
 
-  const handleLike = () => {
-    setLikes(!likes);
+  const handleDelete = (id) => {
+    setReviews(reviews.filter((review) => review.id !== id));
   };
 
   const handleCommentChange = (e) => {
     setComment(e.target.value);
+  };
+
+  const handleCommenst = (id) => {
+    setCommentsId(id);
+    setBussinessComments((prevId) => (prevId === id ? null : id));
   };
 
   return (
@@ -272,7 +287,7 @@ function OneCard({ handleNavigate }) {
               <Image
                 src={heart ? redHeart : emptyHeart}
                 alt="Heart Image"
-                style={{ width: "30px" }}
+                style={{ maxWidth: "30px" }}
               />
             </Button>
           </div>
@@ -350,78 +365,87 @@ function OneCard({ handleNavigate }) {
                 </Col>
               </Row>
             </Card.Text>
-            <Card.Title
-              onClick={handleLocationClick}
-              style={{ cursor: "pointer" }}
-            >
+            <Card.Title style={{ cursor: "pointer" }}>
               <Image src={Location} style={{ width: "40px" }} />
               {card.address}
             </Card.Title>
-            <div className="sticky-CompanyDetails">
-              <div
-                className="button-container  "
-                style={{ marginTop: "auto", justifyContent: "flex-start" }}
+            <div
+              className="button-container"
+              style={{ marginTop: "auto", justifyContent: "flex-start" }}
+            >
+              <Button
+                className="hover-button"
+                variant="outline-success"
+                onClick={() => (window.location.href = "tel:+919940821893")}
+                style={{ display: "flex", alignItems: "center" }}
               >
-                <Button
-                  className="hover-button "
-                  variant="outline-success"
-                  onClick={() => (window.location.href = "tel:+919940821893")}
-                  style={{ display: "flex", alignItems: "center" }}
-                >
-                  <TbPhoneCall style={{ marginRight: "8px" }} />
-                  <span>Call</span>
-                </Button>
+                <TbPhoneCall style={{ marginRight: "8px" }} />
+                <span>Call</span>
+              </Button>
 
-                <Button
-                  className="hover-button"
-                  variant="outline-info"
-                  onClick={() =>
-                    window.open(
-                      "https://wa.me/919940821893",
-                      "noopener noreferrer"
-                    )
+              <Button
+                className="hover-button"
+                variant="outline-info"
+                onClick={() =>
+                  window.open(
+                    "https://wa.me/919940821893",
+                    "noopener noreferrer"
+                  )
+                }
+                style={{ display: "flex", alignItems: "center" }}
+              >
+                <img
+                  src={Whatsapp}
+                  style={{ width: "28px", marginRight: "8px" }}
+                  alt="Chat"
+                />
+                <span> Chat</span>
+              </Button>
+
+              <Button
+                className="hover-button"
+                variant="outline-info"
+                onClick={() => {
+                  if (navigator.share) {
+                    navigator
+                      .share({
+                        title: "Check out this card!",
+                        text: "Here’s a link to a great card:",
+                        url: "http://www.pradeepsathish.tech/card-link", // Replace with your card link
+                      })
+                      .then(() => console.log("Shared successfully!"))
+                      .catch((error) => console.error("Error sharing:", error));
+                  } else {
+                    alert(
+                      "Web Share API is not supported in this browser. Please copy and share the link manually."
+                    );
                   }
-                  style={{ display: "flex", alignItems: "center" }}
-                >
-                  <img
-                    src={Whatsapp}
-                    style={{ width: "28px", marginRight: "8px" }}
-                    alt="Chat"
-                  />
-                  <span> Chat</span>
-                </Button>
-
-                <Button
-                  className="hover-button"
-                  variant="outline-info"
-                  onClick={() => {
-                    if (navigator.share) {
-                      navigator
-                        .share({
-                          title: "Check out this card!",
-                          text: "Here’s a link to a great card:",
-                          url: "http://www.pradeepsathish.tech/card-link", // Replace with your card link
-                        })
-                        .then(() => console.log("Shared successfully!"))
-                        .catch((error) =>
-                          console.error("Error sharing:", error)
-                        );
-                    } else {
-                      alert(
-                        "Web Share API is not supported in this browser. Please copy and share the link manually."
-                      );
-                    }
-                  }}
-                  style={{ display: "flex", alignItems: "center" }}
-                >
-                  <img
-                    src={Share}
-                    style={{ width: "28px", marginRight: "8px" }}
-                    alt="Chat"
-                  />
-                  <span>Share</span>
-                </Button>
-              </div>
+                }}
+                style={{ display: "flex", alignItems: "center" }}
+              >
+                <img
+                  src={Share}
+                  style={{ width: "28px", marginRight: "8px" }}
+                  alt="Chat"
+                />
+                <span> Share</span>
+              </Button>
+              <Button
+                className="hover-button"
+                variant="outline-success"
+                onClick={() => {
+                  handleLocationClick(card.address);
+                }}
+                style={{ display: "flex", alignItems: "center" }}
+              >
+                <img
+                  src={Location}
+                  style={{ width: "28px", marginRight: "8px" }}
+                  alt="Chat"
+                />
+                {/* <LocationLink address={card.address} /> */}
+                <span>Direction </span>
+              </Button>
             </div>
           </Card.Body>
           <Card.Body className="OneCard-Services-Card">
@@ -519,10 +543,42 @@ function OneCard({ handleNavigate }) {
                                 ))}
                               </div>
                               <p>{review.comment}</p>
+
+                              {commentsId === review.id &&
+                                BussinessComments && (
+                                  <div className="email-form-container">
+                                    <FloatingLabel
+                                      controlId="floatingInput"
+                                      label="Reply"
+                                      className="BusinessReply"
+                                    >
+                                      <Form.Control
+                                        type="text"
+                                        placeholder="Comment here "
+                                        name="BussinessComments"
+                                      />
+                                    </FloatingLabel>
+
+                                    <Button
+                                      onClick={() => handleCommenst(review.id)}
+                                      className="submit-button"
+                                      style={{
+                                        backgroundColor: "grey",                                        padding: "10px",
+                                      }}
+                                    >
+                                      <Image
+                                        src={Submit}
+                                        alt="Heart Image"
+                                        style={{ width: "20px" }}
+                                      />
+                                    </Button>
+                                  </div>
+                                )}
                             </Col>
                             <Col xs={2}>
-                              <Button
-                                onClick={() => handleLike()}
+                              {cookiesType === "Bussiness"&&
+                             ( <><Button
+                                onClick={() => handleCommenst(review.id)}
                                 style={{
                                   backgroundColor: "transparent",
                                   border: "none",
@@ -530,11 +586,44 @@ function OneCard({ handleNavigate }) {
                                 }}
                               >
                                 <Image
-                                  src={likes ? redHeart : emptyHeart}
+                                  src={Comment}
                                   alt="Heart Image"
                                   style={{ width: "20px" }}
                                 />
                               </Button>
+                              <Button
+                                onClick={() => handleDelete(review.id)}
+                                style={{
+                                  backgroundColor: "transparent",
+                                  border: "none",
+                                  padding: "10px",
+                                }}
+                              >
+                                <Image
+                                  src={Delete}
+                                  alt="Delete"
+                                  style={{ width: "20px" }}
+                                />
+                              </Button></>)}
+                              <Button
+                                onClick={() => handleLike(review.id)}
+                                style={{
+                                  backgroundColor: "transparent",
+                                  border: "none",
+                                  padding: "10px",
+                                }}
+                              >
+                                <Image
+                                  src={
+                                    likedReviews[review.id]
+                                      ? redHeart
+                                      : emptyHeart
+                                  }
+                                  alt="Heart Image"
+                                  style={{ width: "20px" }}
+                                />
+                              </Button>
+                             
                             </Col>
                             <hr />
                           </Row>
@@ -626,75 +715,6 @@ function OneCard({ handleNavigate }) {
                     </div>
                   </section>
                   <hr />
-
-                  <h3 className="my-4 team-container">Key Metrics</h3>
-                  <Row>
-                    {card.keyMetrics.map((metric, index) => (
-                      <div
-                        className="col-12 col-sm-6 col-md-6 col-lg-3  col-xl-3mb-4"
-                        key={index}
-                      >
-                        <Card
-                          style={{
-                            height: "110px",
-                            padding: "10px",
-                            border: "none",
-                            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                          }}
-                          className="testimonials-container"
-                        >
-                          <Row className="d-flex align-items-center">
-                            <Col
-                              xs={4}
-                              className="d-flex justify-content-center"
-                            >
-                              <Card.Img
-                                variant="top"
-                                src={metric.icon}
-                                className="img-fluid "
-                                alt={metric.name}
-                                style={{ width: "60px" }}
-                              />
-                            </Col>
-                            <Col xs={8} className="d-flex align-items-center">
-                              <Card.Body>
-                                <center>
-                                  <Card.Title className="ServicesName">
-                                    {metric.name}
-                                  </Card.Title>
-                                  <Card.Text className="metricValue">
-                                    {metric.value}
-                                  </Card.Text>
-                                </center>
-                              </Card.Body>
-                            </Col>
-                          </Row>
-                        </Card>
-                      </div>
-                    ))}
-                  </Row>
-                  {/* <hr /> */}
-
-                  {/* <h3 className="my-4 team-container">Meet Our Team</h3>
-                  <div className="team-container">
-                    {card.team.map((member, index) => (
-                      <div key={index} className="team-member">
-                        <Card className="team-card">
-                          <Card.Img
-                            variant="top"
-                            src={member.photo}
-                            className="team-card-img"
-                          />
-                          <Card.Body>
-                            <Card.Title>{member.name}</Card.Title>
-                            <Card.Text>{member.title}</Card.Text>
-                          </Card.Body>
-                        </Card>
-                      </div>
-                    ))}
-                  </div> */}
-                  <hr />
-
                   <section className="testimonials-section">
                     <h3 className="testimonials-heading my-4 ">
                       What Our Clients Say
@@ -722,12 +742,6 @@ function OneCard({ handleNavigate }) {
                   </section>
                 </div>
               )}
-
-              {/* {activeTab === "Contact" && 
-              
-              <div>Content for Contact tab</div>
-              
-              } */}
             </div>
           </Card.Body>
         </Card.Body>

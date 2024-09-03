@@ -32,12 +32,12 @@
 }
 .sticky-CompanyDetails {
   position: sticky !important;
-  top: calc(50 ) !important; 
+  top: calc(50) !important;
   background-color: rgb(220, 14, 14);
-  
+
   padding: 10px;
 
-  gap: 10px; 
+  gap: 10px;
 }
 
 .button-container .hover-button {
@@ -47,7 +47,7 @@
 }
 
 .button-container img {
-  width: 28px;
+  width: 18px;
   margin-right: 8px;
 }
 .OneCard-Services-Card {
@@ -106,14 +106,14 @@
   }
 
   .OneCard-Services-text:hover {
-    font-size: 10px; 
+    font-size: 10px;
   }
 
   .OneCard-Services-text.active {
     /* font-size: 12px; */
     color: rgb(7, 123, 217);
-     font-weight:500;
-    font-size:10px;
+    font-weight: 500;
+    font-size: 10px;
   }
 }
 
@@ -146,6 +146,11 @@
     font-weight: bold;
     font-size: 75px;
   }
+  .button-container .hover-button {
+    padding: 0px 5px 0px 5px !important;
+    width: 21%;
+  }
+  
 }
 
 /* General Section Styles */
@@ -283,8 +288,8 @@
 
 .OneCard-Services-text.active {
   color: rgb(7, 123, 217);
-  font-weight:bols;
-  font-size:larger;
+  font-weight: bols;
+  font-size: larger;
 }
 
 .OneCard-Services-text.active::after {
@@ -304,7 +309,6 @@
     font-size: small;
   }
 }
-
 
 /* Services Card Image and Text */
 .ServicesCard {
@@ -349,7 +353,7 @@
 }
 
 .team-card-img {
-  height: 150px; 
+  height: 150px;
   object-fit: cover;
 }
 
@@ -369,10 +373,10 @@
 
 @media (max-width: 450px) {
   .company-timing-heading,
-  .testimonials-heading{
+  .testimonials-heading {
     font-size: 20px !important;
   }
- 
+
   .team-member {
     flex: 1 1 100%; /* 1 card per row */
     max-width: 100%;
@@ -396,12 +400,12 @@
   .timing-day {
     font-size: 15px;
   }
-  .timing-hours{
+  .timing-hours {
     font-size: 80%;
   }
 }
 @media (max-width: 350px) {
-  .timing-hours{
+  .timing-hours {
     font-size: 10px;
   }
 }
@@ -451,7 +455,7 @@
 .testimonial-footer {
   margin-top: 1rem;
   font-size: 0.875rem;
-  color: #777; 
+  color: #777;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -521,4 +525,17 @@
   }
 }
 
+.email-form-container {
+  display: flex;
+  align-items: center;
+}
+
+.email-input {
+  flex: 1;
+  margin-right: 10px; /* Adjust spacing between input and button */
+}
+
+.submit-button {
+  white-space: nowrap; /* Prevent text from wrapping */
+}
 

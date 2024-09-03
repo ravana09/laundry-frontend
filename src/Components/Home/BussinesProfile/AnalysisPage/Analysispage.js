@@ -65,18 +65,33 @@ const Analysispage = ({ data }) => {
       <Card.Body style={{ width: "100%" }}>
         {isMobile && (
           <Button
-            onClick={() => setShowBarChart(!showBarChart)}
-            style={{ marginBottom: "1rem", backgroundColor: "white" }}
-            aria-label={
-              showBarChart ? "Switch to Pie Chart" : "Switch to Bar Chart"
-            }
-          >
-            <Image
-              src={showBarChart ? pieImg : barImg}
-              alt={showBarChart ? "Pie Chart" : "Bar Chart"}
-              style={{ width: "30px" }}
-            />
-          </Button>
+          onClick={() => setShowBarChart(!showBarChart)}
+          style={{
+            marginBottom: "1rem",
+            backgroundColor: "white",
+            border: "1px solid #ddd",
+            padding: "0.5rem 1rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
+            cursor: "pointer",
+            borderRadius: "5px",
+            boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)",
+          }}
+          aria-label={
+            showBarChart ? "Switch to Pie Chart" : "Switch to Bar Chart"
+          }
+        >
+          <Image
+            src={showBarChart ? pieImg : barImg}
+            alt={showBarChart ? "Pie Chart" : "Bar Chart"}
+            style={{ width: "20px", height: "20px", objectFit: "contain" }}
+          />
+          <span style={{ fontSize: "14px", fontWeight: "bold", color: "#333" }}>
+            {showBarChart ? "Pie Chart" : "Bar Chart"}
+          </span>
+        </Button>
+        
         )}
         <Row>
           {(!isMobile || showBarChart) && (
