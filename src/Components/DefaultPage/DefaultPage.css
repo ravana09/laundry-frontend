@@ -1,0 +1,84 @@
+/* DefaultPage.css */
+.Default_Row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    text-align: center;
+  }
+  
+  /* DefaultPage.css */
+
+.cursive-heading {
+    font-family: "Brush Script MT", "Lucida Handwriting", "Comic Sans MS", cursive; /* Default cursive fonts */
+    font-size: 90px;
+    color: white; 
+    /* overflow: hidden; */
+    white-space: nowrap;
+  
+    /* Gradient text */
+    /* background: -webkit-linear-gradient(
+      top,
+      #21a2a6,
+    #438c8f,
+    #5ec8cc,
+    #4fe8e8,
+    #a5f0f0
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; */
+  
+   
+    text-shadow: 3px 3px 10px rgba(67, 66, 66, 0.7); 
+  }
+  
+  
+ /* DefaultPage.css */
+
+/* Define fade-in animation */
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px); /* Start below the final position */
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0); /* End at the final position */
+    }
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Spacing between buttons */
+    opacity: 0; /* Initially hidden */
+    animation: fadeIn 1s forwards; /* Apply fade-in animation */
+    animation-delay: 0s; /* Delay animation to match the typewriter effect duration */
+  }
+  .button-container Button{
+    width: max-content;
+  }
+  
+  @media only screen and (max-width: 910px) {
+    .cursive-heading {
+        font-family: "Brush Script MT", "Lucida Handwriting", "Comic Sans MS", cursive; /* Default cursive fonts */
+        font-size: auto !important;
+        color: white;
+        /* overflow: hidden; */
+        white-space: wrap;
+      }
+     
+     
+  }
+  @media only screen and (max-width: 910px) {
+    .cursive-heading {
+        font-family: "Brush Script MT", "Lucida Handwriting", "Comic Sans MS", cursive; /* Default cursive fonts */
+        font-size: 60px !important;
+        color: white;
+        /* overflow: hidden; */
+        white-space: wrap;
+      }
+     
+      
+  }
+  

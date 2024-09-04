@@ -139,7 +139,7 @@ function SignUpPage() {
   };
 
   const handleLoginPage = () => {
-    navigate("/");
+    navigate("/Login");
   };
 
   return (

@@ -33,6 +33,7 @@ import AllAnalysisPage from "./Components/Home/BussinesProfile/AnalysisPage/AllA
 import ReportsPage from "./Components/Home/BussinesProfile/ReportsPage/ReportsPage";
 import AllReportsPage from "./Components/Home/BussinesProfile/ReportsPage/AllReportsPage";
 import PopupCard from "./Components/Home/PopupCard/PopupCard";
+import DefaultPage from "./Components/DefaultPage/DefaultPage";
 
 function App() {
   const [AccountType, setAccountType] = useState(Cookies.get("AccountType"));
@@ -81,7 +82,8 @@ function App() {
   return (
     <Routes>
       {/* Common Routes */}
-      <Route path="/" element={<Login />} />
+      <Route path="/Login" element={<Login />} />
+      <Route path="/" element={<DefaultPage />} />
       <Route path="/Bubbles" element={<BubbleAnimation />} />
       <Route path="/SignUpPage" element={<SignUpPage />} />
       <Route path="/MobileVerification" element={<MobileVerification />} />

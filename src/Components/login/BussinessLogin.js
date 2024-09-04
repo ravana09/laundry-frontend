@@ -164,7 +164,7 @@ function BussinessLogin() {
             <Button
               className="animated-button"
               onClick={() => {
-                handleNavigation("/");
+                handleNavigation("/Login");
               }}
             >
               <Image

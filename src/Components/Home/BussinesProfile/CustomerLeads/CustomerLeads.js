@@ -10,6 +10,7 @@ import {
   Tooltip,
   Card,
   Collapse,
+  Form,
 } from "react-bootstrap";
 import DataTable from "react-data-table-component";
 import * as XLSX from "xlsx";
@@ -19,15 +20,18 @@ import Printer from "../../../Images/printer.png";
 import { useLocation } from "react-router-dom";
 import { FaSave } from "react-icons/fa";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa"; // For arrow icons
+import { ImSearch } from "react-icons/im";
 
-function CustomerLeads({data,Reportstitle}) {
+function CustomerLeads({ data, Reportstitle }) {
   const [details, setDetails] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
   const [dataChanged, setDataChanged] = useState({});
   const [changedRows, setChangedRows] = useState(new Set());
   const [expandedRow, setExpandedRow] = useState(null);
 
-  const[LeadsTitle,setLeadsTitle]=useState("")
+  const [searchBarValue,setSearchBarValue]=useState('')
+
+  const [LeadsTitle, setLeadsTitle] = useState("");
 
   const toggleRow = (rowId) => {
     setExpandedRow(expandedRow === rowId ? null : rowId);
@@ -36,17 +40,19 @@ function CustomerLeads({data,Reportstitle}) {
   const location = useLocation();
   const { title, sampleData } = location.state || {};
 
+
+
   useEffect(() => {
     if (sampleData) {
       setDetails(sampleData);
-      setLeadsTitle(title)
+      setLeadsTitle(title);
     }
 
-    if(data){
-      setDetails(data)
-      setLeadsTitle(Reportstitle)
+    if (data) {
+      setDetails(data);
+      setLeadsTitle(Reportstitle);
     }
-  }, [sampleData,data]);
+  }, [sampleData, data,searchBarValue]);
 
   const renderCompanyServices = (
     row,
@@ -229,27 +235,34 @@ function CustomerLeads({data,Reportstitle}) {
     },
     {
       name: "Remarks",
-      cell: (row) => (
-        <div className="remarks-container d-flex align-items-center">
-          <input
-            type="text"
-            name="Remarks"
-            value={dataChanged[row.id]?.Remarks || row.Remarks || ""}
-            onChange={(e) => handleRemarksChange(row.id, e)}
-            placeholder="Enter remarks"
-            className="remarks-input flex-grow-1"
-          />
-          {changedRows.has(row.id) && (
-            <Button
-              className="remarks-save-btn "
-              onClick={() => handleSave(row.id)}
-            >
-              <FaSave />
-            </Button>
-          )}
-        </div>
-      ),
-    },
+      cell: (row) => {
+        const selectedOption =
+          dataChanged[row.id]?.typeServices || row.typeServices;
+    
+        return selectedOption === "connected/Notsale" ? (
+          <div className="remarks-container d-flex align-items-center">
+            <input
+              type="text"
+              name="Remarks"
+              value={dataChanged[row.id]?.Remarks || row.Remarks || ""}
+              onChange={(e) => handleRemarksChange(row.id, e)}
+              placeholder="Enter remarks"
+              className="remarks-input flex-grow-1"
+              required
+            />
+            {changedRows.has(row.id) && (
+              <Button
+                className="remarks-save-btn"
+                onClick={() => handleSave(row.id)}
+              >
+                <FaSave />
+              </Button>
+            )}
+          </div>
+        ) : null;
+      },
+    }
+    
   ];
 
   const handleExport = () => {
@@ -327,18 +340,67 @@ function CustomerLeads({data,Reportstitle}) {
     setSelectedRows(selectedRows);
   };
 
+  const handleSearchBarChange = (e) => {
+    const { name, value } = e.target;
+setSearchBarValue(value);  };
+
+
+const handleSearch = () => {
+  if (searchBarValue.length > 0) {
+    const filteredRows = details.filter((row) =>
+      Object.values(row).some((value) =>
+        value.toString().toLowerCase().includes(searchBarValue.toLowerCase())
+      )
+    );
+    setDetails(filteredRows)
+    console.log(filteredRows);
+  } else {
+    setDetails(details)
+    console.log(details); // Example: replace with your reset logic
+  }
+};
+
   const paginationRowsPerPageOptions = [5, 10, 15];
 
   return (
     <>
       <Container fluid className="business-profile-head">
-       <div className="fixed-header">
+        <div className="fixed-header">
           <Row className="align-items-center">
-            <Col xs={0} sm={5}></Col>
-            <Col xs={6} sm={5}>
+            <Col xs={0} lg={5}></Col>
+            <Col xs={4} sm={5} lg={2}>
               <h4>{LeadsTitle}</h4>
             </Col>
-            <Col xs={6} sm={2} className="d-flex justify-content-end">
+            <Col xs={8} sm={6} lg={5} className="d-flex justify-content-end">
+              <Form
+                className="d-flex align-items-center"
+                style={{ gap: "8px" }}
+              >
+                <Form.Control
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                  onChange={handleSearchBarChange}
+                  style={{
+                    maxWidth: "150px",
+                    padding: "5px 10px",
+                    borderRadius: "4px",
+                  }}
+                />
+                <Button
+                  variant="outline-success"
+                  onClick={handleSearch}
+                  style={{
+                    padding: "10px 10px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <ImSearch />
+                </Button>
+              </Form>
+
               <OverlayTrigger
                 placement="top"
                 overlay={<Tooltip id="tooltip-excel">Convert to Excel</Tooltip>}
@@ -444,12 +506,18 @@ function CustomerLeads({data,Reportstitle}) {
                                 : "-"; // Default value
 
                             return (
-                              <div  key={col.name}>
+                              <div key={col.name}>
                                 <Row>
-                                <Col xs={3}>
-                                  <strong className="data-item-detail-name">{col.name}:</strong>
-                                </Col>
-                                <Col xs="auto"><p className="data-item-detail-value">{value}</p> </Col>
+                                  <Col xs={3}>
+                                    <strong className="data-item-detail-name">
+                                      {col.name}:
+                                    </strong>
+                                  </Col>
+                                  <Col xs="auto">
+                                    <p className="data-item-detail-value">
+                                      {value}
+                                    </p>{" "}
+                                  </Col>
                                 </Row>
                               </div>
                             );
