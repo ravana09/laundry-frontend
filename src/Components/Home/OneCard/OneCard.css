@@ -46,6 +46,13 @@
   padding: 8px 16px; /* Adjust for better spacing */
 }
 
+.hover-button img {
+  transition: filter 0.3s ease;
+}
+.hover-button img:hover {
+  filter: drop-shadow(0 0 5px white);
+}
+
 .button-container img {
   width: 18px;
   margin-right: 8px;

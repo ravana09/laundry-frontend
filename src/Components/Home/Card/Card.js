@@ -22,6 +22,8 @@ import { TbPhoneCall } from "react-icons/tb";
 import { BsCart3 } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import LocationLink from "../GoogleMap/LocationLink";
+import BubbleAnimation from "../../BubbleAnimation/BubbleAnimation";
+import NavbarBubbleAnimation from "../SideNavbar/NavbarAnimation";
 
 const cardData = [
   {
@@ -115,6 +117,7 @@ function CompanyCard() {
 
   return (
     <Container fluid className="CompanyCard-body">
+      <NavbarBubbleAnimation  />
       <div className="card-grid-container">
         {cardData.map((card) => (
           <Card
@@ -122,9 +125,10 @@ function CompanyCard() {
             className="CompanyCard-Card"
             style={{
               width: "100%",
+              
               // borderRadius: "20px",
               marginBottom: "10px",
-              // border: "2px solid black",
+              
             }}
           >
             <Row>
@@ -158,7 +162,7 @@ function CompanyCard() {
               <Col sm={8}  >
                 {/* Details section */}
                
-                <Card.Body style={{ flex: "2", padding: "20px" }}>
+                <Card.Body style={{ flex: "2", padding: "20px 20px 0px 20px" }}>
                 <div onClick={() => handleNavigate("/OneCard", card._id)}>
                   <Card.Title onClick={() => handleNavigate("/OneCard", card._id)} className="companyCard-Title">
                     {card.title}
@@ -182,7 +186,7 @@ function CompanyCard() {
                   <div className="button-container" style={{ marginTop: "auto" }}>
                     <Button
                       className="hover-button"
-                      variant="outline-success"
+                      variant="outline-secondary"
                       onClick={() => (window.location.href = "tel:+919940821893")}
                       style={{ display: "flex", alignItems: "center" }}
                     >
@@ -192,7 +196,7 @@ function CompanyCard() {
 
                     <Button
                       className="hover-button"
-                      variant="outline-info"
+                      variant="outline-secondary"
                       onClick={() =>
                         window.open("https://wa.me/919940821893", "noopener noreferrer")
                       }
@@ -208,7 +212,7 @@ function CompanyCard() {
 
                     <Button
                       className="hover-button"
-                      variant="outline-info"
+                      variant="outline-secondary"
                       onClick={() => {
                         if (navigator.share) {
                           navigator
@@ -236,7 +240,7 @@ function CompanyCard() {
                     </Button>
                     <Button
                       className="hover-button"
-                      variant="outline-success"
+                      variant="outline-secondary"
                      
                      onClick={()=>{
                   handleLocation(card.address)
@@ -257,8 +261,11 @@ function CompanyCard() {
               <Col sm={1}   onClick={() => handleNavigate("/OneCard", card._id)} ></Col>
             </Row>
           </Card>
+          
         ))}
+           <hr/>
       </div>
+   
     </Container>
   );
 }

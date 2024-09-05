@@ -29,7 +29,7 @@ function CustomerLeads({ data, Reportstitle }) {
   const [changedRows, setChangedRows] = useState(new Set());
   const [expandedRow, setExpandedRow] = useState(null);
 
-  const [searchBarValue,setSearchBarValue]=useState('')
+  const [searchBarValue, setSearchBarValue] = useState("");
 
   const [LeadsTitle, setLeadsTitle] = useState("");
 
@@ -40,19 +40,19 @@ function CustomerLeads({ data, Reportstitle }) {
   const location = useLocation();
   const { title, sampleData } = location.state || {};
 
-
-
   useEffect(() => {
     if (sampleData) {
-      setDetails(sampleData);
+      let reverseData = sampleData.slice().reverse();
+      setDetails(reverseData);
       setLeadsTitle(title);
     }
 
     if (data) {
-      setDetails(data);
+      let reverseData = data.slice().reverse();
+      setDetails(reverseData);
       setLeadsTitle(Reportstitle);
     }
-  }, [sampleData, data,searchBarValue]);
+  }, [sampleData, data, searchBarValue]);
 
   const renderCompanyServices = (
     row,
@@ -238,7 +238,7 @@ function CustomerLeads({ data, Reportstitle }) {
       cell: (row) => {
         const selectedOption =
           dataChanged[row.id]?.typeServices || row.typeServices;
-    
+
         return selectedOption === "connected/Notsale" ? (
           <div className="remarks-container d-flex align-items-center">
             <input
@@ -261,8 +261,7 @@ function CustomerLeads({ data, Reportstitle }) {
           </div>
         ) : null;
       },
-    }
-    
+    },
   ];
 
   const handleExport = () => {
@@ -342,23 +341,23 @@ function CustomerLeads({ data, Reportstitle }) {
 
   const handleSearchBarChange = (e) => {
     const { name, value } = e.target;
-setSearchBarValue(value);  };
+    setSearchBarValue(value);
+  };
 
-
-const handleSearch = () => {
-  if (searchBarValue.length > 0) {
-    const filteredRows = details.filter((row) =>
-      Object.values(row).some((value) =>
-        value.toString().toLowerCase().includes(searchBarValue.toLowerCase())
-      )
-    );
-    setDetails(filteredRows)
-    console.log(filteredRows);
-  } else {
-    setDetails(details)
-    console.log(details); // Example: replace with your reset logic
-  }
-};
+  const handleSearch = () => {
+    if (searchBarValue.length > 0) {
+      const filteredRows = details.filter((row) =>
+        Object.values(row).some((value) =>
+          value.toString().toLowerCase().includes(searchBarValue.toLowerCase())
+        )
+      );
+      setDetails(filteredRows);
+      console.log(filteredRows);
+    } else {
+      setDetails(details);
+      console.log(details); // Example: replace with your reset logic
+    }
+  };
 
   const paginationRowsPerPageOptions = [5, 10, 15];
 

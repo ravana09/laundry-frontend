@@ -17,6 +17,7 @@ import apple from "../Images/AppleLogo.png";
 import Bussiness from "../Images/cooperation.png";
 import twitter from "../Images/TwitterLogo.png";
 import facebook from "../Images/facebook.png";
+import Email from "../Images/email.png";
 import BubbleAnimation from "../BubbleAnimation/BubbleAnimation";
 import symbol from "../Images/symbol.jpg";
 import playStoreLogo from "../Images/playStore.png"; // Add your Play Store logo here
@@ -28,9 +29,11 @@ import Swal from "sweetalert2";
 function BussinessLogin() {
   const [formData, setFormData] = useState({
     Email: "",
+    MobileNumber: "",
     Password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [mobileLogin, setMobileLogin] = useState(false);
   const [isMac, setIsMac] = useState(false);
 
   useEffect(() => {
@@ -40,11 +43,19 @@ function BussinessLogin() {
 
   function handleInputChanges(e) {
     const { name, value } = e.target;
+    const numberPattern = /^\d*$/; // Allows only numeric input without restricting to 10 digits immediately
+
+   
 
     if (name === "Email") {
       setFormData({ ...formData, [name]: value });
     } else if (name === "Password") {
       if (value.length <= 8) {
+        setFormData({ ...formData, [name]: value });
+      }
+    } else if (name === "MobileNumber") {
+ 
+      if (numberPattern.test(value) && value.length <= 10) {
         setFormData({ ...formData, [name]: value });
       }
     }
@@ -58,53 +69,60 @@ function BussinessLogin() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.Email || !formData.Password) {
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        },
-      });
 
-      Toast.fire({
-        icon: "error",
-        title: `Please fill all data`,
-      });
-      return;
+    if (mobileLogin) {
+      // Validation for mobile login
+      if (!formData.MobileNumber || !formData.Password) {
+        showErrorToast("Please fill all data for mobile login");
+        return;
+      }
     } else {
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        },
-      });
-
-      Toast.fire({
-        icon: "success",
-        title: `Signed in successfully`,
-      });
-      console.log("Form submitted");
-      Cookies.set("AccountType", "Bussiness", { expires: 684 });
-      Cookies.set("AccountToken", "BusinessTokenqwertyuiop", { expires: 684 });
-      setTimeout(() => {
-        if (Cookies.get("AccountType") === "Bussiness") {
-          navigate("/BussinessProfile");
-          window.location.reload();
-        } else {
-          console.error("Failed to set AccountType cookie.");
-        }
-      }, 100);
+      // Validation for email login
+      if (!formData.Email || !formData.Password) {
+        showErrorToast("Please fill all data for email login");
+        return;
+      }
     }
+
+    // Success Toast
+    showSuccessToast("Signed in successfully");
+
+    // Set cookies and navigate
+    Cookies.set("AccountType", "Bussiness", { expires: 684 });
+    Cookies.set("AccountToken", "BusinessTokenqwertyuiop", { expires: 684 });
+
+    setTimeout(() => {
+      if (Cookies.get("AccountType") === "Bussiness") {
+        navigate("/BussinessProfile");
+        window.location.reload();
+      } else {
+        console.error("Failed to set AccountType cookie.");
+      }
+    }, 100);
+  };
+
+  const showErrorToast = (message) => {
+    Swal.fire({
+      toast: true,
+      position: "top-end",
+      icon: "error",
+      title: message,
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+    });
+  };
+
+  const showSuccessToast = (message) => {
+    Swal.fire({
+      toast: true,
+      position: "top-end",
+      icon: "success",
+      title: message,
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+    });
   };
 
   const handleSignUpPage = () => {
@@ -112,6 +130,10 @@ function BussinessLogin() {
   };
   const handleNavigation = (pages) => {
     navigate(pages, { state: { redirectTo: "/BussinessForgetPassword" } });
+  };
+
+  const handleMobileLogin = () => {
+    setMobileLogin(!mobileLogin);
   };
 
   return (
@@ -200,19 +222,36 @@ function BussinessLogin() {
 
                 <Card.Body>
                   <Form onSubmit={handleSubmit}>
-                    <FloatingLabel
-                      controlId="floatingInput"
-                      label="Email address"
-                      className="mb-3"
-                    >
-                      <Form.Control
-                        type="email"
-                        name="Email"
-                        placeholder="name@example.com"
-                        value={formData.Email}
-                        onChange={handleInputChanges}
-                      />
-                    </FloatingLabel>
+                    {!mobileLogin ? (
+                      <FloatingLabel
+                        controlId="floatingInput"
+                        label="Email address"
+                        className="mb-3"
+                      >
+                        <Form.Control
+                          type="email"
+                          name="Email"
+                          placeholder="name@example.com"
+                          value={formData.Email}
+                          onChange={handleInputChanges}
+                        />
+                      </FloatingLabel>
+                    ) : (
+                      <FloatingLabel
+                        controlId="floatingInput"
+                        label="Mobile Number"
+                        className="mb-3"
+                      >
+                        <Form.Control
+                          type="text"
+                          name="MobileNumber"
+                          placeholder="9876543210"
+                          value={formData.MobileNumber}
+                          onChange={handleInputChanges}
+                          maxLength={10}
+                        />
+                      </FloatingLabel>
+                    )}
                     <FloatingLabel
                       controlId="floatingPassword"
                       label="Password"
@@ -284,9 +323,10 @@ function BussinessLogin() {
                       <Button
                         className="Login-Logos"
                         style={{ backgroundColor: "white", border: "none" }}
+                        onClick={handleMobileLogin}
                       >
                         <img
-                          src={twitter}
+                          src={!mobileLogin ?twitter:Email}
                           alt="Twitter"
                           style={{ width: "30px" }}
                         />

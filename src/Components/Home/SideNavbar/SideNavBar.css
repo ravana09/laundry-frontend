@@ -3,7 +3,9 @@
     !important;
     width:100vw;
     position: fixed;
-    top:0
+    top:0;
+    border-bottom: 2px solid white;
+
   }
 
   

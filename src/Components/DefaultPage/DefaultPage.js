@@ -11,7 +11,7 @@ function DefaultPage() {
 
   // Effect to show buttons after typewriter effect
   useEffect(() => {
-    const timer = setTimeout(() => setShowButtons(true), 3100); // Adjust time to match your typeSpeed * number of characters
+    const timer = setTimeout(() => setShowButtons(true), 4000); // Adjust time to match your typeSpeed * number of characters
     return () => clearTimeout(timer);
   }, []);
 
@@ -20,7 +20,10 @@ function DefaultPage() {
   };
 
   return (
-    <Container fluid className="Login_Row d-flex justify-content-center align-items-center vh-100">
+    <Container
+      fluid
+      className="Login_Row d-flex justify-content-center align-items-center vh-100"
+    >
       <BubbleAnimation />
 
       <Row className="text-center">
@@ -30,29 +33,47 @@ function DefaultPage() {
               words={["hi buddy", "welcome to laund "]}
               loop={1}
               cursor={false}
-              typeSpeed={100}
+              typeSpeed={90}
               deleteSpeed={0}
               delaySpeed={1000}
             />
           </h1>
           {showButtons && (
-            <div className="button-container mt-4">
+            <>
+            <h5 className="cursive-heading SUbHeading-h4" style={{fontSize:'300%'}}>Connect with us as</h5>
+            <div className="button-container mt-4 cursive-heading">
+              
               <Button
-                variant="primary"
+                variant="info"
                 className="me-3"
-                style={{ maxWidth: '200px' }}
+                style={{
+                  fontSize:'40%',
+                  maxWidth: "200px",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "20px",
+                  // backgroundColor: "transparent",
+                }}
                 onClick={() => handleNavigation("/Login")}
               >
-                User Login
+                User 
               </Button>
               <Button
                 variant="secondary"
-                style={{ maxWidth: '200px' }}
+                style={{
+                  fontSize:'40%',
+                  maxWidth: "200px",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "20px",
+                  // backgroundColor: "transparent",
+                }}
                 onClick={() => handleNavigation("/BussinessLogin")}
               >
-                Business Login
+                Business 
               </Button>
             </div>
+            </>
           )}
         </Col>
       </Row>

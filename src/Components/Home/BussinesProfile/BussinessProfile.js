@@ -32,14 +32,14 @@ function BussinessProfile() {
     <Card className="Bussiness-Profile-BoostCard" style={{ marginTop:'3vh'}}>
       <Card.Body>
         <Row>
-          <Col xs={4}>
+          {/* <Col xs={4}>
             <Card.Img
               variant="top"
               src={BoostImage}
               className="Bussiness-Profile-BoostPic"
             />
-          </Col>
-          <Col xs={8} className="d-flex flex-column justify-content-center">
+          </Col> */}
+          <Col xs={12} className="d-flex flex-column justify-content-center">
             <p className="Bussiness-Profile-BoostText">
               Increase Business Profile to reach out to more customers
             </p>
@@ -58,7 +58,7 @@ function BussinessProfile() {
             ) : (
               <Card
                 className="Bussiness-Profile-MyBussinesCard"
-                style={{  width:"90%" }}
+                style={{  width:"100%",backgroundColor:'transparent' ,border:"none"}}
               >
                 <Card.Body style={{padding:'0px'}}>
                   {[
@@ -73,7 +73,7 @@ function BussinessProfile() {
                       style={{
                         width:"100%",
                         height: "min-content",
-                        backgroundColor: "white",
+                        backgroundColor: "transparent",
                         marginBottom: "12px",
                         border:'none'
                        
@@ -81,8 +81,8 @@ function BussinessProfile() {
                       }}
                       onClick={() => handleNavigation(item.Navigate)}
                     >
-                      <Card.Body>
-                        <div className="MYbussinessCard-Div">
+                      <Card.Body >
+                        <div className="MYbussinessCard-Div" style={{backgroundColor:'white'}}>
                           <Row className="justify-content-center align-items-center">
                             <Col
                               xs={4}

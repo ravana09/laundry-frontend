@@ -44,8 +44,7 @@ import {
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { FaMapMarkerAlt, FaStar } from "react-icons/fa";
-import { FaAward } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
 
 function getMediaType(url) {
   const extension = url.split(".").pop().toLowerCase();
@@ -68,23 +67,7 @@ const cardData = [
     address:
       "Kamaraj Road, off Killiyur Falls Road, Post, Ondikadai, Yercaud, Tamil Nadu 636601",
     text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
-    images: [
-      img1,
-      OnePIeceGif,
-      SuryaVideo,
-      img2,
-      img3,
-      img1,
-      img2,
-      img3,
-      img1,
-      img2,
-      img3,
-      img1,
-      img2,
-
-      img3,
-    ],
+    images: [img1, OnePIeceGif, img2, img3, img1, img2, img3, img3],
     name: "Company Name",
     tagline: "Innovating the Future",
     description:
@@ -182,7 +165,9 @@ function OneCard({ handleNavigate }) {
 
   const [likedReviews, setLikedReviews] = useState(false);
   const [BussinessComments, setBussinessComments] = useState(false);
-  const [activeTab, setActiveTab] = useState("Services");
+  const [activeTab, setActiveTab] = useState("Overview");
+
+  const [Reply, setReply] = useState({});
 
   const location = useLocation();
   const { data } = location.state || {};
@@ -259,10 +244,28 @@ function OneCard({ handleNavigate }) {
   const handleCommenst = (id) => {
     setCommentsId(id);
     setBussinessComments((prevId) => (prevId === id ? null : id));
+    console.log(id);
+  };
+
+  const handleReply = (id, e) => {
+    setReply((prevReplies) => ({
+      ...prevReplies,
+      [id]: e.target.value,
+    }));
+  };
+
+  console.log(Reply);
+
+  const handleDeleteReply = (id) => {
+    setReply((prevReplies) => {
+      const updatedReplies = { ...prevReplies };
+      delete updatedReplies[id]; // Remove the reply associated with the review ID
+      return updatedReplies;
+    });
   };
 
   return (
-    <Container fluid className="CompanyCard-body">
+    <Container fluid className="CompanyCard-body" style={{ marginTop: "12vh" }}>
       <Card border="info">
         <Card.Body>
           <div
@@ -375,7 +378,7 @@ function OneCard({ handleNavigate }) {
             >
               <Button
                 className="hover-button"
-                variant="outline-success"
+                variant="outline-secondary"
                 onClick={() => (window.location.href = "tel:+919940821893")}
                 style={{ display: "flex", alignItems: "center" }}
               >
@@ -385,7 +388,7 @@ function OneCard({ handleNavigate }) {
 
               <Button
                 className="hover-button"
-                variant="outline-info"
+                variant="outline-secondary"
                 onClick={() =>
                   window.open(
                     "https://wa.me/919940821893",
@@ -404,7 +407,7 @@ function OneCard({ handleNavigate }) {
 
               <Button
                 className="hover-button"
-                variant="outline-info"
+                variant="outline-secondary"
                 onClick={() => {
                   if (navigator.share) {
                     navigator
@@ -432,7 +435,7 @@ function OneCard({ handleNavigate }) {
               </Button>
               <Button
                 className="hover-button"
-                variant="outline-success"
+                variant="outline-secondary"
                 onClick={() => {
                   handleLocationClick(card.address);
                 }}
@@ -453,14 +456,15 @@ function OneCard({ handleNavigate }) {
               <Row className="text-center my-3">
                 <Col xs={4} sm={4} className="mb-2">
                   <div
-                    onClick={() => handleClick("Services")}
+                    onClick={() => handleClick("Overview")}
                     className={`OneCard-Services-text ${
-                      activeTab === "Services" ? "active" : ""
+                      activeTab === "Overview" ? "active" : ""
                     }`}
                   >
-                    Services
+                    Overview
                   </div>
                 </Col>
+
                 <Col xs={4} sm={4} className="mb-2">
                   <div
                     onClick={() => handleClick("Review")}
@@ -473,12 +477,12 @@ function OneCard({ handleNavigate }) {
                 </Col>
                 <Col xs={4} sm={4} className="mb-2">
                   <div
-                    onClick={() => handleClick("Overview")}
+                    onClick={() => handleClick("Services")}
                     className={`OneCard-Services-text ${
-                      activeTab === "Overview" ? "active" : ""
+                      activeTab === "Services" ? "active" : ""
                     }`}
                   >
-                    Overview
+                    Services
                   </div>
                 </Col>
               </Row>
@@ -543,6 +547,32 @@ function OneCard({ handleNavigate }) {
                                 ))}
                               </div>
                               <p>{review.comment}</p>
+                              {Reply[review.id] && (
+                                <div
+                                  className="reply-display"
+                                  style={{
+                                    marginLeft: "50px",
+                                    marginBottom: "10px",
+                                  }}
+                                >
+                                  <strong>Reply:</strong> {Reply[review.id]}
+                                  <Button
+                                    onClick={() => handleDeleteReply(review.id)}
+                                    style={{
+                                      backgroundColor: "transparent",
+                                      border: "none",
+                                      padding: "5px",
+                                      marginLeft: "10px",
+                                    }}
+                                  >
+                                    <Image
+                                      src={Delete}
+                                      alt="Delete Reply"
+                                      style={{ width: "15px" }}
+                                    />
+                                  </Button>
+                                </div>
+                              )}
 
                               {commentsId === review.id &&
                                 BussinessComments && (
@@ -554,8 +584,12 @@ function OneCard({ handleNavigate }) {
                                     >
                                       <Form.Control
                                         type="text"
-                                        placeholder="Comment here "
+                                        placeholder="Comment here"
                                         name="BussinessComments"
+                                        value={Reply[review.id] || ""}
+                                        onChange={(e) =>
+                                          handleReply(review.id, e)
+                                        }
                                       />
                                     </FloatingLabel>
 
@@ -563,7 +597,8 @@ function OneCard({ handleNavigate }) {
                                       onClick={() => handleCommenst(review.id)}
                                       className="submit-button"
                                       style={{
-                                        backgroundColor: "grey",                                        padding: "10px",
+                                        backgroundColor: "grey",
+                                        padding: "10px",
                                       }}
                                     >
                                       <Image
@@ -576,35 +611,38 @@ function OneCard({ handleNavigate }) {
                                 )}
                             </Col>
                             <Col xs={2}>
-                              {cookiesType === "Bussiness"&&
-                             ( <><Button
-                                onClick={() => handleCommenst(review.id)}
-                                style={{
-                                  backgroundColor: "transparent",
-                                  border: "none",
-                                  padding: "10px",
-                                }}
-                              >
-                                <Image
-                                  src={Comment}
-                                  alt="Heart Image"
-                                  style={{ width: "20px" }}
-                                />
-                              </Button>
-                              <Button
-                                onClick={() => handleDelete(review.id)}
-                                style={{
-                                  backgroundColor: "transparent",
-                                  border: "none",
-                                  padding: "10px",
-                                }}
-                              >
-                                <Image
-                                  src={Delete}
-                                  alt="Delete"
-                                  style={{ width: "20px" }}
-                                />
-                              </Button></>)}
+                              {cookiesType === "Bussiness" && (
+                                <>
+                                  <Button
+                                    onClick={() => handleCommenst(review.id)}
+                                    style={{
+                                      backgroundColor: "transparent",
+                                      border: "none",
+                                      padding: "10px",
+                                    }}
+                                  >
+                                    <Image
+                                      src={Comment}
+                                      alt="Heart Image"
+                                      style={{ width: "20px" }}
+                                    />
+                                  </Button>
+                                  <Button
+                                    onClick={() => handleDelete(review.id)}
+                                    style={{
+                                      backgroundColor: "transparent",
+                                      border: "none",
+                                      padding: "10px",
+                                    }}
+                                  >
+                                    <Image
+                                      src={Delete}
+                                      alt="Delete"
+                                      style={{ width: "20px" }}
+                                    />
+                                  </Button>
+                                </>
+                              )}
                               <Button
                                 onClick={() => handleLike(review.id)}
                                 style={{
@@ -623,7 +661,6 @@ function OneCard({ handleNavigate }) {
                                   style={{ width: "20px" }}
                                 />
                               </Button>
-                             
                             </Col>
                             <hr />
                           </Row>

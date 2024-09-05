@@ -24,6 +24,7 @@
     margin-top: 3vh;
     padding: 0px 0px 0px 0px !important;
     height:max-content !important;
+    background-color: transparent;
 }
 .MYbussinessCard-Div {
   border: 0.5px solid rgb(193, 191, 191);

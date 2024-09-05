@@ -242,6 +242,8 @@ function LeadsContainer() {
     },
   ];
 
+
+
   const secondSectionCards = [
     {
       title: "Washing",

@@ -27,7 +27,7 @@ import Swal from "sweetalert2";
 
 function Login() {
   const [formData, setFormData] = useState({
-    Email: "",
+    MobileNumber: "",
     Password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -40,14 +40,20 @@ function Login() {
 
   function handleInputChanges(e) {
     const { name, value } = e.target;
+    const numberPattern = /^\d*$/; // Allows only numeric input without restricting to 10 digits immediately
 
-    if (name === "Email") {
-      setFormData({ ...formData, [name]: value });
+    if (name === "MobileNumber") {
+      // Check if input is numeric and within 10 digits
+      if (numberPattern.test(value) && value.length <= 10) {
+        setFormData({ ...formData, [name]: value });
+      }
     } else if (name === "Password") {
+      // Check if password length is 8 or fewer characters
       if (value.length <= 8) {
         setFormData({ ...formData, [name]: value });
       }
     }
+    // Add more conditions for other fields if needed
   }
 
   let navigate = useNavigate();
@@ -59,7 +65,7 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!formData.Email || !formData.Password) {
+    if (!formData.MobileNumber || !formData.Password) {
       const Toast = Swal.mixin({
         toast: true,
         position: "top-end",
@@ -221,15 +227,16 @@ function Login() {
                 <Form onSubmit={handleSubmit}>
                   <FloatingLabel
                     controlId="floatingInput"
-                    label="Email address"
+                    label="Mobile Number"
                     className="mb-3"
                   >
                     <Form.Control
-                      type="email"
-                      name="Email"
-                      placeholder="name@example.com"
-                      value={formData.Email}
+                      type="text"
+                      name="MobileNumber"
+                      placeholder="9876543210"
+                      value={formData.MobileNumber}
                       onChange={handleInputChanges}
+                      maxLength={10}
                     />
                   </FloatingLabel>
                   <FloatingLabel
@@ -274,8 +281,8 @@ function Login() {
                   <span>Connect With</span>
                   <hr className="hr" />
                 </div>
-                <Row className="justify-content-center">
-                  <Col xs={3}>
+                <Row className="justify-content-evenly">
+                  <Col xs={3} className="d-flex justify-content-center">
                     <Button
                       className="Login-Logos"
                       style={{ backgroundColor: "white", border: "none" }}
@@ -287,7 +294,7 @@ function Login() {
                       />
                     </Button>
                   </Col>
-                  <Col xs={3}>
+                  <Col xs={3} className="d-flex justify-content-center">
                     <Button
                       className="Login-Logos"
                       style={{ backgroundColor: "white", border: "none" }}
@@ -295,19 +302,8 @@ function Login() {
                       <img src={apple} alt="Apple" style={{ width: "25px" }} />
                     </Button>
                   </Col>
-                  <Col xs={3}>
-                    <Button
-                      className="Login-Logos"
-                      style={{ backgroundColor: "white", border: "none" }}
-                    >
-                      <img
-                        src={twitter}
-                        alt="Twitter"
-                        style={{ width: "30px" }}
-                      />
-                    </Button>
-                  </Col>
-                  <Col xs={3}>
+           
+                  <Col xs={3} className="d-flex justify-content-center">
                     <Button
                       className="Login-Logos"
                       style={{ backgroundColor: "white", border: "none" }}
@@ -320,6 +316,7 @@ function Login() {
                     </Button>
                   </Col>
                 </Row>
+
                 <center>
                   {/* UserForgetMobileVerification */}
                   <div

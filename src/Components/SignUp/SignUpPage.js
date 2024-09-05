@@ -134,7 +134,7 @@ function SignUpPage() {
     console.log("Form submitted");
 
     navigate("/MobileVerification", {
-      state: { redirectTo: "/BussinessLogin" },
+      state: { redirectTo: "/Login" },
     });
   };
 
