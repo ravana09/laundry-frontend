@@ -15,7 +15,8 @@ function Home({ children, showSideBar = false }) {
           // background:  linear-gradient(to right, #09b8f5, #3dc6f2, #62d2ef, #83deec, #a2e9ec)
    
           // backgroundImage: 'linear-gradient(to right, #09b8f5, #3dc6f2, #62d2ef, #83deec, #a2e9ec)',
-          minHeight: "fit-content" 
+          maxHeight: "fit-content" ,
+          minHeight:'100vh'
         }}
       >
         <Row>

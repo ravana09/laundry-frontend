@@ -144,6 +144,9 @@ function SideNavBar() {
                   <Nav.Link onClick={() => handleNavigation("/EditUserProfile")}>
                     Edit Profile
                   </Nav.Link>
+                  <Nav.Link onClick={() => handleNavigation("/PopupCard")}>
+                  PopupCard
+                  </Nav.Link>
                 </Nav>              )}
               {cookiesType === "Bussiness" && (
                 <Nav className="justify-content-start flex-grow-1 pe-3">

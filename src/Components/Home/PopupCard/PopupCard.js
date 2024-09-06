@@ -3,14 +3,36 @@ import "../PopupCard/PopupCard.css";
 import { Card, CloseButton, Col, Container, Form, Row } from "react-bootstrap";
 
 function PopupCard() {
-  const [radio, setRadio] = useState();
+  // Define an array of options
+  const options = [
+    "Washing",
+    "Dry Cleaning",
+    "Ironing",
+    "Folding",
+    "Delivery",
+    "Others"
+  ];
 
-  function handleChange(e) {
-    setRadio(e.target.value);
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
+  // Handle checkbox change
+  function handleCheckboxChange(e) {
+    const value = e.target.value;
+    setSelectedOptions((prevState) =>
+      prevState.includes(value)
+        ? prevState.filter((item) => item !== value) // Uncheck
+        : [...prevState, value] // Check
+    );
+  }
+
+  // Function to process selected options
+  function processSelection() {
+    console.log("Selected Options:", selectedOptions);
+    
   }
 
   return (
-    <Container fluid style={{ marginTop: '20vh' }}>
+    <Container fluid style={{ marginTop: '20vh', backgroundColor: 'transparent' }}>
       <Row>
         <Col xs={12} sm={1} md={3}></Col>
         <Col xs={12} sm={10} md={6}>
@@ -26,48 +48,19 @@ function PopupCard() {
               </Row>
             </Card.Header>
             <Card.Body className="popup-card-body">
-              <Form.Check
-                type="radio"
-                label="Washing"
-                value="Washing"
-                checked={radio === 'Washing'}
-                onChange={handleChange}
-              />
-              <Form.Check
-                type="radio"
-                label="Dry Cleaning"
-                value="Dry Cleaning"
-                checked={radio === 'Dry Cleaning'}
-                onChange={handleChange}
-              />
-              <Form.Check
-                type="radio"
-                label="Ironing"
-                value="Ironing"
-                checked={radio === 'Ironing'}
-                onChange={handleChange}
-              />
-              <Form.Check
-                type="radio"
-                label="Folding"
-                value="Folding"
-                checked={radio === 'Folding'}
-                onChange={handleChange}
-              />
-              <Form.Check
-                type="radio"
-                label="Delivery"
-                value="Delivery"
-                checked={radio === 'Delivery'}
-                onChange={handleChange}
-              />
-              <Form.Check
-                type="radio"
-                label="Others"
-                value="Others"
-                checked={radio === 'Others'}
-                onChange={handleChange}
-              />
+              {options.map((option) => (
+                <Form.Check
+                  key={option}
+                  type="checkbox"
+                  label={option}
+                  value={option}
+                  checked={selectedOptions.includes(option)}
+                  onChange={handleCheckboxChange}
+                />
+              ))}
+              <button onClick={processSelection} className="btn btn-primary mt-3">
+           Continue
+              </button>
             </Card.Body>
           </Card>
         </Col>

@@ -66,6 +66,7 @@ function BussinessProfile() {
                     { title: "Analysis", subtitle: "Improve Product and Services", Navigate: "/AllAnalysisPage" },
                     { title: "Reports", subtitle: "All the updates", Navigate: "/ReportsPage" },
                     { title: "Advertise On LAUND", subtitle: "Reach out to a wide range of customers" },
+                    
                   ].map((item, index) => (
                     <Card
                       key={index}

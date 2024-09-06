@@ -30,7 +30,7 @@ function CustomerLeads({ data, Reportstitle }) {
   const [expandedRow, setExpandedRow] = useState(null);
 
   const [searchBarValue, setSearchBarValue] = useState("");
-
+  const [filteredDetails, setFilteredDetails] = useState([]); 
   const [LeadsTitle, setLeadsTitle] = useState("");
 
   const toggleRow = (rowId) => {
@@ -342,6 +342,7 @@ function CustomerLeads({ data, Reportstitle }) {
   const handleSearchBarChange = (e) => {
     const { name, value } = e.target;
     setSearchBarValue(value);
+    handleSearch()
   };
 
   const handleSearch = () => {
@@ -355,7 +356,7 @@ function CustomerLeads({ data, Reportstitle }) {
       console.log(filteredRows);
     } else {
       setDetails(details);
-      console.log(details); // Example: replace with your reset logic
+      console.log(details); 
     }
   };
 

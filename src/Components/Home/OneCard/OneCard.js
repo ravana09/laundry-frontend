@@ -167,7 +167,8 @@ function OneCard({ handleNavigate }) {
   const [BussinessComments, setBussinessComments] = useState(false);
   const [activeTab, setActiveTab] = useState("Overview");
 
-  const [Reply, setReply] = useState({});
+  const [replyInput, setReplyInput] = useState({});
+  const [submittedReplies, setSubmittedReplies] = useState({});
 
   const location = useLocation();
   const { data } = location.state || {};
@@ -211,7 +212,7 @@ function OneCard({ handleNavigate }) {
   const handleLike = (id) => {
     setLikedReviews((prevLikes) => ({
       ...prevLikes,
-      [id]: !prevLikes[id], // Toggle liked status
+      [id]: !prevLikes[id],
     }));
   };
 
@@ -244,22 +245,36 @@ function OneCard({ handleNavigate }) {
   const handleCommenst = (id) => {
     setCommentsId(id);
     setBussinessComments((prevId) => (prevId === id ? null : id));
-    console.log(id);
   };
 
   const handleReply = (id, e) => {
-    setReply((prevReplies) => ({
-      ...prevReplies,
+    setReplyInput((prev) => ({
+      ...prev,
       [id]: e.target.value,
     }));
   };
 
-  console.log(Reply);
+  const handleReplySubmit = (id) => {
+    if (!replyInput[id] || replyInput[id].trim() === "") {
+      alert("Please enter a reply.");
+      return;
+    }
+
+    setSubmittedReplies((prev) => ({
+      ...prev,
+      [id]: replyInput[id],
+    }));
+
+    setReplyInput((prev) => ({
+      ...prev,
+      [id]: "",
+    }));
+  };
 
   const handleDeleteReply = (id) => {
-    setReply((prevReplies) => {
-      const updatedReplies = { ...prevReplies };
-      delete updatedReplies[id]; // Remove the reply associated with the review ID
+    setSubmittedReplies((prev) => {
+      const updatedReplies = { ...prev };
+      delete updatedReplies[id];
       return updatedReplies;
     });
   };
@@ -534,20 +549,22 @@ function OneCard({ handleNavigate }) {
 
               {activeTab === "Review" && (
                 <div className="overview-section">
-                  <div className="reviews-list ">
+                  <div className="reviews-list">
                     {reviews.length > 0 ? (
                       reviews.map((review, index) => (
                         <div key={index} className="review-item">
                           <Row>
                             <Col xs={10}>
-                              <div> UserName </div>
+                              <div>UserName</div>
                               <div>
                                 {[...Array(review.rating)].map((_, i) => (
                                   <FaStar key={i} color="#ffc107" size={20} />
                                 ))}
                               </div>
                               <p>{review.comment}</p>
-                              {Reply[review.id] && (
+
+                              {/* Display submitted reply if it exists */}
+                              {submittedReplies[review.id] ? (
                                 <div
                                   className="reply-display"
                                   style={{
@@ -555,15 +572,11 @@ function OneCard({ handleNavigate }) {
                                     marginBottom: "10px",
                                   }}
                                 >
-                                  <strong>Reply:</strong> {Reply[review.id]}
+                                  <strong>Reply:</strong>{" "}
+                                  {submittedReplies[review.id]}
                                   <Button
                                     onClick={() => handleDeleteReply(review.id)}
-                                    style={{
-                                      backgroundColor: "transparent",
-                                      border: "none",
-                                      padding: "5px",
-                                      marginLeft: "10px",
-                                    }}
+                                    className="review-btn"
                                   >
                                     <Image
                                       src={Delete}
@@ -572,10 +585,9 @@ function OneCard({ handleNavigate }) {
                                     />
                                   </Button>
                                 </div>
-                              )}
-
-                              {commentsId === review.id &&
-                                BussinessComments && (
+                              ) : (
+                                // Show input and submit button only if no reply is submitted
+                                commentsId === review.id && (
                                   <div className="email-form-container">
                                     <FloatingLabel
                                       controlId="floatingInput"
@@ -585,55 +597,44 @@ function OneCard({ handleNavigate }) {
                                       <Form.Control
                                         type="text"
                                         placeholder="Comment here"
-                                        name="BussinessComments"
-                                        value={Reply[review.id] || ""}
+                                        value={replyInput[review.id] || ""}
                                         onChange={(e) =>
                                           handleReply(review.id, e)
                                         }
                                       />
                                     </FloatingLabel>
-
                                     <Button
-                                      onClick={() => handleCommenst(review.id)}
-                                      className="submit-button"
-                                      style={{
-                                        backgroundColor: "grey",
-                                        padding: "10px",
-                                      }}
+                                      onClick={() =>
+                                        handleReplySubmit(review.id)
+                                      }
+                                      className="review-btn"
                                     >
                                       <Image
                                         src={Submit}
-                                        alt="Heart Image"
+                                        alt="Submit Reply"
                                         style={{ width: "20px" }}
                                       />
                                     </Button>
                                   </div>
-                                )}
+                                )
+                              )}
                             </Col>
                             <Col xs={2}>
                               {cookiesType === "Bussiness" && (
                                 <>
                                   <Button
                                     onClick={() => handleCommenst(review.id)}
-                                    style={{
-                                      backgroundColor: "transparent",
-                                      border: "none",
-                                      padding: "10px",
-                                    }}
+                                    className="review-btn"
                                   >
                                     <Image
                                       src={Comment}
-                                      alt="Heart Image"
+                                      alt="Comment Icon"
                                       style={{ width: "20px" }}
                                     />
                                   </Button>
                                   <Button
                                     onClick={() => handleDelete(review.id)}
-                                    style={{
-                                      backgroundColor: "transparent",
-                                      border: "none",
-                                      padding: "10px",
-                                    }}
+                                    className="review-btn"
                                   >
                                     <Image
                                       src={Delete}
@@ -645,11 +646,7 @@ function OneCard({ handleNavigate }) {
                               )}
                               <Button
                                 onClick={() => handleLike(review.id)}
-                                style={{
-                                  backgroundColor: "transparent",
-                                  border: "none",
-                                  padding: "10px",
-                                }}
+                                className="review-btn"
                               >
                                 <Image
                                   src={
@@ -657,13 +654,13 @@ function OneCard({ handleNavigate }) {
                                       ? redHeart
                                       : emptyHeart
                                   }
-                                  alt="Heart Image"
+                                  alt="Heart Icon"
                                   style={{ width: "20px" }}
                                 />
                               </Button>
                             </Col>
-                            <hr />
                           </Row>
+                          <hr />
                         </div>
                       ))
                     ) : (
@@ -676,7 +673,6 @@ function OneCard({ handleNavigate }) {
                       <Form.Group className="mb-3" controlId="rating">
                         {[...Array(5)].map((_, index) => {
                           const ratingValue = index + 1;
-
                           return (
                             <label key={index}>
                               <input
@@ -695,10 +691,7 @@ function OneCard({ handleNavigate }) {
                                 }
                                 onMouseEnter={() => setHover(ratingValue)}
                                 onMouseLeave={() => setHover(null)}
-                                style={{
-                                  cursor: "pointer",
-                                  marginRight: "5px",
-                                }}
+                                className="rating-star"
                               />
                             </label>
                           );
