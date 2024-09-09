@@ -4,4 +4,15 @@
     text-decoration: underline;
     font-weight: 600;
     text-shadow: 4px 4px 5px rgba(139, 136, 136, 0.5); /* Softer shadow */
+    margin-bottom: 20px !important;
+}
+
+.AllAnalysisit-Body{
+    padding: 1rem;
+}
+
+@media (max-width: 380px) {
+    .AllAnalysisit-Body{
+        padding: 0rem;
+    }
 }

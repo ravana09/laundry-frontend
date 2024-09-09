@@ -20,10 +20,13 @@ import Location from "../../Images/LocationCircle.png";
 import Share from "../../Images/Share.png";
 import { TbPhoneCall } from "react-icons/tb";
 import { BsCart3 } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import LocationLink from "../GoogleMap/LocationLink";
 import BubbleAnimation from "../../BubbleAnimation/BubbleAnimation";
 import NavbarBubbleAnimation from "../SideNavbar/NavbarAnimation";
+import PopupCard from "../PopupCard/PopupCard";
+import Cookies from "js-cookie";
+import "../PopupCard/PopupCard.css";
 
 const cardData = [
   {
@@ -59,9 +62,21 @@ const cardData = [
   // Add more cards as needed
 ];
 
+
+
 function CompanyCard() {
   let navigate = useNavigate();
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+  useEffect(() => {
+    if (!sessionStorage.getItem("popupClosed")) {
+      setIsPopupVisible(true);
+    }
+  }, []);
 
+  const location = useLocation();
+  const selectedOptions = location.state?.selectedOptions || []; 
+  console.log(selectedOptions,"card js ")
+ 
   const handleNavigate = (page, id) => {
     navigate(page, { state: { data: id } });
   };
@@ -118,6 +133,10 @@ function CompanyCard() {
   return (
     <Container fluid className="CompanyCard-body">
       <NavbarBubbleAnimation  />
+            {isPopupVisible && <PopupCard 
+           
+            />}
+
       <div className="card-grid-container">
         {cardData.map((card) => (
           <Card

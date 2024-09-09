@@ -184,7 +184,7 @@ function Login() {
                   alt="For Business"
                   className="business-icon"
                 />
-                <span className="download-text">For Business</span>
+                <span className="download-text"></span>
               </Button>
             </Col>
           </Col>

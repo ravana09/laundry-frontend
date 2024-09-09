@@ -10,7 +10,6 @@ function AllAnalysisPage() {
     "Ironing": 50,
     "Dry Cleaning": 100,
     "Others": 50,
-    
   };
 
   const Overalldata = {
@@ -20,12 +19,6 @@ function AllAnalysisPage() {
     "Others": 150
   };
 
-  const Attendanvcedata = {
-    "Present": 150,
-    "Absent": 10,
-    "Late": 5,
-    "Leave": 7
-  };
 
   const Leadsedata = {
     "sale": 150,
@@ -35,16 +28,16 @@ function AllAnalysisPage() {
   };
 
   return (
-    <Card style={{ marginTop: '10vh', padding: '1rem' }}>
+    <Card  className="AllAnalysisit-Body" style={{ marginTop: '10vh'}}>
       <Card.Body className='AllAnalysitBody'>
-        <h2>Overall Analysis</h2>
+        <h2 >Overall Analysis</h2>
         <Analysispage data={Overalldata} />
         <h2>Services Analysis</h2>
         <Analysispage data={Servicesdata} />
         <h2>Leads Analysis</h2>
         <Analysispage data={Leadsedata} />
-        <h2>Attendance Analysis</h2>
-        <Analysispage data={Attendanvcedata} />
+        {/* <h2>Attendance Analysis</h2>
+        <Analysispage data={Attendanvcedata} /> */}
       </Card.Body>
     </Card>
   );

@@ -32,6 +32,7 @@ function SideNavBar() {
   const handleSignOut = (page) => {
     Cookies.remove("AccountType");
     Cookies.remove("AccountToken");
+    sessionStorage.clear()
     setTimeout(() => {
       if (!Cookies.get("AccountType")) {
         navigate(page);
@@ -144,9 +145,9 @@ function SideNavBar() {
                   <Nav.Link onClick={() => handleNavigation("/EditUserProfile")}>
                     Edit Profile
                   </Nav.Link>
-                  <Nav.Link onClick={() => handleNavigation("/PopupCard")}>
+                  {/* <Nav.Link onClick={() => handleNavigation("/PopupCard")}>
                   PopupCard
-                  </Nav.Link>
+                  </Nav.Link> */}
                 </Nav>              )}
               {cookiesType === "Bussiness" && (
                 <Nav className="justify-content-start flex-grow-1 pe-3">

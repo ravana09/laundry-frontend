@@ -194,7 +194,7 @@ function BussinessLogin() {
                 alt="For Business"
                 className="business-icon"
               />
-              <span className="download-text">For User</span>
+              <span className="download-text"></span>
             </Button>
           </Col>
           <Col xs={4} className="d-flex align-items-end justify-content-end">

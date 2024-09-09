@@ -1,72 +1,101 @@
 import React, { useState } from "react";
-import "../PopupCard/PopupCard.css";
-import { Card, CloseButton, Col, Container, Form, Row } from "react-bootstrap";
+import { Card, CloseButton, Col, Container, Row } from "react-bootstrap";
+import "./PopupCard.css"; // Ensure this points to your correct CSS file
+import { useNavigate } from "react-router-dom";
 
 function PopupCard() {
-  // Define an array of options
   const options = [
     "Washing",
     "Dry Cleaning",
     "Ironing",
     "Folding",
     "Delivery",
-    "Others"
+    "Others",
   ];
 
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [isVisible, setIsVisible] = useState(true);
 
-  // Handle checkbox change
-  function handleCheckboxChange(e) {
+  const handleClosePopup = () => {
+    sessionStorage.setItem("popupClosed", "true");
+    setIsVisible(false);
+  };
+
+  const handleCheckboxChange = (e) => {
     const value = e.target.value;
     setSelectedOptions((prevState) =>
       prevState.includes(value)
-        ? prevState.filter((item) => item !== value) // Uncheck
-        : [...prevState, value] // Check
+        ? prevState.filter((item) => item !== value)
+        : [...prevState, value]
     );
-  }
+  };
 
-  // Function to process selected options
-  function processSelection() {
+  let navigate =useNavigate()
+  const processSelection = () => {
+    if (selectedOptions.length === 0) {
+      alert("Please select at least one option.");
+      return;
+    }
+    sessionStorage.setItem("popupClosed", "true");
+    setIsVisible(false);
     console.log("Selected Options:", selectedOptions);
-    
-  }
+    navigate('/CompanyCard', { state: { selectedOptions } });
+  };
+
+  if (!isVisible) return null;
 
   return (
-    <Container fluid style={{ marginTop: '20vh', backgroundColor: 'transparent' }}>
-      <Row>
-        <Col xs={12} sm={1} md={3}></Col>
-        <Col xs={12} sm={10} md={6}>
-          <Card className="popup-card">
-            <Card.Header className="popup-card-header">
-              <Row>
-                <Col xs="auto" className="d-flex align-items-center">
-                  <div className="popup-card-title">Choose Your Preference</div>
-                </Col>
-                <Col xs="auto" className="ms-auto">
-                  <CloseButton className="popup-close-button" />
-                </Col>
-              </Row>
-            </Card.Header>
-            <Card.Body className="popup-card-body">
-              {options.map((option) => (
-                <Form.Check
-                  key={option}
+    <div className="popup-overlay">
+      <Container className="popup-container">
+        <Card className="popup-card">
+          <div className="checkbox-container">
+            {/* <Row className="align-items-center mb-3">
+              <Col xs="auto">
+                <div className="popup-card-title">Need Help?</div>
+              </Col>
+              <Col xs={1} className="ms-auto">
+                <CloseButton onClick={handleClosePopup} />
+              </Col>
+            </Row> */}
+
+            {/* Checkbox options */}
+            {options.map((option) => (
+              <label className="custom-checkbox" key={option}>
+                <input
                   type="checkbox"
-                  label={option}
                   value={option}
                   checked={selectedOptions.includes(option)}
                   onChange={handleCheckboxChange}
                 />
-              ))}
-              <button onClick={processSelection} className="btn btn-primary mt-3">
-           Continue
-              </button>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col xs={12} sm={1} md={3}></Col>
-      </Row>
-    </Container>
+                <span className="checkmark"></span>
+                <span className="custom-checkbox-label">{option}</span>
+              </label>
+            ))}
+
+            <Row>
+              <Col xs={6}>
+                <button className="btn-submit" onClick={processSelection}>
+                  Continue
+                </button>
+              </Col>
+              <Col xs={6} className="ms-auto">
+                <button
+                  className="btn-submit"
+                  style={{
+                    backgroundColor: "white",
+                    border: "1px solid #00bff",
+                    color: "black",
+                  }}
+                  onClick={handleClosePopup}
+                >
+                  Cancel
+                </button>
+              </Col>
+            </Row>
+          </div>
+        </Card>
+      </Container>
+    </div>
   );
 }
 

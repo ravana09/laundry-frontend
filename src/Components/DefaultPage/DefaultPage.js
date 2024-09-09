@@ -52,6 +52,7 @@ function DefaultPage() {
                   color: "white",
                   border: "none",
                   borderRadius: "20px",
+                
                   // backgroundColor: "transparent",
                 }}
                 onClick={() => handleNavigation("/Login")}
@@ -66,6 +67,7 @@ function DefaultPage() {
                   color: "white",
                   border: "none",
                   borderRadius: "20px",
+                 
                   // backgroundColor: "transparent",
                 }}
                 onClick={() => handleNavigation("/BussinessLogin")}
