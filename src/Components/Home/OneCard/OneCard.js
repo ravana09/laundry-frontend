@@ -281,7 +281,9 @@ function OneCard({ handleNavigate }) {
 
   return (
     <Container fluid className="CompanyCard-body" style={{ marginTop: "12vh" }}>
-      <Card border="info">
+      <Card
+      //  border="info"
+       >
         <Card.Body>
           <div
             style={{
@@ -466,7 +468,9 @@ function OneCard({ handleNavigate }) {
               </Button>
             </div>
           </Card.Body>
-          <Card.Body className="OneCard-Services-Card">
+          <Card.Body
+           className="OneCard-Services-Card"
+           >
             <div>
               <Row className="text-center my-3">
                 <Col xs={4} sm={4} className="mb-2">

@@ -62,12 +62,12 @@
   width: 18px;
   margin-right: 8px;
 }
-.OneCard-Services-Card {
+/* .OneCard-Services-Card {
   width: 100%;
-  border: 0.5px solid grey;
+  border: 0.1px solid grey !important;
   margin: 5px;
   border-radius: 20px;
-}
+} */
 
 .OneCard-Services-text {
   position: relative;
@@ -251,7 +251,7 @@
 }
 
 .sticky-header {
-  top: 10vh;
+  top: 9vh;
 }
 
 .sticky-CompanyDetails {
@@ -261,7 +261,7 @@
 /* Services Card Styles */
 .OneCard-Services-Card {
   width: 100%;
-  border: 0.5px solid grey;
+  border: 0.2px solid rgb(224, 222, 222);
   margin: 5px;
   border-radius: 20px;
   background-color: #ffffff; /* Ensure background consistency */

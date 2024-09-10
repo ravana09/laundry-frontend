@@ -2,5 +2,6 @@
 .home-container {
     background: linear-gradient(to bottom, rgb(235, 233, 233), #66def5, #8ce2f6, #abe6f6, #c6eaf5) !important;
     min-height: 100vh;
+    background-color: #f8f9f9;
   }
   

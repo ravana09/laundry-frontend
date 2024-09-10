@@ -30,7 +30,7 @@ function CustomerLeads({ data, Reportstitle }) {
   const [expandedRow, setExpandedRow] = useState(null);
 
   const [searchBarValue, setSearchBarValue] = useState("");
-  const [filteredDetails, setFilteredDetails] = useState([]); 
+  // const [filteredDetails, setFilteredDetails] = useState([]); 
   const [LeadsTitle, setLeadsTitle] = useState("");
 
   const toggleRow = (rowId) => {
@@ -51,6 +51,10 @@ function CustomerLeads({ data, Reportstitle }) {
       let reverseData = data.slice().reverse();
       setDetails(reverseData);
       setLeadsTitle(Reportstitle);
+    }
+
+    if(searchBarValue >0){
+      handleSearch()
     }
   }, [sampleData, data, searchBarValue]);
 
@@ -340,21 +344,22 @@ function CustomerLeads({ data, Reportstitle }) {
   };
 
   const handleSearchBarChange = (e) => {
-    const { name, value } = e.target;
+    const { value } = e.target;
     setSearchBarValue(value);
-    handleSearch()
+    handleSearch(value)
   };
 
-  const handleSearch = () => {
-    if (searchBarValue.length > 0) {
+  const handleSearch = (values) => {
+    if (searchBarValue.length > 0 ) {
       const filteredRows = details.filter((row) =>
-        Object.values(row).some((value) =>
-          value.toString().toLowerCase().includes(searchBarValue.toLowerCase())
+        Object.values(row).some((values) =>
+          values.toString().toLowerCase().includes(searchBarValue.toLowerCase())
         )
       );
       setDetails(filteredRows);
       console.log(filteredRows);
-    } else {
+    }
+     else {
       setDetails(details);
       console.log(details); 
     }

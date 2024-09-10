@@ -107,6 +107,7 @@ function SideNavBar() {
                 )}
 
                 {cookiesType === "user" && (
+                  
                   <Button
                     variant="transparent"
                     style={{ border: "none", padding: 0 }}
@@ -136,7 +137,14 @@ function SideNavBar() {
             placement="start"
             style={{ width: "70%", maxWidth: "300px" }}
           >
-            <Offcanvas.Header closeButton>
+            <Offcanvas.Header
+              closeButton
+              style={{
+                background:
+                  "linear-gradient(to right, #09b8f5, #3dc6f2, #62d2ef, #83deec, #a2e9ec)",
+                  color:'white'
+              }}
+            >
               <Offcanvas.Title id="offcanvasNavbarLabel">Laund</Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body className="Sidenavbar-Offcampus-body d-flex flex-column">

@@ -1,13 +1,38 @@
 .CompanyCard-body {
   /* background-color: rgb(253, 251, 251); */
   justify-content: center;
-  margin-top: 9vh;
-     background-color: rgb(248, 247, 247);
+  margin-top: 7vh;
+     background-color: transparent;
   
 }
-.CompanyCard-Card{
+/* .CompanyCard-Card{
   border: 0.5px solid skyblue !important;
+} */
+
+/* SearchBar.css */
+
+.search-container {
+  position: relative;
+  max-width: 550px;
 }
+.search-wrapper{
+  max-width: 1000px !important;
+}
+
+.search-input {
+  padding-right: 40px; /* Space for the icon */
+  border-radius: 4px;
+  width: 45%;
+}
+
+.search-icon {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: gray;
+}
+
 
 .card-grid-container {
   display: grid;
@@ -48,7 +73,7 @@
   transition: width 0.5s ease;
   overflow: hidden;
   white-space: nowrap;
-  border-radius: 20px;
+  /* border-radius: 20px; */
 }
 
 .button-container button {
@@ -98,6 +123,11 @@
   }
   .button-container button span {
     display: none;
+  }
+  .search-input {
+    padding-right: 40px; /* Space for the icon */
+    border-radius: 4px;
+    width: 100%;
   }
 }
 

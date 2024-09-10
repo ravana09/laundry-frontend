@@ -103,7 +103,7 @@ function App() {
       {AccountType === "user" && (
         <>
           <Route path="/UserProfile" element={<WithHomeLayout component={<UserProfile />} />} />
-          <Route path="/CompanyCard" element={<WithHomeLayout component={<CompanyCard />} />} />
+          <Route path="/CompanyCard" element={<WithHomeLayout component={<CompanyCard />} showSideBar={false}  />} />
           <Route path="/EditUserProfile" element={<WithHomeLayout component={<EditUserProfile />} />} />
           <Route path="/PopupCard" element={<WithHomeLayout component={<PopupCard />} />} />
         </>

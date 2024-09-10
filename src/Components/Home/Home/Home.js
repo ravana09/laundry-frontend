@@ -11,7 +11,7 @@ function Home({ children, showSideBar = false }) {
         fluid
         className="Home-Container"
         style={{ 
-          backgroundColor: "rgb(248, 247, 247)",
+          backgroundColor: "#f8f9f9",
           // background:  linear-gradient(to right, #09b8f5, #3dc6f2, #62d2ef, #83deec, #a2e9ec)
    
           // backgroundImage: 'linear-gradient(to right, #09b8f5, #3dc6f2, #62d2ef, #83deec, #a2e9ec)',
